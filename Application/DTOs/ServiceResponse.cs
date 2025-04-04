@@ -1,0 +1,50 @@
+
+namespace Application.DTOs;
+
+public sealed class ServiceResponse<T>
+{
+    public bool IsSuccessful { get; set; }
+    public ErrorModel? Error { get; set; } 
+    public T? Data { get; set; }
+
+    public ServiceResponse()
+    {
+        
+    }
+    
+    public ServiceResponse(bool isSuccessful, ErrorModel error, T? data)
+    {
+        IsSuccessful = isSuccessful;
+        Error = error;
+        Data = data;
+    }
+
+    public static ServiceResponse<T> Success(T data)
+    {
+        return new (true, null, data);
+    }
+
+    public static ServiceResponse<T> Failure(ErrorModel error)
+    {
+        return new(false, error, default);
+    }
+    
+    public static ServiceResponse<T> Failure(string code , string message,  string details = null)
+    {
+        return new(false, new ErrorModel(code, message, details), default);
+    }
+}
+
+public sealed class ErrorModel
+{
+    public string Code { get; set; }
+    public string Message { get; set; }
+    public string Details { get; set; }
+    
+    public ErrorModel(string code, string message, string? details = null)
+    {
+        Code = code;
+        Message = message;
+        Details = details;
+    }
+}
