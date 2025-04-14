@@ -130,14 +130,15 @@ public class AccountController : BaseApiController
         claimIdentity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
         claimIdentity.AddClaim(new Claim(ClaimTypes.GivenName, user.Name));
         claimIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
-        claimIdentity.AddClaim(new Claim(ClaimTypes.Email, roleName));
+        claimIdentity.AddClaim(new Claim(ClaimTypes.Role, roleName));
         // Add issued and expiration claims
         claimIdentity.AddClaim(new Claim(ClaimTypes.Expiration, DateTime.UtcNow.AddHours(24).ToString())); 
+        /*
         var roles = _userManager.GetRolesAsync(user).Result;
         foreach (var role in roles)
         {
             claimIdentity.AddClaim(new Claim(ClaimTypes.Role, role));  
-        }
+        }*/
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("testusername0012232434343863486837467834"));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 

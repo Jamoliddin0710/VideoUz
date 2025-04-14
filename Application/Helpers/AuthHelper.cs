@@ -18,9 +18,10 @@ public static class AuthHelper
         return userName;
     }
 
-    public static bool IsUserRole(ClaimsPrincipal principal)
+    public static bool IsUserRole(this ClaimsPrincipal principal , string role)
     {
-        return principal?.IsInRole(Role.User.ToString()) ?? false;
+        var userrole =  principal.FindFirstValue(ClaimTypes.Role);
+        return userrole.Equals(role);
     }
 
     public static long? GetUserId(this ClaimsPrincipal principal)
