@@ -1,12 +1,10 @@
 using System.Globalization;
 using System.Net.Http.Headers;
-using Domain.Client;
 using Infrastructure.DTOs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Refit;
-
-namespace Application.Services;
+namespace Application.ServiceContract;
 
 public static class ServiceDependencyInjection
 {
@@ -24,9 +22,9 @@ public static class ServiceDependencyInjection
     {
    #if DEBUG
         var timeout = TimeSpan.FromMinutes(2);
-#else
+  #else
         var timeout = TimeSpan.FromSeconds(10);
-#endif
+  #endif
         return s =>
         {
             s.BaseAddress = new Uri(route);

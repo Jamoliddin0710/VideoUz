@@ -1,4 +1,3 @@
-using Domain.Entities;
 using Infrastructure.DTOs;
 
 namespace Application.ServiceContract;

@@ -1,0 +1,40 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Application.DTOs.LoginDTO
+
+<div class="d-flex justify-content-center ">
+    <div class="col-lg-5">
+        <main class="form-signin">
+            <form method="post" asp-action="Login" asp-controller="Account">
+                @*<input hidden type="text" asp-for="ReturnUrl"/>*@
+                <div class="text-center my-4">
+                    <h3 class="mb-3 font-weight-normal "> Login </h3>
+                </div>
+                
+                <div class="form-floating mt-5 mb-3">
+                    <input type="text" asp-for="UserName" class="form-control " placeholder="Username or Email"/>
+                    <label asp-for="UserName"></label>
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="form-floating  mb-3">
+                    <input type="text" asp-for="Password" class="form-control" placeholder="Password"/>
+                    <label asp-for="Password"></label>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-floating">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                </div>
+                <div class="d-grid m-4 px-1">
+                    <button class="btn btn-lg btn-info" type="submit">
+                        Login
+                    </button>
+                </div>
+            </form>
+        </main>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

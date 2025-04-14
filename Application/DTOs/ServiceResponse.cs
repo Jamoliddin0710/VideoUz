@@ -29,7 +29,7 @@ public sealed class ServiceResponse<T>
         return new(false, error, default);
     }
     
-    public static ServiceResponse<T> Failure(string code , string message,  string details = null)
+    public static ServiceResponse<T> Failure(string code , string message,  List<string> details = null)
     {
         return new(false, new ErrorModel(code, message, details), default);
     }
@@ -39,9 +39,14 @@ public sealed class ErrorModel
 {
     public string Code { get; set; }
     public string Message { get; set; }
-    public string Details { get; set; }
+    public List<string> Details { get; set; }
+
+    public ErrorModel()
+    {
+        
+    }
     
-    public ErrorModel(string code, string message, string? details = null)
+    public ErrorModel(string code, string message, List<string>? details = null)
     {
         Code = code;
         Message = message;
