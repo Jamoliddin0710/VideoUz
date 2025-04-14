@@ -3,12 +3,8 @@ using System.Security.Claims;
 using System.Text;
 using Application.DTOs;
 using Application.Models;
-using Application.Utility;
 using Domain.Entities;
-using Infrastructure.DTOs;
-using Infrastructure.ViewModels;
 using Mapster;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -51,7 +47,7 @@ public class AccountController : BaseApiController
         var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
         if (result.Succeeded)
         {
-            var token = await GenerateJwtToken(user);
+            var token = await GenerateJwtToken(user, nameof(Role.User));
             return new ServiceResponse<TokenModel>()
             {
                 Data = token,
@@ -116,7 +112,7 @@ public class AccountController : BaseApiController
         
         await _userManager.AddToRoleAsync(user, nameof(Role.User));
         
-        var token = await GenerateJwtToken(user);
+        var token = await GenerateJwtToken(user, nameof(Role.User));
         return new ServiceResponse<TokenModel>()
         {
             Data = token,
@@ -124,7 +120,7 @@ public class AccountController : BaseApiController
         };
     }
 
-    private async Task<TokenModel> GenerateJwtToken(AppUser user)
+    private async Task<TokenModel> GenerateJwtToken(AppUser user , string roleName)
     {
         // Create claims identity with default authentication scheme
         var claimIdentity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -134,6 +130,7 @@ public class AccountController : BaseApiController
         claimIdentity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
         claimIdentity.AddClaim(new Claim(ClaimTypes.GivenName, user.Name));
         claimIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
+        claimIdentity.AddClaim(new Claim(ClaimTypes.Email, roleName));
         // Add issued and expiration claims
         claimIdentity.AddClaim(new Claim(ClaimTypes.Expiration, DateTime.UtcNow.AddHours(24).ToString())); 
         var roles = _userManager.GetRolesAsync(user).Result;

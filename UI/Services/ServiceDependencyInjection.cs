@@ -15,6 +15,10 @@ public static class ServiceDependencyInjection
             .AddRefitClient<IAccountRefitClient>()
             .ConfigureHttpClient(CreateHttpClient(url));
         
+        services
+            .AddRefitClient<IChannelRefitService>()
+            .ConfigureHttpClient(CreateHttpClient(url));
+        
         return services;
     }
     

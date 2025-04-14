@@ -2,7 +2,9 @@
 using Application.ServiceContract;
 using Application.Services;
 using Domain.Entities;
+using Domain.RepositoryContracts;
 using Infrastructure;
+using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
@@ -17,6 +19,8 @@ namespace API.Extensions
         {
             services.AddDbContext<AppDbContext>
                 (options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }
 

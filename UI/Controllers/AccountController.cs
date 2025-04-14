@@ -3,7 +3,6 @@ using Application.DTOs;
 using Application.Helpers;
 using Application.Models;
 using Application.ServiceContract;
-using Infrastructure.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;

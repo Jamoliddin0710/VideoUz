@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Application.Models;
+using Domain.Entities;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Application.Helpers;
@@ -17,6 +18,11 @@ public static class AuthHelper
         return userName;
     }
 
+    public static bool IsUserRole(ClaimsPrincipal principal)
+    {
+        return principal?.IsInRole(Role.User.ToString()) ?? false;
+    }
+
     public static long? GetUserId(this ClaimsPrincipal principal)
     {
         if (principal is null)
@@ -27,6 +33,7 @@ public static class AuthHelper
         var userIdClaim = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         return long.TryParse(userIdClaim , out var userId) ? userId : 0;
     }
+    
     public static JwtSecurityToken DecodeToken(string token)
     {
         var handler = new JwtSecurityTokenHandler();

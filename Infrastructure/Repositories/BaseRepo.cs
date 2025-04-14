@@ -25,8 +25,7 @@ public class BaseRepo<T> : IBaseRepo<T> where T : BaseEntity
     {
         _dbSet.Entry(source).CurrentValues.SetValues(destination);
     }
-
-
+    
     public void Remove(T entity)
     {
         _dbSet.Remove(entity);
