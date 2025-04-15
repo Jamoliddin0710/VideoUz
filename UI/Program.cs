@@ -1,7 +1,7 @@
-using Application.ServiceContract;
+using Application.Services;
 using Infrastructure.DTOs;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Refit;
+using UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

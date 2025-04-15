@@ -2,7 +2,7 @@ using Application.DTOs;
 using Application.Models;
 using Refit;
 
-namespace Application.ServiceContract;
+namespace UI.Services;
 
 public interface IChannelRefitService
 {

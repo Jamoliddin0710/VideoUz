@@ -3,6 +3,7 @@ using Application.Helpers;
 using Application.Models;
 using Application.ServiceContract;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -17,8 +18,10 @@ public class ChannelController : BaseApiController
     }
 
     [HttpPost]
+  
     public async Task<IActionResult> Create(CreateOrUpdateChannelDTO createOrUpdateChannelDto)
     {
+        HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
         await _channelService.CreateAsync(createOrUpdateChannelDto);
         return NoContent();
     }
@@ -36,10 +39,11 @@ public class ChannelController : BaseApiController
     }
     
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult<ServiceResponse<FilterResponseModel<ChannelDTO>>>> GetUserChannels()
     {
         var userId = User.GetUserId();
-        if (userId.HasValue)
+        if (userId.HasValue || userId == 0)
         {
             return Ok(await _channelService.GetUsersChannel(userId.Value));
         }
@@ -47,7 +51,8 @@ public class ChannelController : BaseApiController
         return new ServiceResponse<FilterResponseModel<ChannelDTO>>()
         {
             Error = new ErrorModel("401", "User not authorized"),
-            IsSuccessful = false
+            IsSuccessful = false,
+            Data = null,
         };
     }
     

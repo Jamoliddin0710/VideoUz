@@ -20,13 +20,15 @@ namespace API.Extensions
             services.AddDbContext<AppDbContext>
                 (options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+           
             return services;
         }
 
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IChannelService, ChannelService>();
             return services;
         }
         public static IServiceCollection AddAuthServices(this IServiceCollection services)

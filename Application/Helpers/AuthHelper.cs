@@ -3,6 +3,7 @@ using System.Security.Claims;
 using Application.Models;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.Helpers;
 
@@ -21,7 +22,7 @@ public static class AuthHelper
     public static bool IsUserRole(this ClaimsPrincipal principal , string role)
     {
         var userrole =  principal.FindFirstValue(ClaimTypes.Role);
-        return userrole.Equals(role);
+        return userrole?.Contains(role , StringComparison.OrdinalIgnoreCase) ?? false;
     }
 
     public static long? GetUserId(this ClaimsPrincipal principal)
@@ -112,9 +113,14 @@ public static class AuthHelper
                 token
             },
             {
+                ClaimTypes.Role,
+                string.Join(";", claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value))
+            },
+            {
                 ClaimTypes.Expiration,
                 claims.FirstOrDefault(c => c.Type == ClaimTypes.Expiration)?.Value ?? ""
             },
         };
     }
 }
+

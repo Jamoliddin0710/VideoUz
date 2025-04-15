@@ -5,7 +5,7 @@ using Infrastructure.DTOs;
 using Infrastructure.ViewModels;
 using Refit;
 
-namespace Application.ServiceContract;
+namespace UI.Services;
 
 public interface IAccountRefitClient
 {

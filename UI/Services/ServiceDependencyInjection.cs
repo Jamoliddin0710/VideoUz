@@ -1,22 +1,26 @@
 using System.Globalization;
 using System.Net.Http.Headers;
+using Application.Helpers;
 using Infrastructure.DTOs;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using Application.Helpers;
 using Refit;
-namespace Application.ServiceContract;
+using UI.Services;
+namespace UI.Services;
 
 public static class ServiceDependencyInjection
 {
     public static IServiceCollection AddRefitService(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddTransient<AuthTokenHandler>();
         var url = configuration.GetValue<string>($"{nameof(AppOptions)}:{nameof(AppOptions.BackendApi)}");
         services
             .AddRefitClient<IAccountRefitClient>()
-            .ConfigureHttpClient(CreateHttpClient(url));
+            .ConfigureHttpClient(CreateHttpClient(url))
+            .AddHttpMessageHandler<AuthTokenHandler>();
         
         services
             .AddRefitClient<IChannelRefitService>()
+            .AddHttpMessageHandler<AuthTokenHandler>()
             .ConfigureHttpClient(CreateHttpClient(url));
         
         return services;

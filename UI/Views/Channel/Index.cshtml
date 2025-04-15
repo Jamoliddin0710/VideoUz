@@ -1,7 +1,7 @@
 @model CreateOrUpdateChannelDTO
 @if (string.IsNullOrWhiteSpace(Model?.Name))
 {
-    <h1> Channel is not created yet. Use the form to below to create your channel</h1>
+    <p> Channel is not created yet. Use the form to below to create your channel</p>
     <form asp-action="CreateChannel" asp-controller="Channel" class="mt-2">
         <div class="row">
             <div class="col-md-6">
@@ -11,9 +11,9 @@
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="Name" class="form-label"></label>
-                    <input asp-for="Name" class="form-control" type="text"/>
-                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <label asp-for="Description" class="form-label"></label>
+                    <input asp-for="Description" class="form-control" type="text"/>
+                    <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
                 <button class="btn btn-success" type="submit">Create</button>
             </div>            

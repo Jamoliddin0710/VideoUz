@@ -77,7 +77,12 @@ public class BaseRepo<T> : IBaseRepo<T> where T : BaseEntity
     public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null, string includeProperties = null,
         Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null)
     {
-        var query = _dbSet.AsQueryable().Where(predicate);
+        var query = _dbSet.AsQueryable();
+        if (predicate is not null)
+        {
+            query = query.Where(predicate);
+        }
+       
         if (!string.IsNullOrWhiteSpace(includeProperties))
         {  
             query = GetQueryWithIncludeProperties(query, includeProperties);

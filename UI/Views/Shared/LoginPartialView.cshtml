@@ -7,7 +7,7 @@
         <li class="nav-item">
             <span class="nav-link text-info-emphasis"> @User.GetUserName()</span>
         </li>
-        @if (User?.IsUserRole(nameof(Role.User)) ?? false)
+        @if (User?.IsUserRole(nameof(Role.Admin)) ?? false)
         {
             <li class="nav-item">
                 <a class="nav-link text-white @Html.IsActive("Index", "Channel")" asp-action="Index" asp-controller="Channel">
