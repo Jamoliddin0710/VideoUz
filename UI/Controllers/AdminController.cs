@@ -24,6 +24,7 @@ public class AdminController : Controller
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAllCategories()
     {
         var categories = await _categoryRefitService.GetAllCategories();
@@ -31,8 +32,8 @@ public class AdminController : Controller
         {
             Id = a.Id,
             Name = a.Name,
-        });
-        return Json(new APIResponse(200,result: categories));
+        }).ToList();
+        return Json(new APIResponse(200,result: data));
     }
     
 }

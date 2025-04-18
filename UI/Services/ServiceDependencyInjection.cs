@@ -21,6 +21,11 @@ public static class ServiceDependencyInjection
         services
             .AddRefitClient<IChannelRefitService>()
             .AddHttpMessageHandler<AuthTokenHandler>()
+            .ConfigureHttpClient(CreateHttpClient(url));  
+        
+        services
+            .AddRefitClient<ICategoryRefitService>()
+            .AddHttpMessageHandler<AuthTokenHandler>()
             .ConfigureHttpClient(CreateHttpClient(url));
         
         return services;

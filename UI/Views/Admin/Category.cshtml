@@ -14,3 +14,30 @@
         </tbody>
     </table>
 </div>
+
+@section Scripts
+{
+    <script>
+        $(function (){
+            getCategories();
+        })
+        
+        function getCategories(){
+            $.ajax({
+                uri : "@Url.Action("GetAllCategories")",
+                type:"GET",
+                success: function (data){
+                    console.log(data);
+                    @*if (data.issucces){
+                        $('categories').add(data.result);
+                    }*@
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+            })
+        }
+    </script>
+   
+}
