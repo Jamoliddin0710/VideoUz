@@ -15,11 +15,24 @@ public class ChannelService : IChannelService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task CreateAsync(CreateOrUpdateChannelDTO channelDto)
+    public async Task CreateAsync(CreateOrUpdateChannelDTO channelDto , long userId)
     {
+        if (await _unitOfWork.ChannelRepo.AnyAsync(a=>a.Name.ToLower().Equals(channelDto.Name.ToLower())))
+        {
+            throw new Exception($"Channel {channelDto.Name} already exists");
+        }
         var channel = channelDto.Adapt<Channel>();
+        channel.AppUserId = userId;
         _unitOfWork.ChannelRepo.Add(channel);
-        await _unitOfWork.CompleteAsync();
+        try
+        {
+            await _unitOfWork.CompleteAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+       
     }
 
     public async Task<ChannelDTO?> GetByIdAsync(long Id)

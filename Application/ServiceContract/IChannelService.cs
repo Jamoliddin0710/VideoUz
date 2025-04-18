@@ -5,7 +5,7 @@ namespace Application.ServiceContract;
 public interface IChannelService
 {
     // Create a new channel
-    Task CreateAsync(CreateOrUpdateChannelDTO orUpdateChannel);
+    Task CreateAsync(CreateOrUpdateChannelDTO orUpdateChannel , long userId);
 
     // Get a channel by its ID
     Task<ChannelDTO> GetByIdAsync(long Id);

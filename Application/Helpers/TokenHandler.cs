@@ -26,7 +26,7 @@ public class AuthTokenHandler(IHttpContextAccessor accessor) : DelegatingHandler
 
                 if (!string.IsNullOrEmpty(token))
                 {
-                    request.Headers.Authorization = new AuthenticationHeaderValue( token);
+                    request.Headers.Authorization = new AuthenticationHeaderValue( tokenMethod,token);
                 }
 
                 response = await base.SendAsync(request, cancellationToken);

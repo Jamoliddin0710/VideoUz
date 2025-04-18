@@ -21,9 +21,14 @@ public class ChannelController : BaseApiController
   
     public async Task<IActionResult> Create(CreateOrUpdateChannelDTO createOrUpdateChannelDto)
     {
-        HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-        await _channelService.CreateAsync(createOrUpdateChannelDto);
-        return NoContent();
+        var userId = User.GetUserId();
+        if (userId.HasValue || userId == 0)
+        {
+            await _channelService.CreateAsync(createOrUpdateChannelDto, userId.Value);
+            return NoContent();
+        }
+
+        return Unauthorized("User  not authorized");
     }
 
     [HttpGet]

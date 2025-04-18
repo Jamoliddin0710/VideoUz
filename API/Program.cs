@@ -82,6 +82,7 @@ app.UseAuthentication();
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthorization();
+
 app.MapControllers();
 await InitializeContext();
 app.Run();

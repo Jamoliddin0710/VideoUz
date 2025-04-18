@@ -19,4 +19,8 @@
       <Folder Include="Models\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Remove="Views\Home\Privacy.cshtml" />
+    </ItemGroup>
+
 </Project>

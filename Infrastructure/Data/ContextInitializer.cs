@@ -36,7 +36,7 @@ namespace Infrastructure.Data
                 };
                 
                await userManager.CreateAsync(admin, "admin123");
-               await userManager.AddToRoleAsync(admin, Role.Admin.ToString());
+               await userManager.AddToRoleAsync(admin, nameof(Role.Admin));
                
                var moderator = new AppUser()
                 {
@@ -46,7 +46,7 @@ namespace Infrastructure.Data
                 };
                 
                await userManager.CreateAsync(moderator, "moderator123");
-               await userManager.AddToRoleAsync(moderator, Role.Moderator.ToString());
+               await userManager.AddToRoleAsync(moderator, nameof(Role.Moderator));
              
                var user = new AppUser()
                 {
@@ -56,7 +56,7 @@ namespace Infrastructure.Data
                 };
                 
                await userManager.CreateAsync(user, "user123");
-               await userManager.AddToRoleAsync(user, Role.User.ToString());
+               await userManager.AddToRoleAsync(user, nameof(Role.User));
             }
         }
     }

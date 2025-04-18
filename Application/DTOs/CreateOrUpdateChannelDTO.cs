@@ -9,5 +9,4 @@ public class CreateOrUpdateChannelDTO
     public string Name { get; set; }
     [Required]
     public string Description { get; set; }
-    public List<ErrorViewModel> Errors { get; set; }
 }

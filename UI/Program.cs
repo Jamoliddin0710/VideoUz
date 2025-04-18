@@ -22,6 +22,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddSession();
 builder.Services.AddRefitService(builder.Configuration);
 var appOptions = new AppOptions();
 var section = builder.Configuration.GetSection(nameof(AppOptions));
@@ -41,6 +42,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseSession();
 app.MapControllers();
 app.MapControllerRoute(
     name: "default",
