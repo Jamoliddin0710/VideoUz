@@ -23,4 +23,8 @@
       <Content Remove="Views\Home\Privacy.cshtml" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Shared\UIToast\Default.cshtml" />
+    </ItemGroup>
+
 </Project>

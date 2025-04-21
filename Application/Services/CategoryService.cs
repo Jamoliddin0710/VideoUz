@@ -45,9 +45,9 @@ public class CategoryService : ICategoryService
     {
         var category = await _unitOfWork.CategoryRepo.GetByIdAsync(Id);
         if (category is not null)
-        {
-            var model = createOrUpdateChannelDto.Adapt<Category>();
-            _unitOfWork.CategoryRepo.Update(category, model);
+        {  
+            category.Name = createOrUpdateChannelDto.Name;
+            _unitOfWork.CategoryRepo.Update(category, category);
             await _unitOfWork.CompleteAsync();
         }
     }

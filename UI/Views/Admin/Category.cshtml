@@ -1,5 +1,5 @@
 <div class="p-4">
-    <h2> Categoires </h2>
+    <h2> Categories </h2>
     <button type="button" class="btn btn-primary actions" onclick="createnewcategory()">Create</button>
     <table class="table table-striped table-bordered mt-2">
         <thead>
@@ -24,20 +24,96 @@
         
         function getCategories(){
             $.ajax({
-                uri : "@Url.Action("GetAllCategories")",
+                url : "@Url.Action("GetAllCategories", "Admin")",
                 type:"GET",
                 success: function (data){
-                    console.log(data);
-                    @*if (data.issucces){
-                        $('categories').add(data.result);
-                    }*@
+                   
+                    if (data.isSuccess){
+                        $('categories').empty();
+                        data.result.map((item,  index) => {
+                            const row = `<tr id="trid_${index}"> 
+                             <td> ${index} </td> 
+                             @*<td> ${item.name}</td>  *@
+                              </tr>`
+                            $('#categories').append(row);
+                            displaytablerow("display", index , item.id , item.name);
+                        });
+                    }
+                    else {
+                        toastr.options = {
+                            "positionClass": "toast-top-left",
+                            "timeOut": "1000"
+                        };
+                        toastr.error(` ${xhr.status} - ${data.message}`);
+                    }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                alert(xhr.status);
-                alert(thrownError);
+                    toastr.options = {
+                        "positionClass": "toast-top-left", 
+                        "timeOut": "1000"
+                    };
+                    toastr.error(` ${xhr.status} - ${thrownError}`, "So'rov bajarilmadi");
             }
+            })
+        }
+
+        function displaytablerow(mode, index , id , name) {
+             $('#trid_' + index).empty();
+             let innerHtml = "";
+             innerHtml += `<td>${id}</td>`;
+             if (mode == 'display'){
+                 $('.actions').prop('disabled', false);
+                 innerHtml += `<td>`;
+                 innerHtml += `<input id="input_${index}" type="text" value="${name}" class="form-control" disabled>`;
+                 innerHtml += `</td>`;
+                 innerHtml += `<td>`;
+                 innerHtml += `<button onclick="displaytablerow('edit' , ${index}, ${id}, '${name}')" class="btn btn-warning text-white me-2 actions"> Edit </button>`
+                 innerHtml += `<button onclick="deleteRecord(${id}, '${name}')" class="btn btn-danger text-white me-2 actions"> Delete </button>`
+                 innerHtml += `</td>`;
+             }
+             else if(mode == 'edit'){
+                 $('.actions').prop('disabled', true);
+                 innerHtml += `<td>`;
+                 innerHtml += `<input id="input_${index}" type="text" value="${name}" class="form-control">`;
+                 innerHtml += `</td>`;
+                 innerHtml += `<td>`;
+                 innerHtml += `<button onclick="save(${index}, ${id})" class="btn btn-success text-white me-2 "> Save </button>`
+                 innerHtml += `<button onclick="displaytablerow('display' , ${index}, ${id}, '${name}')" class="btn btn-warning text-white"> Cancel </button>`
+                 innerHtml += `</td>`;
+             }
+             console.log('#trId_' + index);
+            $('#trid_' + index).append(innerHtml);
+        }
+        
+        function deleteRecord(id, name){
+            
+        }
+        
+        function save(index, id){
+            const name = $('#input_'+ index).val();
+            let model = {
+                id,
+                name
+            };
+            
+            $.ajax({
+                url: "@Url.Action("AddorEditCategory")",
+                type: 'POST',
+                data: model,
+                success(response){
+                    getCategories();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    toastr.options = {
+                        "positionClass": "toast-top-left",
+                        "timeOut": "1000"
+                    };
+                    toastr.error(` ${xhr.status} - ${thrownError}`, "So'rov bajarilmadi");
+                }
             })
         }
     </script>
    
 }
+
+

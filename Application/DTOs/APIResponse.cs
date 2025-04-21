@@ -15,6 +15,7 @@ public class APIResponse
         }
         Title = title ?? GetDefaultTitleOrMessage(statusCode);
         Message = message ?? GetDefaultTitleOrMessage(statusCode);
+        Result = result ?? null;
     }
 
     private string? GetDefaultTitleOrMessage(int statusCode)

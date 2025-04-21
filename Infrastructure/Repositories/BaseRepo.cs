@@ -45,7 +45,7 @@ public class BaseRepo<T> : IBaseRepo<T> where T : BaseEntity
     public async Task<T> GetByIdAsync(long Id, string includeProperties = null)
     {
         IQueryable<T> query = _dbSet.AsQueryable();
-        if (string.IsNullOrWhiteSpace(includeProperties))
+        if (!string.IsNullOrWhiteSpace(includeProperties))
         {
             query =  GetQueryWithIncludeProperties(query, includeProperties);
         }

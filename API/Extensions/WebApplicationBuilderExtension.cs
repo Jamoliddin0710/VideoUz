@@ -29,6 +29,7 @@ namespace API.Extensions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IChannelService, ChannelService>();
+            services.AddScoped<ICategoryService, CategoryService>();
            
             return services;
         }
