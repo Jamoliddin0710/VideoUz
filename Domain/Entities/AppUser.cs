@@ -10,4 +10,7 @@ public class AppUser :  IdentityUser<long>
     public ICollection<Comment> Comments { get; set; }
     public ICollection<Subscribe> Subscribtions { get; set; }
     public ICollection<LikeDislike> LikeDislikes { get; set; }
+    public virtual ICollection<Course> AuthoredCourses { get; set; }
+    public virtual ICollection<Enrollment> Enrollments { get; set; }
+    public virtual ICollection<Progress> Progresses { get; set; }
 }

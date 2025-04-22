@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace API.Extensions
 {
@@ -17,10 +18,10 @@ namespace API.Extensions
         public static IServiceCollection AddConfigurationService(this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddDbContext<AppDbContext>
-                (options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
-
-           
+            services.AddAuditing().AddDbContext<AppDbContext>
+            (options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
+                .AddAuditInterceptors());
+                
             return services;
         }
 
@@ -30,10 +31,24 @@ namespace API.Extensions
             services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddScoped<AuditService>();
             
-            configureOptions.Invoke(new AuditOptions(services));
+            configureOptions?.Invoke(new AuditOptions(services));
             return services;
         }
 
+        public static DbContextOptionsBuilder AddAuditInterceptors(this DbContextOptionsBuilder optionsBuilder)
+        {
+            var coreOptionsExtension = optionsBuilder.Options.GetExtension<CoreOptionsExtension>();
+            var clonedCoreOptionsExtension = new CoreOptionsExtension()
+                .WithApplicationServiceProvider(coreOptionsExtension.ApplicationServiceProvider);
+
+            ((IDbContextOptionsBuilderInfrastructure)optionsBuilder)
+                .AddOrUpdateExtension(clonedCoreOptionsExtension);
+
+            optionsBuilder.AddInterceptors(
+                coreOptionsExtension.ApplicationServiceProvider!.GetRequiredService<AuditService>());
+
+            return optionsBuilder;
+        }
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();

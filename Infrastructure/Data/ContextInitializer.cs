@@ -31,6 +31,7 @@ namespace Infrastructure.Data
                 var admin = new AppUser()
                 {
                     UserName = "admin",
+                    Name = "Admin",
                     Email = "admin@admin.com",
                     PhoneNumber = "0123456789",
                 };
@@ -41,6 +42,7 @@ namespace Infrastructure.Data
                var moderator = new AppUser()
                 {
                     UserName = "moderator",
+                    Name = "moderator",
                     Email = "moderator@moderator.com",
                     PhoneNumber = "0123456789",
                 };
@@ -51,6 +53,7 @@ namespace Infrastructure.Data
                var user = new AppUser()
                 {
                     UserName = "user",
+                    Name = "User",
                     Email = "user@user.com",
                     PhoneNumber = "0123456789",
                 };

@@ -7,6 +7,7 @@ using Refit;
 
 namespace API.Controllers;
 
+[AllowAnonymous]
 public class CategoryController : BaseApiController
 {
     private readonly ICategoryService _categoryService;

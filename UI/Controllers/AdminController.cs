@@ -50,6 +50,7 @@ public class AdminController : Controller
         {
             Id = a.Id,
             Name = a.Name,
+            Description = a.Description,
         }).ToList();
         return Json(new APIResponse(200, result: data));
     }

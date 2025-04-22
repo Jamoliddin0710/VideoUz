@@ -6,6 +6,7 @@
         <tr>
             <td>Id</td>
             <td>Name</td>
+            <td>Description</td>
             <td>Actions</td>
         </tr>
         </thead>
@@ -57,7 +58,7 @@
             })
         }
 
-        function displaytablerow(mode, index , id , name) {
+        function displaytablerow(mode, index , id , name , description) {
              $('#trid_' + index).empty();
              let innerHtml = "";
              innerHtml += `<td>${id}</td>`;
@@ -67,7 +68,10 @@
                  innerHtml += `<input id="input_${index}" type="text" value="${name}" class="form-control" disabled>`;
                  innerHtml += `</td>`;
                  innerHtml += `<td>`;
-                 innerHtml += `<button onclick="displaytablerow('edit' , ${index}, ${id}, '${name}')" class="btn btn-warning text-white me-2 actions"> Edit </button>`
+                 innerHtml += `<input id="input_${index}" type="text" value="${description}" class="form-control" disabled>`;
+                 innerHtml += `</td>`;
+                 innerHtml += `<td>`;
+                 innerHtml += `<button onclick="displaytablerow('edit' , ${index}, ${id}, '${name}', '${description}')" class="btn btn-warning text-white me-2 actions"> Edit </button>`
                  innerHtml += `<button onclick="deleteRecord(${id})" class="btn btn-danger text-white me-2 actions"> Delete </button>`
                  innerHtml += `</td>`;
              }
@@ -77,8 +81,11 @@
                  innerHtml += `<input id="input_${index}" type="text" value="${name}" class="form-control">`;
                  innerHtml += `</td>`;
                  innerHtml += `<td>`;
+                 innerHtml += `<input id="input_${index}" type="text" value="${description}" class="form-control" disabled>`;
+                 innerHtml += `</td>`;
+                 innerHtml += `<td>`;
                  innerHtml += `<button onclick="save(${index}, ${id})" class="btn btn-success text-white me-2 "> Save </button>`
-                 innerHtml += `<button onclick="displaytablerow('display' , ${index}, ${id}, '${name}')" class="btn btn-warning text-white"> Cancel </button>`
+                 innerHtml += `<button onclick="displaytablerow('display' , ${index}, ${id}, '${name}', '${description}')" class="btn btn-warning text-white"> Cancel </button>`
                  innerHtml += `</td>`;
              }
              console.log('#trId_' + index);
@@ -93,7 +100,11 @@
             innerHtml += `<td> ${index + 1} </td>`;
             innerHtml += `<td>`;
             innerHtml += `<input id="input_${index}" type="text" class="form-control">`;
-            innerHtml += `<span id="validationText_Id_${index}" class="text-danger" > </span>`;
+            innerHtml += `<span id="validationTextId_${index}" class="text-danger" > </span>`;
+            innerHtml += `</td>`;
+            innerHtml += `<td>`;
+            innerHtml += `<input id="input_description${index}" type="text" class="form-control">`;
+            innerHtml += `<span id="validationTextId_description${index}" class="text-danger" > </span>`;
             innerHtml += `</td>`;
             innerHtml += `<td id="tdActionId_${index}">  </td>`;
             $('#categories').append(innerHtml);
@@ -121,9 +132,11 @@
 
         function save(index, id) {
             const name = $('#input_' + index).val();
+            const description = $('#input_description' + index).val();
             let model = {
                 id,
-                name
+                name,
+                description
             };
 
             $.ajax({
@@ -141,7 +154,7 @@
                 error: function (xhr, ajaxOptions, thrownError) {
                     toastr.options = {
                         "positionClass": "toast-top-right",
-                        "timeOut": "1000"
+                        "timeOut": "2000"
                     };
                     displaynotification(false, response.title, response.message, 'toastr');
                 }
