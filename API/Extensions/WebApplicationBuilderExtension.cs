@@ -24,6 +24,16 @@ namespace API.Extensions
             return services;
         }
 
+        public static IServiceCollection AddAuditing(this IServiceCollection services,
+            Action<AuditOptions> configureOptions = null)
+        {
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<AuditService>();
+            
+            configureOptions.Invoke(new AuditOptions(services));
+            return services;
+        }
+
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();

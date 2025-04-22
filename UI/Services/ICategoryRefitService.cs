@@ -11,6 +11,8 @@ public interface ICategoryRefitService
     [Post("/Category/AddOrEditCategory")] 
     Task AddOrEditCategory(CreateOrEditCategoryDTO categoryDto);
     [Get("/category/getbyid")]
-    public Task<ServiceResponse<CategoryDTO>> GetCategoryById(long id);
+    public Task<ServiceResponse<CategoryDTO>> GetCategoryById(long id); 
+    [Delete("/category/delete")]
+    Task<ServiceResponse<object>> Delete(long id);
 }
 

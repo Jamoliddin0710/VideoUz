@@ -3,6 +3,7 @@ using Application.Models;
 using Application.ServiceContract;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Refit;
 
 namespace API.Controllers;
 
@@ -29,8 +30,7 @@ public class CategoryController : BaseApiController
 
         return NoContent();
     }
-    /*[Authorize(Roles = nameof(Role.Admin))]*/
-    [AllowAnonymous]
+
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<FilterResponseModel<CategoryDTO>>>> GetAllCategories()
     {
@@ -48,5 +48,16 @@ public class CategoryController : BaseApiController
     {
         var category = await _categoryService.GetByIdAsync(id);
         return ServiceResponse<CategoryDTO>.Success(category);
+    }
+
+    [HttpDelete]
+    public async Task<ActionResult<ServiceResponse<object>>> Delete(int id)
+    {
+        var result = await _categoryService.DeleteAsync(id);
+        return new ServiceResponse<object>()
+        {
+            IsSuccessful = result,
+            Data = result,
+        };
     }
 }

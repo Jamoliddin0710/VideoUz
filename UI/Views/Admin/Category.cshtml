@@ -1,6 +1,6 @@
 <div class="p-4">
     <h2> Categories </h2>
-    <button type="button" class="btn btn-primary actions" onclick="createnewcategory()">Create</button>
+    <button type="button" class="btn btn-primary actions" onclick="createRecord()">Create</button>
     <table class="table table-striped table-bordered mt-2">
         <thead>
         <tr>
@@ -29,7 +29,7 @@
                 success: function (data){
                    
                     if (data.isSuccess){
-                        $('categories').empty();
+                        $('#categories').empty();
                         data.result.map((item,  index) => {
                             const row = `<tr id="trid_${index}"> 
                              <td> ${index} </td> 
@@ -68,7 +68,7 @@
                  innerHtml += `</td>`;
                  innerHtml += `<td>`;
                  innerHtml += `<button onclick="displaytablerow('edit' , ${index}, ${id}, '${name}')" class="btn btn-warning text-white me-2 actions"> Edit </button>`
-                 innerHtml += `<button onclick="deleteRecord(${id}, '${name}')" class="btn btn-danger text-white me-2 actions"> Delete </button>`
+                 innerHtml += `<button onclick="deleteRecord(${id})" class="btn btn-danger text-white me-2 actions"> Delete </button>`
                  innerHtml += `</td>`;
              }
              else if(mode == 'edit'){
@@ -85,30 +85,65 @@
             $('#trid_' + index).append(innerHtml);
         }
         
-        function deleteRecord(id, name){
-            
+        function createRecord(){
+            $('.actions').prop('disabled', false);
+            let index = $('#categories tr').length;
+            let innerHtml = '';
+            innerHtml += `<tr id="trid_${index}">`;
+            innerHtml += `<td> ${index + 1} </td>`;
+            innerHtml += `<td>`;
+            innerHtml += `<input id="input_${index}" type="text" class="form-control">`;
+            innerHtml += `<span id="validationText_Id_${index}" class="text-danger" > </span>`;
+            innerHtml += `</td>`;
+            innerHtml += `<td id="tdActionId_${index}">  </td>`;
+            $('#categories').append(innerHtml);
+            const $tdactionid = $('#tdActionId_'+ index);
+            let saveButton = `<button  onclick="save(${index}, ${0})" class="btn btn-success text-white me-2">Save</button>`;
+            let cancelButton = `<button  class="btn btn-warning text-white">Cancel</button>`;
+            $tdactionid.append(saveButton, cancelButton);
         }
-        
-        function save(index, id){
-            const name = $('#input_'+ index).val();
+
+
+        function deleteRecord(Id) {
+            $.ajax({
+                url: '@Url.Action("Delete", "Admin")' + '?id=' + Id,
+                type: 'DELETE', 
+                success: function (response) {
+                    getCategories();
+                    displaynotification(response.isSuccess, response.title, response.message, 'toastr');
+                },
+                error: function (xhr, status, error) {
+                    displaynotification(false, response.title, response.message, 'toastr');
+                }
+            });
+        }
+
+
+        function save(index, id) {
+            const name = $('#input_' + index).val();
             let model = {
                 id,
                 name
             };
-            
+
             $.ajax({
                 url: "@Url.Action("AddorEditCategory")",
                 type: 'POST',
                 data: model,
-                success(response){
+                success(response) {
+                    toastr.options = {
+                        "positionClass": "toast-top-right",
+                        "timeOut": "2000"
+                    };
                     getCategories();
+                    displaynotification(response.isSuccess, response.title, response.message, 'toastr');
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     toastr.options = {
-                        "positionClass": "toast-top-left",
+                        "positionClass": "toast-top-right",
                         "timeOut": "1000"
                     };
-                    toastr.error(` ${xhr.status} - ${thrownError}`, "So'rov bajarilmadi");
+                    displaynotification(false, response.title, response.message, 'toastr');
                 }
             })
         }

@@ -27,13 +27,17 @@ public class AdminController : Controller
     [HttpPost]
     public async Task<IActionResult> AddorEditCategory(CreateOrEditCategoryDTO category)
     {
-       
-         await _categoryRefitService.AddOrEditCategory(category);
+        
          if (category.Id != 0)
          {
              var oldcategory = await _categoryRefitService.GetCategoryById(category.Id);
+             await _categoryRefitService.AddOrEditCategory(category);
+             TempData["notification"] = $"true; updated; category of {oldcategory?.Data?.Name} has renaimed to {category.Name}; modal";
              return Json(new APIResponse(200, title: "updated", message: $"category of {oldcategory?.Data?.Name} has renaimed to {category.Name}", result: true));
          }
+         
+         await _categoryRefitService.AddOrEditCategory(category);
+         TempData["notification"] = $"true; created; {category.Name} succesfully created; modal";
          return Json(new APIResponse(200, title: $"{category.Name} succesfully created", result: true));
     }
 
@@ -48,6 +52,20 @@ public class AdminController : Controller
             Name = a.Name,
         }).ToList();
         return Json(new APIResponse(200, result: data));
+    }
+    
+    
+    [HttpDelete]
+    public async Task<IActionResult> Delete(long id)
+    {
+        var response = await _categoryRefitService.Delete(id);
+        var result = Convert.ToBoolean(response.Data);
+        if (result)
+        {
+            return Json(new APIResponse(200));
+        }
+      
+        return Json(new APIResponse(400));
     }
     
 }

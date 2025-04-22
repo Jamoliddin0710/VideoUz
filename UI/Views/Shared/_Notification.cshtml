@@ -7,9 +7,19 @@
              let isSuccess = (notificationModel[0] === 'true');
              let title = notificationModel[1];
              let message = notificationModel[2];
- 
-             var modalContentInnerHtml =
-                 `
+             let type = notificationModel[3];
+            displaynotification(isSuccess, title, message, type);
+         });
+     </script>
+}
+
+<script>
+    function displaynotification(isSuccess, title, message, type = 'modal'){
+        $("#notificationModalContent").empty();
+        if (type == 'modal')
+        {
+            let modalContentInnerHtml =
+                `
                      <div class="modal-header ${isSuccess === true ? 'bg-success' : 'bg-danger'}">
                          <h5 class="modal-title" id="modalLabel">${title}</h5>
                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -21,12 +31,19 @@
                          <button type="button" class="btn btn-default" data-bs-dismiss="modal">OK</button>
                      </div>
                   `;
-             $("#notificationModalContent").append(modalContentInnerHtml);
-             $("#triggerModalButton").trigger('click');
-         });
-     </script>
-}
- 
+            $("#notificationModalContent").append(modalContentInnerHtml);
+            $("#triggerModalButton").trigger('click');
+        }
+        else{
+            if (isSuccess){
+                toastr.success(message);
+            }
+            else {
+                toastr.error(message);
+            }
+        }
+    }
+</script>
 <button type="button" id="triggerModalButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#notificationModal" style="display:none;">
     Launch demo modal
 </button>
