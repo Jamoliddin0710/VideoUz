@@ -1,4 +1,5 @@
 using Application.DTOs;
+using Application.Helpers;
 using Application.Models;
 using Application.ServiceContract;
 using Microsoft.AspNetCore.Authorization;
@@ -33,9 +34,9 @@ public class CategoryController : BaseApiController
     }
 
     [HttpGet]
-    public async Task<ActionResult<ServiceResponse<FilterResponseModel<CategoryDTO>>>> GetAllCategories()
+    public async Task<ActionResult<ServiceResponse<FilterResponseModel<CategoryDTO>>>> GetAllCategories([FromBody]Filter filter)
     {
-       var categories = await _categoryService.GetAllAsync();
+       var categories = await _categoryService.GetAllAsync(filter);
        return new ServiceResponse<FilterResponseModel<CategoryDTO>>
        {
            IsSuccessful = true,

@@ -1,4 +1,5 @@
 using Application.DTOs;
+using Application.Helpers;
 using Application.Models;
 using Application.ServiceContract;
 using Domain.Entities;
@@ -21,11 +22,16 @@ public class AdminController : Controller
 
     public async Task<IActionResult> Category()
     {
-        return View();
+        ViewBag.SearchFields = new Dictionary<string, string>()
+        {
+            { nameof(CategoryDTO.Name), "Name" },
+            { nameof(CategoryDTO.Description), "Description" },
+        };
+        return View("Category1");
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddorEditCategory(CreateOrEditCategoryDTO category)
+    public async Task<IActionResult> AddorEditCategory([FromBody]CreateOrEditCategoryDTO category)
     {
         
          if (category.Id != 0)
@@ -41,11 +47,16 @@ public class AdminController : Controller
          return Json(new APIResponse(200, title: $"{category.Name} succesfully created", result: true));
     }
 
-    [HttpGet]
+    [HttpPost]
     [AllowAnonymous]
-    public async Task<IActionResult> GetAllCategories()
+    public async Task<IActionResult> GetAllCategories([FromBody]Filter filter)
     {
-        var categories = await _categoryRefitService.GetAllCategories();
+     
+        /*ViewBag.searchBy = searchBy;
+        ViewBag.SearchString = searchString;
+        ViewBag.sortBy = sortBy;
+        ViewBag.sortOrder = sortOrder;*/
+        var categories = await _categoryRefitService.GetAllCategories(filter);
         var data = categories?.Data?.Data?.Select(a => new CreateOrEditCategoryDTO()
         {
             Id = a.Id,

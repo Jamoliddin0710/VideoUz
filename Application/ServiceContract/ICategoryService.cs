@@ -1,4 +1,5 @@
 using Application.DTOs;
+using Application.Helpers;
 using Application.Models;
 namespace Application.ServiceContract;
 
@@ -12,7 +13,7 @@ public interface ICategoryService
     
 
     // Get all categories
-    Task<FilterResponseModel<CategoryDTO>> GetAllAsync();
+    Task<FilterResponseModel<CategoryDTO>> GetAllAsync(Filter filter);
 
     // Update an existing category
     Task UpdateAsync(long Id, CreateOrEditCategoryDTO createOrUpdateChannelDto);

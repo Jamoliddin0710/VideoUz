@@ -1,4 +1,5 @@
 using Application.DTOs;
+using Application.Helpers;
 using Application.Models;
 using Application.ServiceContract;
 using Domain.Entities;
@@ -30,10 +31,11 @@ public class CategoryService : ICategoryService
         return category.Adapt<CategoryDTO>();
     }
 
-    public async Task<FilterResponseModel<CategoryDTO>> GetAllAsync()
+    public async Task<FilterResponseModel<CategoryDTO>> GetAllAsync(Filter filter)
     {
-        var categories = await _unitOfWork.CategoryRepo.GetAllAsync();
-        var result = categories.Adapt<List<CategoryDTO>>();
+        var query =  (await _unitOfWork.CategoryRepo.GetAllAsync()).AsQueryable();
+        var categories =  query.ApplyFilter(filter);
+        var result =  categories.Adapt<List<CategoryDTO>>();
         return new FilterResponseModel<CategoryDTO>()
         {
             Data = result,
@@ -47,6 +49,7 @@ public class CategoryService : ICategoryService
         if (category is not null)
         {  
             category.Name = createOrUpdateChannelDto.Name;
+            category.Description = createOrUpdateChannelDto.Description;
             _unitOfWork.CategoryRepo.Update(category, category);
             await _unitOfWork.CompleteAsync();
         }

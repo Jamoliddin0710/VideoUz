@@ -1,4 +1,5 @@
 using Application.DTOs;
+using Application.Helpers;
 using Application.Models;
 using Refit;
 
@@ -7,7 +8,7 @@ namespace UI.Services;
 public interface ICategoryRefitService
 {
     [Get("/category/getallcategories")]
-    public Task<ServiceResponse<FilterResponseModel<CategoryDTO>>> GetAllCategories();  
+    public Task<ServiceResponse<FilterResponseModel<CategoryDTO>>> GetAllCategories([Body] Filter filter);  
     [Post("/Category/AddOrEditCategory")] 
     Task AddOrEditCategory(CreateOrEditCategoryDTO categoryDto);
     [Get("/category/getbyid")]
