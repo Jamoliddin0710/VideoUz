@@ -1,5 +1,3 @@
-
-
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -7,7 +5,6 @@ using Application.DTOs;
 using Application.Models;
 using Domain.Entities;
 using Mapster;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

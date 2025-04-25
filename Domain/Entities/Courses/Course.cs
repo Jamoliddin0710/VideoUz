@@ -17,7 +17,7 @@ public class Course : BaseEntity
     public long AuthorId { get; set; }
 
     [Required]
-    public long CategoryId { get; set; }
+    public long CategoryId { get; set; } 
 
     [Column(TypeName = "decimal(18,2)")]
     public decimal Price { get; set; }

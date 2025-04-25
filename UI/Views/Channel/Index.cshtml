@@ -22,6 +22,70 @@
 }
 else
 {
-    <p>Name : @Model.Name</p>
-    <p>Description : @Model.Description</p>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a href="#myvideos" class="nav-link" data-bs-toggle="tab"> My videos </a>
+        </li>   
+        <li class="nav-item">
+            <a href="#analitics" class="nav-link" data-bs-toggle="tab"> Analytics </a>
+        </li>    
+        <li class="nav-item">
+            <a href="#profile" class="nav-link" data-bs-toggle="tab">  
+                <form asp-action="CreateChannel" asp-controller="Channel" class="mt-2">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label"></label>
+                            <input asp-for="Name" class="form-control" type="text"/>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label"></label>
+                            <textarea type="text" class="form-control" asp-for="Description"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <button class="btn btn-success" type="submit">Create</button>
+                    </div>
+                </div>
+            </form>
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade"  id="myvideos">
+            <div class="mt-3">
+                My videos
+            </div>
+        </div> 
+        <div class="tab-pane fade"  id="analitics">
+            <div class="mt-3">
+                Analytics
+            </div>
+        </div> 
+        <div class="tab-pane fade" id="profile">
+            <div class="mt-3" >
+               Profile
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts
+{
+    <script>
+        $(function (){
+            $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e){
+                let currenttabid = $(e.target).attr('href');
+                localStorage.setItem("activeTab", currenttabid);
+            })
+            
+            let activetab = localStorage.getItem("activeTab");
+            if (activetab)
+            {
+                $('a[href="' + activetab +'"]').tab('show');
+            } else {
+                $('a[href="#myvideos"]').tab('show');
+            }
+        })
+    </script>
 }
