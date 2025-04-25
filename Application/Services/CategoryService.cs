@@ -50,7 +50,6 @@ public class CategoryService : ICategoryService
         {  
             category.Name = createOrUpdateChannelDto.Name;
             category.Description = createOrUpdateChannelDto.Description;
-            _unitOfWork.CategoryRepo.Update(category, category);
             await _unitOfWork.CompleteAsync();
         }
     }

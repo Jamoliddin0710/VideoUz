@@ -1,0 +1,35 @@
+@model CreateOrEditVideoDTO
+
+<div class="card border-secondary mb-3">
+    <div class="card-header bg-black-info ">
+        <span class="h4  text-dark">
+            @(Model.Id > 0 ? "Create" : "Edit") Video 
+        </span>
+    </div>
+    <div class="card-body">
+        <form id="videoeditform" asp-action="CreateEditVideo" asp-controller="Video" enctype="multipart/form-data">
+            <input id="videoid" type="hidden" asp-for="Id"/>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label asp-for="CategoryId" class="form-label"></label>
+                        <select asp-for="CategoryId" class="form-select" asp-items="Model.CategoryDropDown">
+                            <option disabled>Select category</option>
+                        </select>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Title" class="form-label"></label>
+                        <input type="text" asp-for="Title" class="form-control"/>
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>  
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label"></label>
+                        <textarea type="text" asp-for="Description" rows="6" class="form-control"/>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

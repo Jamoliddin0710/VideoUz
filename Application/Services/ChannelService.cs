@@ -17,13 +17,23 @@ public class ChannelService : IChannelService
 
     public async Task CreateAsync(CreateOrUpdateChannelDTO channelDto , long userId)
     {
-        if (await _unitOfWork.ChannelRepo.AnyAsync(a=>a.Name.ToLower().Equals(channelDto.Name.ToLower())))
+        /*if (await _unitOfWork.ChannelRepo.AnyAsync(a=>a.Name.ToLower().Equals(channelDto.Name.ToLower())))
         {
             throw new Exception($"Channel {channelDto.Name} already exists");
+        }*/
+       
+        if (channelDto.Id.HasValue)
+        {
+            var  channel = await _unitOfWork.ChannelRepo.GetByIdAsync(channelDto.Id.Value);
+            channel.Description = channelDto.Description;
+            channel.Name = channelDto.Name;
         }
-        var channel = channelDto.Adapt<Channel>();
-        channel.AppUserId = userId;
-        _unitOfWork.ChannelRepo.Add(channel);
+        else
+        {
+            var channel = channelDto.Adapt<Channel>();
+            channel.AppUserId = userId;
+            _unitOfWork.ChannelRepo.Add(channel);
+        }
         try
         {
             await _unitOfWork.CompleteAsync();
@@ -98,5 +108,10 @@ public class ChannelService : IChannelService
         }
 
         return new FilterResponseModel<ChannelDTO>();
+    }
+
+    public async Task<bool> UsersChannelExists(long userId)
+    {
+        return await _unitOfWork.ChannelRepo.AnyAsync(a=>a.AppUserId == userId);
     }
 }

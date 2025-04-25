@@ -59,7 +59,19 @@ public class ChannelController : BaseApiController
             Data = null,
         };
     }
-    
+
+    [HttpGet]
+    public async Task<ActionResult<ServiceResponse<bool>>> UsersChannelExists()
+    {
+        var userId = User.GetUserId();
+        if (userId.HasValue)
+        {
+            var result = await _channelService.UsersChannelExists(userId.Value);
+            return Ok(result); 
+        }
+
+        return Ok(false);
+    }
 
     [HttpPut]
     public async Task<IActionResult> Update(long Id, CreateOrUpdateChannelDTO categoryDto)

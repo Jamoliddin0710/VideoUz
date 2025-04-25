@@ -45,6 +45,7 @@ public class ChannelController : Controller
         if (userchannels?.Data?.Data?.Any() ?? false)
         {
             var first = userchannels.Data.Data.FirstOrDefault();
+            model.Id = first.Id;
             model.Name = first.Name;
             model.Description = first.Description; 
         }
@@ -52,7 +53,7 @@ public class ChannelController : Controller
         return View(model);
     }
 
-    public async Task<IActionResult> CreateChannel(CreateOrUpdateChannelDTO model)
+    public async Task<IActionResult> CreateOrEditChannel(CreateOrUpdateChannelDTO model)
     {
         if (!ModelState.IsValid)
         {
@@ -81,7 +82,7 @@ public class ChannelController : Controller
         }
         catch (Exception exception)
         {
-            Console.WriteLine(exception.Message);
+          Console.WriteLine(exception.Message);
         }
         
         return RedirectToAction("Index");

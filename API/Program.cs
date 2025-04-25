@@ -2,6 +2,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using API.Controllers;
 using API.Extensions;
+using Application.DTOs;
 using Domain.Entities;
 using Infrastructure;
 using Infrastructure.Data;
@@ -18,6 +19,9 @@ builder.Services.AddConfigurationService(builder.Configuration)
     .AddAuthServices();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddServices();
+
+builder.Configuration.AddEnvironmentVariables();
+builder.Services.Configure<FileUploadOption>(builder.Configuration.GetSection("FileUpload"));
 
 builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));

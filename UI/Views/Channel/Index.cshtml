@@ -2,7 +2,7 @@
 @if (string.IsNullOrWhiteSpace(Model?.Name))
 {
     <p> Channel is not created yet. Use the form to below to create your channel</p>
-    <form asp-action="CreateChannel" asp-controller="Channel" class="mt-2">
+    <form asp-action="CreateOrEditChannel" asp-controller="Channel" class="mt-2">
         <div class="row">
             <div class="col-md-6">
                 <div class="mb-3">
@@ -30,24 +30,7 @@ else
             <a href="#analitics" class="nav-link" data-bs-toggle="tab"> Analytics </a>
         </li>    
         <li class="nav-item">
-            <a href="#profile" class="nav-link" data-bs-toggle="tab">  
-                <form asp-action="CreateChannel" asp-controller="Channel" class="mt-2">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label asp-for="Name" class="form-label"></label>
-                            <input asp-for="Name" class="form-control" type="text"/>
-                            <span asp-validation-for="Name" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Description" class="form-label"></label>
-                            <textarea type="text" class="form-control" asp-for="Description"></textarea>
-                            <span asp-validation-for="Description" class="text-danger"></span>
-                        </div>
-                        <button class="btn btn-success" type="submit">Create</button>
-                    </div>
-                </div>
-               </form>
+            <a href="#profile" class="nav-link" data-bs-toggle="tab"> Profile
             </a>
         </li>
     </ul>
@@ -64,7 +47,43 @@ else
         </div> 
         <div class="tab-pane fade" id="profile">
             <div class="mt-3" >
-               Profile
+                <form asp-action="CreateOrEditChannel" asp-controller="Channel" class="mt-2">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input asp-for="Id" type="hidden" />
+                            <div class="mb-3">
+                                <label asp-for="Name" class="form-label"></label>
+                                <input asp-for="Name" id="channel_name" disabled class="form-control" type="text"/>
+                                <span id="channel_name_error" asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Description" class="form-label"></label>
+                                <textarea id="channel_description" type="text" disabled class="form-control" asp-for="Description"></textarea>
+                                <span id="channel_description_error" asp-validation-for="Description"  class="text-danger"></span>
+                            </div>
+                         
+                            <div class="row" id="divEditButton">
+                                <div class="col">
+                                    <div class="d-flex justify-content-end">
+                                        <button type="button" class="btn btn-outline-secondary" onclick="updateprofile()">Edit</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="display: none" id="updateprofilebuttons">
+                                <div class="offset-3 col-6">
+                                    <div class="row">
+                                        <div class="col d-grid">
+                                            <button class="btn btn-success" type="submit"> Update </button>
+                                        </div>
+                                        <div class="col d-grid">
+                                            <button class="btn btn-danger" type="button" onclick="cancelEdit()">Cancel</button>
+                                        </div>
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -72,13 +91,18 @@ else
 
 @section Scripts
 {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
     <script>
+
         $(function (){
             $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function (e){
                 let currenttabid = $(e.target).attr('href');
                 localStorage.setItem("activeTab", currenttabid);
             })
-            
+    
             let activetab = localStorage.getItem("activeTab");
             if (activetab)
             {
@@ -87,5 +111,21 @@ else
                 $('a[href="#myvideos"]').tab('show');
             }
         })
+    
+        function updateprofile(){
+            $('#updateprofilebuttons').show();
+            $('#channel_name').prop('disabled',false);
+            $('#channel_description').prop('disabled',false);
+            $('#divEditButton').hide();
+        }
+
+        function cancelEdit() {
+            $('#divEditButton').show();
+            $('#channel_name').prop('disabled',true);
+            $('#channel_description').prop('disabled',true);
+            $('#updateprofilebuttons').show();
+            $('channel_description_error').empty();
+            $('channel_name_error').empty();
+        }
     </script>
 }

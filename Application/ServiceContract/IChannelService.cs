@@ -20,4 +20,5 @@ public interface IChannelService
     Task<bool> DeleteAsync(long id);
 
     Task<FilterResponseModel<ChannelDTO>> GetUsersChannel(long userId);
+    Task<bool> UsersChannelExists(long userId);
 }
