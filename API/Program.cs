@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using API.Controllers;
 using API.Extensions;
 using Application.DTOs;
+using Application.Models;
 using Domain.Entities;
 using Infrastructure;
 using Infrastructure.Data;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Minio;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -69,6 +71,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+var minioSection = builder.Configuration.GetSection(nameof(MinioOptions));
+var minioOptions = new MinioOptions();
+minioSection.Bind(minioOptions);
+builder.Services.Configure<MinioOptions>(minioSection);
+builder.Services.AddMinio(config =>
+{
+    config
+        .WithEndpoint(minioOptions.Host)
+        .WithCredentials(minioOptions.AccessKey, minioOptions.SecretKey)
+        .WithSSL(false)
+        .Build();
+});
 
 builder.Services.AddAuthorization();
 

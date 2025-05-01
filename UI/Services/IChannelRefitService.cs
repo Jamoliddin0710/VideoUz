@@ -10,6 +10,6 @@ public interface IChannelRefitService
     Task Create([Body] CreateOrUpdateChannelDTO createOrUpdateChannelDto);
     [Get("/channel/getuserchannels")]
     Task <ServiceResponse<FilterResponseModel<ChannelDTO>>> GetUserChannels();  
-    [Get("/channel/getuserchannels")]
+    [Get("/channel/userschannelexists")]
     Task <ServiceResponse<bool>> UsersChannelExists();
 }

@@ -1,6 +1,7 @@
 using Application.DTOs;
 using Application.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
 
 namespace API.Controllers;
@@ -19,6 +20,6 @@ public class VideoController : BaseApiController
         {
             return Unauthorized();
         }
-        
+        return View
     }*/
 }

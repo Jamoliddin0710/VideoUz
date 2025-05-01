@@ -3,68 +3,72 @@
   "WorkspaceRootPath": "D:\\testproject\\VideoUz\\src\\VideoUz\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|d:\\testproject\\videouz\\src\\videouz\\domain\\entities\\courses\\content.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\courses\\content.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|d:\\testproject\\videouz\\src\\videouz\\domain\\entities\\courses\\question.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\courses\\question.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|d:\\testproject\\videouz\\src\\videouz\\domain\\entities\\courses\\questionoption.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\courses\\questionoption.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|d:\\testproject\\videouz\\src\\videouz\\domain\\entities\\courses\\quizattempt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\courses\\quizattempt.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|d:\\testproject\\videouz\\src\\videouz\\domain\\entities\\courses\\quizanswer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\courses\\quizanswer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|d:\\testproject\\videouz\\src\\videouz\\domain\\entities\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|d:\\testproject\\videouz\\src\\videouz\\domain\\entities\\courses\\quiz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\courses\\quiz.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|d:\\testproject\\videouz\\src\\videouz\\domain\\entities\\courses\\progress.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\courses\\progress.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|d:\\testproject\\videouz\\src\\videouz\\domain\\entities\\courses\\module.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\courses\\module.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|d:\\testproject\\videouz\\src\\videouz\\domain\\entities\\courses\\enrollment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\courses\\enrollment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|d:\\testproject\\videouz\\src\\videouz\\domain\\entities\\appuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\appuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|d:\\testproject\\videouz\\src\\videouz\\domain\\entities\\courses\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\courses\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|d:\\testproject\\videouz\\src\\videouz\\domain\\entities\\courses\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\courses\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Migrations\\20250501044904_filemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Infrastructure\\Migrations\\20250501044904_filemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|d:\\testproject\\videouz\\src\\videouz\\infrastructure\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F0C336DB-69B2-415C-BD8A-E0B6120583CC}|API\\API.csproj|d:\\testproject\\videouz\\src\\videouz\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{F0C336DB-69B2-415C-BD8A-E0B6120583CC}|API\\API.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Migrations\\20250430133405_test.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Infrastructure\\Migrations\\20250430133405_test.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|d:\\testproject\\videouz\\src\\videouz\\infrastructure\\data\\course\\contentconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\data\\course\\contentconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|d:\\testproject\\videouz\\src\\videouz\\domain\\entities\\subscribe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\subscribe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F0C336DB-69B2-415C-BD8A-E0B6120583CC}|API\\API.csproj|d:\\testproject\\videouz\\src\\videouz\\api\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F0C336DB-69B2-415C-BD8A-E0B6120583CC}|API\\API.csproj|solutionrelative:api\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F0C336DB-69B2-415C-BD8A-E0B6120583CC}|API\\API.csproj|d:\\testproject\\videouz\\src\\videouz\\api\\controllers\\channelcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F0C336DB-69B2-415C-BD8A-E0B6120583CC}|API\\API.csproj|solutionrelative:api\\controllers\\channelcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|d:\\testproject\\videouz\\src\\videouz\\domain\\entities\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|d:\\testproject\\videouz\\src\\videouz\\domain\\entities\\comment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\comment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|d:\\testproject\\videouz\\src\\videouz\\domain\\enums\\contenttype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|solutionrelative:domain\\enums\\contenttype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|d:\\testproject\\videouz\\src\\videouz\\domain\\enums\\enrollmentstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|solutionrelative:domain\\enums\\enrollmentstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FF18220-7962-4D5E-97B3-409507656C12}|UI\\UI.csproj|d:\\testproject\\videouz\\src\\videouz\\ui\\views\\admin\\category.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{6FF18220-7962-4D5E-97B3-409507656C12}|UI\\UI.csproj|solutionrelative:ui\\views\\admin\\category.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6FF18220-7962-4D5E-97B3-409507656C12}|UI\\UI.csproj|d:\\testproject\\videouz\\src\\videouz\\ui\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6FF18220-7962-4D5E-97B3-409507656C12}|UI\\UI.csproj|solutionrelative:ui\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|d:\\testproject\\videouz\\src\\videouz\\infrastructure\\repositories\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\repositories\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|d:\\testproject\\videouz\\src\\videouz\\infrastructure\\repositories\\channelrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\repositories\\channelrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{158F3232-C2DD-46C7-8F74-6ADC4D129C65}|Application\\Application.csproj|d:\\testproject\\videouz\\src\\videouz\\application\\dtos\\categorydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{158F3232-C2DD-46C7-8F74-6ADC4D129C65}|Application\\Application.csproj|solutionrelative:application\\dtos\\categorydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{158F3232-C2DD-46C7-8F74-6ADC4D129C65}|Application\\Application.csproj|d:\\testproject\\videouz\\src\\videouz\\application\\servicecontract\\icategoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{158F3232-C2DD-46C7-8F74-6ADC4D129C65}|Application\\Application.csproj|solutionrelative:application\\servicecontract\\icategoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{158F3232-C2DD-46C7-8F74-6ADC4D129C65}|Application\\Application.csproj|d:\\testproject\\videouz\\src\\videouz\\application\\models\\createoreditcategorydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{158F3232-C2DD-46C7-8F74-6ADC4D129C65}|Application\\Application.csproj|solutionrelative:application\\models\\createoreditcategorydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|d:\\testproject\\videouz\\src\\videouz\\infrastructure\\data\\config\\commentconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -75,43 +79,15 @@
       "RelativeMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\approle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|d:\\testproject\\videouz\\src\\videouz\\infrastructure\\data\\course\\moduleconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\data\\course\\moduleconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|d:\\testproject\\videouz\\src\\videouz\\infrastructure\\data\\course\\courseconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\data\\course\\courseconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|d:\\testproject\\videouz\\src\\videouz\\infrastructure\\data\\course\\categoryconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\data\\course\\categoryconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|d:\\testproject\\videouz\\src\\videouz\\infrastructure\\data\\config\\likedislikeconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\data\\config\\likedislikeconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F0C336DB-69B2-415C-BD8A-E0B6120583CC}|API\\API.csproj|d:\\testproject\\videouz\\src\\videouz\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F0C336DB-69B2-415C-BD8A-E0B6120583CC}|API\\API.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F0C336DB-69B2-415C-BD8A-E0B6120583CC}|API\\API.csproj|d:\\testproject\\videouz\\src\\videouz\\api\\controllers\\baseapicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F0C336DB-69B2-415C-BD8A-E0B6120583CC}|API\\API.csproj|solutionrelative:api\\controllers\\baseapicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F0C336DB-69B2-415C-BD8A-E0B6120583CC}|API\\API.csproj|d:\\testproject\\videouz\\src\\videouz\\api\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F0C336DB-69B2-415C-BD8A-E0B6120583CC}|API\\API.csproj|solutionrelative:api\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{158F3232-C2DD-46C7-8F74-6ADC4D129C65}|Application\\Application.csproj|d:\\testproject\\videouz\\src\\videouz\\application\\utility\\sd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{158F3232-C2DD-46C7-8F74-6ADC4D129C65}|Application\\Application.csproj|solutionrelative:application\\utility\\sd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{158F3232-C2DD-46C7-8F74-6ADC4D129C65}|Application\\Application.csproj|d:\\testproject\\videouz\\src\\videouz\\application\\application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{158F3232-C2DD-46C7-8F74-6ADC4D129C65}|Application\\Application.csproj|solutionrelative:application\\application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|d:\\testproject\\videouz\\src\\videouz\\infrastructure\\migrations\\20250408055403_init.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -152,6 +128,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\testproject\\VideoUz\\src\\VideoUz\\UI\\Models\\ErrorViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:UI\\Models\\ErrorViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|d:\\testproject\\videouz\\src\\videouz\\infrastructure\\migrations\\20250422104456_courses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\migrations\\20250422104456_courses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -161,60 +141,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "BaseEntity.cs",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\BaseEntity.cs",
-              "RelativeDocumentMoniker": "Domain\\Entities\\BaseEntity.cs",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\BaseEntity.cs",
-              "RelativeToolTip": "Domain\\Entities\\BaseEntity.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T10:34:10.977Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Content.cs",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\Content.cs",
-              "RelativeDocumentMoniker": "Domain\\Entities\\Courses\\Content.cs",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\Content.cs",
-              "RelativeToolTip": "Domain\\Entities\\Courses\\Content.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T10:29:33.057Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "QuestionOption.cs",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\QuestionOption.cs",
-              "RelativeDocumentMoniker": "Domain\\Entities\\Courses\\QuestionOption.cs",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\QuestionOption.cs",
-              "RelativeToolTip": "Domain\\Entities\\Courses\\QuestionOption.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T10:29:25.253Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Question.cs",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\Question.cs",
-              "RelativeDocumentMoniker": "Domain\\Entities\\Courses\\Question.cs",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\Question.cs",
-              "RelativeToolTip": "Domain\\Entities\\Courses\\Question.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T10:29:08.956Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
@@ -229,150 +157,229 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Progress.cs",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\Progress.cs",
-              "RelativeDocumentMoniker": "Domain\\Entities\\Courses\\Progress.cs",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\Progress.cs",
-              "RelativeToolTip": "Domain\\Entities\\Courses\\Progress.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "20250501044904_filemodel.cs",
+              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Migrations\\20250501044904_filemodel.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Migrations\\20250501044904_filemodel.cs",
+              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Migrations\\20250501044904_filemodel.cs",
+              "RelativeToolTip": "Infrastructure\\Migrations\\20250501044904_filemodel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T10:29:07.533Z",
+              "WhenOpened": "2025-05-01T04:49:04.226Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Module.cs",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\Module.cs",
-              "RelativeDocumentMoniker": "Domain\\Entities\\Courses\\Module.cs",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\Module.cs",
-              "RelativeToolTip": "Domain\\Entities\\Courses\\Module.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAPAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Data\\AppDbContext.cs",
+              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "Infrastructure\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T10:29:06.149Z",
+              "WhenOpened": "2025-04-30T13:34:13.08Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Enrollment.cs",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\Enrollment.cs",
-              "RelativeDocumentMoniker": "Domain\\Entities\\Courses\\Enrollment.cs",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\Enrollment.cs",
-              "RelativeToolTip": "Domain\\Entities\\Courses\\Enrollment.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAPAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "20250430133405_test.cs",
+              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Migrations\\20250430133405_test.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Migrations\\20250430133405_test.cs",
+              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Migrations\\20250430133405_test.cs",
+              "RelativeToolTip": "Infrastructure\\Migrations\\20250430133405_test.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T10:28:55.397Z",
+              "WhenOpened": "2025-04-30T13:34:06.136Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\API\\appsettings.json",
-              "RelativeDocumentMoniker": "API\\appsettings.json",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\API\\appsettings.json",
-              "RelativeToolTip": "API\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-22T10:28:11.022Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Quiz.cs",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\Quiz.cs",
-              "RelativeDocumentMoniker": "Domain\\Entities\\Courses\\Quiz.cs",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\Quiz.cs",
-              "RelativeToolTip": "Domain\\Entities\\Courses\\Quiz.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAApAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "ChannelController.cs",
+              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\API\\Controllers\\ChannelController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\ChannelController.cs",
+              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\API\\Controllers\\ChannelController.cs",
+              "RelativeToolTip": "API\\Controllers\\ChannelController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T10:15:41.346Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "QuizAnswer.cs",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\QuizAnswer.cs",
-              "RelativeDocumentMoniker": "Domain\\Entities\\Courses\\QuizAnswer.cs",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\QuizAnswer.cs",
-              "RelativeToolTip": "Domain\\Entities\\Courses\\QuizAnswer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T10:15:40.584Z",
+              "WhenOpened": "2025-04-30T13:17:42.486Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "QuizAttempt.cs",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\QuizAttempt.cs",
-              "RelativeDocumentMoniker": "Domain\\Entities\\Courses\\QuizAttempt.cs",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\QuizAttempt.cs",
-              "RelativeToolTip": "Domain\\Entities\\Courses\\QuizAttempt.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAABAAAAAAAAAA==",
+              "Title": "Subscribe.cs",
+              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Subscribe.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\Subscribe.cs",
+              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Subscribe.cs",
+              "RelativeToolTip": "Domain\\Entities\\Subscribe.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T10:15:38.673Z",
+              "WhenOpened": "2025-04-30T13:05:47.193Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "ContentConfig.cs",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Data\\Course\\ContentConfig.cs",
-              "RelativeDocumentMoniker": "Infrastructure\\Data\\Course\\ContentConfig.cs",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Data\\Course\\ContentConfig.cs",
-              "RelativeToolTip": "Infrastructure\\Data\\Course\\ContentConfig.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAyAAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "Comment.cs",
+              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Comment.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\Comment.cs",
+              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Comment.cs",
+              "RelativeToolTip": "Domain\\Entities\\Comment.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T09:14:48.134Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-30T13:05:46.264Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "ModuleConfig.cs",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Data\\Course\\ModuleConfig.cs",
-              "RelativeDocumentMoniker": "Infrastructure\\Data\\Course\\ModuleConfig.cs",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Data\\Course\\ModuleConfig.cs",
-              "RelativeToolTip": "Infrastructure\\Data\\Course\\ModuleConfig.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAJAAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "ContentType.cs",
+              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Enums\\ContentType.cs",
+              "RelativeDocumentMoniker": "Domain\\Enums\\ContentType.cs",
+              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Enums\\ContentType.cs",
+              "RelativeToolTip": "Domain\\Enums\\ContentType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T09:11:41.002Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-30T13:05:35.722Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "EnrollmentStatus.cs",
+              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Enums\\EnrollmentStatus.cs",
+              "RelativeDocumentMoniker": "Domain\\Enums\\EnrollmentStatus.cs",
+              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Enums\\EnrollmentStatus.cs",
+              "RelativeToolTip": "Domain\\Enums\\EnrollmentStatus.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-30T13:05:34.697Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 10,
-              "Title": "AppUser.cs",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\AppUser.cs",
-              "RelativeDocumentMoniker": "Domain\\Entities\\AppUser.cs",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\AppUser.cs",
-              "RelativeToolTip": "Domain\\Entities\\AppUser.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T09:08:35.209Z",
-              "EditorCaption": ""
+              "Title": "Category.cshtml",
+              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\UI\\Views\\Admin\\Category.cshtml",
+              "RelativeDocumentMoniker": "UI\\Views\\Admin\\Category.cshtml",
+              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\UI\\Views\\Admin\\Category.cshtml",
+              "RelativeToolTip": "UI\\Views\\Admin\\Category.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-22T10:50:06.515Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 11,
-              "Title": "Course.cs",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\Course.cs",
-              "RelativeDocumentMoniker": "Domain\\Entities\\Courses\\Course.cs",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\Course.cs",
-              "RelativeToolTip": "Domain\\Entities\\Courses\\Course.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAADgvw8AAAAOAAAAAAAAAA==",
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\UI\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "UI\\Controllers\\AdminController.cs",
+              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\UI\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "UI\\Controllers\\AdminController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T09:07:49.703Z",
+              "WhenOpened": "2025-04-22T10:50:03.102Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "UnitOfWork.cs",
+              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Repositories\\UnitOfWork.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Repositories\\UnitOfWork.cs",
+              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Repositories\\UnitOfWork.cs",
+              "RelativeToolTip": "Infrastructure\\Repositories\\UnitOfWork.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T10:49:22.045Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ChannelRepo.cs",
+              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Repositories\\ChannelRepo.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Repositories\\ChannelRepo.cs",
+              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Repositories\\ChannelRepo.cs",
+              "RelativeToolTip": "Infrastructure\\Repositories\\ChannelRepo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T10:49:21.273Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "CategoryDTO.cs",
+              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Application\\DTOs\\CategoryDTO.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\CategoryDTO.cs",
+              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Application\\DTOs\\CategoryDTO.cs",
+              "RelativeToolTip": "Application\\DTOs\\CategoryDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T10:48:33.695Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "ICategoryService.cs",
+              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Application\\ServiceContract\\ICategoryService.cs",
+              "RelativeDocumentMoniker": "Application\\ServiceContract\\ICategoryService.cs",
+              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Application\\ServiceContract\\ICategoryService.cs",
+              "RelativeToolTip": "Application\\ServiceContract\\ICategoryService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T10:48:28.212Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "CreateOrEditCategoryDTO.cs",
+              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Application\\Models\\CreateOrEditCategoryDTO.cs",
+              "RelativeDocumentMoniker": "Application\\Models\\CreateOrEditCategoryDTO.cs",
+              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Application\\Models\\CreateOrEditCategoryDTO.cs",
+              "RelativeToolTip": "Application\\Models\\CreateOrEditCategoryDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T10:45:21.382Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CategoryController.cs",
+              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\API\\Controllers\\CategoryController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\CategoryController.cs",
+              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\API\\Controllers\\CategoryController.cs",
+              "RelativeToolTip": "API\\Controllers\\CategoryController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T10:45:16.104Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 32,
+              "Title": "20250422104456_courses.cs",
+              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Migrations\\20250422104456_courses.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Migrations\\20250422104456_courses.cs",
+              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Migrations\\20250422104456_courses.cs",
+              "RelativeToolTip": "Infrastructure\\Migrations\\20250422104456_courses.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T10:44:56.625Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "BaseEntity.cs",
+              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\BaseEntity.cs",
+              "RelativeDocumentMoniker": "Domain\\Entities\\BaseEntity.cs",
+              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\BaseEntity.cs",
+              "RelativeToolTip": "Domain\\Entities\\BaseEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T10:34:10.977Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
               "Title": "LikeDislikeConfig.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Data\\Config\\LikeDislikeConfig.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Data\\Config\\LikeDislikeConfig.cs",
@@ -380,38 +387,11 @@
               "RelativeToolTip": "Infrastructure\\Data\\Config\\LikeDislikeConfig.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T09:07:13.016Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-22T09:07:13.016Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "CourseConfig.cs",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Data\\Course\\CourseConfig.cs",
-              "RelativeDocumentMoniker": "Infrastructure\\Data\\Course\\CourseConfig.cs",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Data\\Course\\CourseConfig.cs",
-              "RelativeToolTip": "Infrastructure\\Data\\Course\\CourseConfig.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T09:05:11.035Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Category.cs",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\Category.cs",
-              "RelativeDocumentMoniker": "Domain\\Entities\\Courses\\Category.cs",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Courses\\Category.cs",
-              "RelativeToolTip": "Domain\\Entities\\Courses\\Category.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T09:02:20.713Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "CommentConfig.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Data\\Config\\CommentConfig.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Data\\Config\\CommentConfig.cs",
@@ -419,25 +399,11 @@
               "RelativeToolTip": "Infrastructure\\Data\\Config\\CommentConfig.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T09:01:44.903Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-22T09:01:44.903Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "CategoryConfig.cs",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Data\\Course\\CategoryConfig.cs",
-              "RelativeDocumentMoniker": "Infrastructure\\Data\\Course\\CategoryConfig.cs",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Data\\Course\\CategoryConfig.cs",
-              "RelativeToolTip": "Infrastructure\\Data\\Course\\CategoryConfig.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T09:00:04.966Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 21,
               "Title": "Microsoft.Common.CurrentVersion.targets",
               "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
               "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
@@ -447,32 +413,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\API\\Program.cs",
-              "RelativeDocumentMoniker": "API\\Program.cs",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\API\\Program.cs",
-              "RelativeToolTip": "API\\Program.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAAADEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T10:49:11.894Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "AccountController.cs",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\API\\Controllers\\AccountController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\AccountController.cs",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\API\\Controllers\\AccountController.cs",
-              "RelativeToolTip": "API\\Controllers\\AccountController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T10:48:25.799Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 20,
               "Title": "BaseApiController.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\API\\Controllers\\BaseApiController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\BaseApiController.cs",
@@ -484,7 +425,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 29,
               "Title": "20250408070054_changeappuser.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Migrations\\20250408070054_changeappuser.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Migrations\\20250408070054_changeappuser.cs",
@@ -496,7 +437,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 30,
               "Title": "20250408065738_update-version.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Migrations\\20250408065738_update-version.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Migrations\\20250408065738_update-version.cs",
@@ -509,30 +450,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 26,
-              "Title": "SD.cs",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Application\\Utility\\SD.cs",
-              "RelativeDocumentMoniker": "Application\\Utility\\SD.cs",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Application\\Utility\\SD.cs",
-              "RelativeToolTip": "Application\\Utility\\SD.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T06:55:50.822Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "Application.csproj",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Application\\Application.csproj",
-              "RelativeDocumentMoniker": "Application\\Application.csproj",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Application\\Application.csproj",
-              "RelativeToolTip": "Application\\Application.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-04-08T06:54:38.569Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
               "Title": "AppDbContextModelSnapshot.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Migrations\\AppDbContextModelSnapshot.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Migrations\\AppDbContextModelSnapshot.cs",
@@ -544,20 +461,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Data\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "Infrastructure\\Data\\AppDbContext.cs",
-              "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Data\\AppDbContext.cs",
-              "RelativeToolTip": "Infrastructure\\Data\\AppDbContext.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABUAAABBAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T06:00:51.127Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 23,
               "Title": "ContextInitializer.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Data\\ContextInitializer.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Data\\ContextInitializer.cs",
@@ -569,7 +473,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 24,
               "Title": "UI.csproj",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\UI\\UI.csproj",
               "RelativeDocumentMoniker": "UI\\UI.csproj",
@@ -581,7 +485,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "AppRole.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\AppRole.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\AppRole.cs",
@@ -589,12 +493,11 @@
               "RelativeToolTip": "Domain\\Entities\\AppRole.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T05:55:42.969Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-08T05:55:42.969Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 22,
               "Title": "20250408055403_init.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Migrations\\20250408055403_init.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Migrations\\20250408055403_init.cs",
@@ -606,7 +509,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 25,
               "Title": ".gitignore",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\.gitignore",
               "RelativeDocumentMoniker": ".gitignore",
@@ -618,7 +521,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 27,
               "Title": "AccountService.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Application\\Services\\AccountService.cs",
               "RelativeDocumentMoniker": "Application\\Services\\AccountService.cs",
@@ -630,7 +533,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 28,
               "Title": "HomeController.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\UI\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "UI\\Controllers\\HomeController.cs",
@@ -642,7 +545,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 31,
               "Title": "ErrorViewModel.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\UI\\Models\\ErrorViewModel.cs",
               "RelativeDocumentMoniker": "UI\\Models\\ErrorViewModel.cs",

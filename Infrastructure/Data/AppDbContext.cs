@@ -47,5 +47,4 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, long>
     public DbSet<QuizAnswer> QuizAnswers { get; set; }
     public DbSet<QuizAttempt> QuizAttempts { get; set; }
     
-
 }
