@@ -29,6 +29,9 @@
       <Reference Include="Microsoft.AspNetCore.Authentication.Cookies">
         <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.13\Microsoft.AspNetCore.Authentication.Cookies.dll</HintPath>
       </Reference>
+      <Reference Include="System.IO.Pipelines">
+        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.13\System.IO.Pipelines.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

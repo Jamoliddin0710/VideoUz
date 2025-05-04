@@ -55,6 +55,8 @@ namespace API.Extensions
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IChannelService, ChannelService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddSingleton<IMinioClientFactory, MinioClientFactory>();
+            services.AddScoped<IStorageService, StorageService>();
            
             return services;
         }

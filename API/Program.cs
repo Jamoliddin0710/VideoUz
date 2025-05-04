@@ -11,16 +11,15 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Minio;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpContextAccessor();
+builder.Services.Configure<MinioOptions>(
+    builder.Configuration.GetSection("MinioOptions"));
 builder.Services.AddConfigurationService(builder.Configuration)
-    .AddAuthServices();
+    .AddAuthServices().AddServices();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddServices();
+
 
 builder.Configuration.AddEnvironmentVariables();
 builder.Services.Configure<FileUploadOption>(builder.Configuration.GetSection("FileUpload"));
@@ -71,21 +70,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-var minioSection = builder.Configuration.GetSection(nameof(MinioOptions));
-var minioOptions = new MinioOptions();
-minioSection.Bind(minioOptions);
-builder.Services.Configure<MinioOptions>(minioSection);
-builder.Services.AddMinio(config =>
-{
-    config
-        .WithEndpoint(minioOptions.Host)
-        .WithCredentials(minioOptions.AccessKey, minioOptions.SecretKey)
-        .WithSSL(false)
-        .Build();
-});
-
 builder.Services.AddAuthorization();
-
 var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
 // Configure the HTTP request pipeline.

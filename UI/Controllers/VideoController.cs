@@ -101,19 +101,7 @@ public class VideoController : Controller
  
                      if (model.Id == 0)
                      {
-                         /*// for create
-                         var videoToAdd = new Video()
-                         {
-                             Title = model.Title,
-                             Description = model.Description,
-                             ContentType = model.VideoFile.ContentType,
-                             Contents = GetContentsAsync(model.VideoFile).GetAwaiter().GetResult(),
-                             CategoryId = model.CategoryId,
-                             ChannelId = UnitOfWork.ChannelRepo.GetChannelIdByUserId(User.GetUserId()).GetAwaiter().GetResult(),
-                             ThumbnailUrl = _photoService.UploadPhotoLocally(model.ImageUpload)
-                         };
- 
-                         UnitOfWork.VideoRepo.Add(videoToAdd);*/
+                         // for create
  
                          title = "Created";
                          message = "New video has been created";

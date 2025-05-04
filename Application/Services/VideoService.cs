@@ -1,6 +1,8 @@
 using Application.DTOs;
 using Application.ServiceContract;
+using Domain.Entities;
 using Domain.RepositoryContracts;
+using Mapster;
 
 namespace Application.Services;
 
@@ -12,13 +14,9 @@ public class VideoService : IVideoService
     {
         _unitOfWork = unitOfWork;
     }
-
-    /*public Task Create(CreateOrEditVideoDTO model , long userId)
-    {
-        
-    }*/
     public Task Create(CreateOrEditVideoDTO model, long userId)
     {
-        throw new NotImplementedException();
+        var video = model.Adapt<Video>();
+        vi
     }
 }

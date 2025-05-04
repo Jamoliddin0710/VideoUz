@@ -3,16 +3,12 @@
   "WorkspaceRootPath": "D:\\testproject\\VideoUz\\src\\VideoUz\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Migrations\\20250501044904_filemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Infrastructure\\Migrations\\20250501044904_filemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|d:\\testproject\\videouz\\src\\videouz\\infrastructure\\migrations\\20250501044904_filemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\migrations\\20250501044904_filemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|d:\\testproject\\videouz\\src\\videouz\\infrastructure\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Migrations\\20250430133405_test.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Infrastructure\\Migrations\\20250430133405_test.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6C8061B5-8139-48D2-9682-77B19F7BDA9F}|Domain\\Domain.csproj|d:\\testproject\\videouz\\src\\videouz\\domain\\entities\\subscribe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -132,6 +128,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|d:\\testproject\\videouz\\src\\videouz\\infrastructure\\migrations\\20250422104456_courses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\migrations\\20250422104456_courses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|d:\\testproject\\videouz\\src\\videouz\\infrastructure\\migrations\\20250430133405_test.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{42C5F420-5FB7-4265-9BAB-6DA885A69C99}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\migrations\\20250430133405_test.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -163,7 +163,7 @@
               "RelativeDocumentMoniker": "Infrastructure\\Migrations\\20250501044904_filemodel.cs",
               "ToolTip": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Migrations\\20250501044904_filemodel.cs",
               "RelativeToolTip": "Infrastructure\\Migrations\\20250501044904_filemodel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-01T04:49:04.226Z",
               "EditorCaption": ""
@@ -178,12 +178,11 @@
               "RelativeToolTip": "Infrastructure\\Data\\AppDbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-30T13:34:13.08Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-30T13:34:13.08Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 32,
               "Title": "20250430133405_test.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Migrations\\20250430133405_test.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Migrations\\20250430133405_test.cs",
@@ -191,12 +190,11 @@
               "RelativeToolTip": "Infrastructure\\Migrations\\20250430133405_test.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-30T13:34:06.136Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-30T13:34:06.136Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "ChannelController.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\API\\Controllers\\ChannelController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\ChannelController.cs",
@@ -204,12 +202,11 @@
               "RelativeToolTip": "API\\Controllers\\ChannelController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-30T13:17:42.486Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-30T13:17:42.486Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "Subscribe.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Subscribe.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\Subscribe.cs",
@@ -217,12 +214,11 @@
               "RelativeToolTip": "Domain\\Entities\\Subscribe.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-30T13:05:47.193Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-30T13:05:47.193Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 6,
               "Title": "Comment.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\Comment.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\Comment.cs",
@@ -234,7 +230,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 7,
               "Title": "ContentType.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Enums\\ContentType.cs",
               "RelativeDocumentMoniker": "Domain\\Enums\\ContentType.cs",
@@ -246,7 +242,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 8,
               "Title": "EnrollmentStatus.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Enums\\EnrollmentStatus.cs",
               "RelativeDocumentMoniker": "Domain\\Enums\\EnrollmentStatus.cs",
@@ -258,7 +254,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 9,
               "Title": "Category.cshtml",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\UI\\Views\\Admin\\Category.cshtml",
               "RelativeDocumentMoniker": "UI\\Views\\Admin\\Category.cshtml",
@@ -270,7 +266,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 10,
               "Title": "AdminController.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\UI\\Controllers\\AdminController.cs",
               "RelativeDocumentMoniker": "UI\\Controllers\\AdminController.cs",
@@ -282,7 +278,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 11,
               "Title": "UnitOfWork.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Repositories\\UnitOfWork.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Repositories\\UnitOfWork.cs",
@@ -294,7 +290,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 12,
               "Title": "ChannelRepo.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Repositories\\ChannelRepo.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Repositories\\ChannelRepo.cs",
@@ -306,7 +302,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 13,
               "Title": "CategoryDTO.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Application\\DTOs\\CategoryDTO.cs",
               "RelativeDocumentMoniker": "Application\\DTOs\\CategoryDTO.cs",
@@ -318,7 +314,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 14,
               "Title": "ICategoryService.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Application\\ServiceContract\\ICategoryService.cs",
               "RelativeDocumentMoniker": "Application\\ServiceContract\\ICategoryService.cs",
@@ -330,7 +326,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 15,
               "Title": "CreateOrEditCategoryDTO.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Application\\Models\\CreateOrEditCategoryDTO.cs",
               "RelativeDocumentMoniker": "Application\\Models\\CreateOrEditCategoryDTO.cs",
@@ -342,7 +338,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "CategoryController.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\API\\Controllers\\CategoryController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\CategoryController.cs",
@@ -350,12 +346,11 @@
               "RelativeToolTip": "API\\Controllers\\CategoryController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T10:45:16.104Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-22T10:45:16.104Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 31,
               "Title": "20250422104456_courses.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Migrations\\20250422104456_courses.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Migrations\\20250422104456_courses.cs",
@@ -367,7 +362,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "BaseEntity.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\BaseEntity.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\BaseEntity.cs",
@@ -379,7 +374,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 18,
               "Title": "LikeDislikeConfig.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Data\\Config\\LikeDislikeConfig.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Data\\Config\\LikeDislikeConfig.cs",
@@ -391,7 +386,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 16,
               "Title": "CommentConfig.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Data\\Config\\CommentConfig.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Data\\Config\\CommentConfig.cs",
@@ -403,7 +398,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 20,
               "Title": "Microsoft.Common.CurrentVersion.targets",
               "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
               "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
@@ -413,7 +408,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 19,
               "Title": "BaseApiController.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\API\\Controllers\\BaseApiController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\BaseApiController.cs",
@@ -425,7 +420,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 28,
               "Title": "20250408070054_changeappuser.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Migrations\\20250408070054_changeappuser.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Migrations\\20250408070054_changeappuser.cs",
@@ -437,7 +432,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 29,
               "Title": "20250408065738_update-version.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Migrations\\20250408065738_update-version.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Migrations\\20250408065738_update-version.cs",
@@ -449,7 +444,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 25,
               "Title": "AppDbContextModelSnapshot.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Migrations\\AppDbContextModelSnapshot.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Migrations\\AppDbContextModelSnapshot.cs",
@@ -461,7 +456,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 22,
               "Title": "ContextInitializer.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Data\\ContextInitializer.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Data\\ContextInitializer.cs",
@@ -473,7 +468,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 23,
               "Title": "UI.csproj",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\UI\\UI.csproj",
               "RelativeDocumentMoniker": "UI\\UI.csproj",
@@ -485,7 +480,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 17,
               "Title": "AppRole.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Domain\\Entities\\AppRole.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\AppRole.cs",
@@ -497,7 +492,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 21,
               "Title": "20250408055403_init.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Infrastructure\\Migrations\\20250408055403_init.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Migrations\\20250408055403_init.cs",
@@ -509,7 +504,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 24,
               "Title": ".gitignore",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\.gitignore",
               "RelativeDocumentMoniker": ".gitignore",
@@ -521,7 +516,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 26,
               "Title": "AccountService.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\Application\\Services\\AccountService.cs",
               "RelativeDocumentMoniker": "Application\\Services\\AccountService.cs",
@@ -533,7 +528,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 27,
               "Title": "HomeController.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\UI\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "UI\\Controllers\\HomeController.cs",
@@ -545,7 +540,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 30,
               "Title": "ErrorViewModel.cs",
               "DocumentMoniker": "D:\\testproject\\VideoUz\\src\\VideoUz\\UI\\Models\\ErrorViewModel.cs",
               "RelativeDocumentMoniker": "UI\\Models\\ErrorViewModel.cs",
