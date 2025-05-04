@@ -16,7 +16,6 @@ public class VideoService : IVideoService
     }
     public Task Create(CreateOrEditVideoDTO model, long userId)
     {
-        var video = model.Adapt<Video>();
-        vi
+       throw new NotImplementedException();
     }
 }

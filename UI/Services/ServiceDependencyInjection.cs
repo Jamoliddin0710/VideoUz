@@ -3,6 +3,7 @@ using System.Net.Http.Headers;
 using Application.Helpers;
 using Infrastructure.DTOs;
 using Application.Helpers;
+using Application.ServiceContract;
 using Refit;
 using UI.Services;
 namespace UI.Services;
@@ -25,6 +26,26 @@ public static class ServiceDependencyInjection
         
         services
             .AddRefitClient<ICategoryRefitService>()
+            .AddHttpMessageHandler<AuthTokenHandler>()
+            .ConfigureHttpClient(CreateHttpClient(url));
+        
+        services
+            .AddRefitClient<ICourseRefitService>()
+            .AddHttpMessageHandler<AuthTokenHandler>()
+            .ConfigureHttpClient(CreateHttpClient(url));
+        
+        services
+            .AddRefitClient<IStorageRefitService>()
+            .AddHttpMessageHandler<AuthTokenHandler>()
+            .ConfigureHttpClient(CreateHttpClient(url));
+        
+        services
+            .AddRefitClient<IModuleRefitService>()
+            .AddHttpMessageHandler<AuthTokenHandler>()
+            .ConfigureHttpClient(CreateHttpClient(url));
+        
+        services
+            .AddRefitClient<ICourseRefitService>()
             .AddHttpMessageHandler<AuthTokenHandler>()
             .ConfigureHttpClient(CreateHttpClient(url));
         

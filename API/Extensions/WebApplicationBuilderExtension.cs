@@ -18,8 +18,8 @@ namespace API.Extensions
         public static IServiceCollection AddConfigurationService(this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddAuditing().AddDbContext<AppDbContext>
-            (options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
+            services.AddAuditing().AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies()
+                .UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
                 .AddAuditInterceptors());
                 
             return services;
@@ -57,6 +57,8 @@ namespace API.Extensions
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddSingleton<IMinioClientFactory, MinioClientFactory>();
             services.AddScoped<IStorageService, StorageService>();
+            services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<IModuleService, ModuleService>();
            
             return services;
         }

@@ -1,6 +1,8 @@
 using System.IO.Pipelines;
+using Application.DTOs;
 using Application.ServiceContract;
 using Application.Services;
+using Domain.Entities.Courses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,10 +18,10 @@ public class StorageController : BaseApiController
     }
 
     [HttpPost]
-    public async Task<IActionResult> UploadFile(IFormFile file)
+    public async Task<ActionResult<ServiceResponse<FileItem>>> UploadFile(IFormFile file)
     {
         var fileitem = await _storageService.UploadFileAsync(file);
-        return NoContent();
+        return Ok(fileitem);
     }
 
     [HttpGet]

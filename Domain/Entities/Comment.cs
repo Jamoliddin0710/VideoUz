@@ -11,7 +11,7 @@ public class Comment : BaseEntity
     public long VideoId { get; set; }
     //Navigation
     [ForeignKey(nameof(AppUserId))]
-    public AppUser AppUser { get; set; }
+    public virtual AppUser AppUser { get; set; }
     [ForeignKey(nameof(VideoId))]
-    public Video Video { get; set; }
+    public virtual Video Video { get; set; }
 }

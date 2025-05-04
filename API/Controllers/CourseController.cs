@@ -1,0 +1,58 @@
+using Application.DTOs;
+using Application.Helpers;
+using Application.Models;
+using Application.ServiceContract;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace API.Controllers;
+
+public class CourseController : BaseApiController
+{
+    private readonly ICourseService _courseService;
+
+    public CourseController(ICourseService courseService)
+    {
+        _courseService = courseService;
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<ServiceResponse<CourseDTO>>> Create([FromBody] CourseCreateDTO courseCreateDto)
+    {
+        var userId = User.GetUserId();
+        if (!userId.HasValue)
+        {
+            return Unauthorized();
+        }
+
+        var result = await _courseService.Create(courseCreateDto, userId.Value);
+        return Ok(result);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<ServiceResponse<CourseDTO>>> GetById(long courseId)
+    {
+        var course = await _courseService.GetbyId(courseId);
+        return Ok(course);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<ServiceResponse<FilterResponseModel<CourseListViewModel>>>> GetAll()
+    {
+        var userId = User.GetUserId();
+        if (!userId.HasValue)
+        {
+            return Unauthorized();
+        }
+
+        var course = await _courseService.GetAll(userId.Value);
+        return Ok(course);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<ServiceResponse<CourseDetailViewModel>>> Details(long courseId)
+    {
+        var course = await _courseService.GetCourseDetails(courseId);
+        return Ok(course);
+    }
+}

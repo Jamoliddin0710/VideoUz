@@ -68,7 +68,7 @@ public class BaseRepo<T> : IBaseRepo<T> where T : BaseEntity
         var props = includeProperties.Split(',', StringSplitOptions.RemoveEmptyEntries);
         foreach (var prop in props)
         {
-            query = query.Include(prop);
+            query = query.Include(prop.Trim());
         }
 
         return query;

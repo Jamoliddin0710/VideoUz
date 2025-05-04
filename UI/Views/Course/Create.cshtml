@@ -1,4 +1,4 @@
-@model UI.Controllers.CourseCreateViewModel
+@model CourseCreateViewModel;
 
 <div class="container">
     <h2>Yangi kurs yaratish</h2>
@@ -16,13 +16,13 @@
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
 
-        @*<div class="form-group">
+        <div class="form-group">
             <label asp-for="CategoryId">Kategoriya</label>
-            <select asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))" class="form-control">
-                <option value="">-- Kategoriyani tanlang --</option>
+            <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control">
+                <option disabled value="">-- Kategoriyani tanlang --</option>
             </select>
             <span asp-validation-for="CategoryId" class="text-danger"></span>
-        </div>*@
+        </div>
 
         <div class="form-group">
             <label asp-for="Price">Narx</label>
@@ -35,7 +35,6 @@
             <input type="file" asp-for="CoverImage" class="form-control" />
             <span asp-validation-for="CoverImage" class="text-danger"></span>
         </div>
-
         <button type="submit" class="btn btn-primary">Davom etish</button>
     </form>
 </div>

@@ -16,7 +16,7 @@ public class VideoController : BaseApiController
         _videoService = videoService;
         _fileUploadOption = options.Value;
     }
-    public async Task<IActionResult> Create(CreateOrEditVideoDTO model)
+    /*public async Task<IActionResult> Create(CreateOrEditVideoDTO model)
     {
         var userid = User.GetUserId();
         if (!userid.HasValue)
@@ -25,5 +25,5 @@ public class VideoController : BaseApiController
         }
 
         return Ok(default);
-    }
+    }*/
 }

@@ -12,5 +12,4 @@ public interface IStorageService
         Task<string> GetFileUrlAsync(string fileName);
         void DownloadStream(string bucketName,  string fileName, PipeWriter pipeWrite);
         Task<long> GetFileSizeAsync(string bucketName,  string fileName);
-    
 }
