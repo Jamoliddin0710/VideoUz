@@ -32,4 +32,17 @@ public class ModuleService : IModuleService
         await _unitOfWork.CompleteAsync();
         return module.Adapt<ModuleDTO>();
     }
+
+    public async Task<bool> Delete(long moduleId)
+    {
+        var module = await _unitOfWork.ModuleRepo.GetByIdAsync(moduleId);
+        _unitOfWork.ModuleRepo.Remove(module);
+       return await _unitOfWork.CompleteAsync();
+    }
+
+    public async Task<ModuleDTO> GetById(long Id)
+    {
+      var module = await _unitOfWork.ModuleRepo.GetByIdAsync(Id, includeProperties:"Course");
+      return module.Adapt<ModuleDTO>();
+    }
 }

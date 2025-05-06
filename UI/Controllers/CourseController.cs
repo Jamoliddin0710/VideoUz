@@ -2,8 +2,10 @@ using System.ComponentModel.DataAnnotations;
 using Application.DTOs;
 using Application.Helpers;
 using Application.ServiceContract;
+using Infrastructure.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Options;
 using Refit;
 using UI.Models;
 using UI.Services;
@@ -15,11 +17,17 @@ public class CourseController : Controller
     private readonly ICourseRefitService _courseRefitService;
     private readonly ICategoryRefitService _categoryRefitService;
     private readonly IStorageRefitService _storageRefitService;
-    public CourseController(ICourseRefitService courseRefitService, ICategoryRefitService categoryRefitService, IStorageRefitService storageRefitService)
+    private readonly HttpClient _httpClient;
+    private AppOptions options;
+
+    public CourseController(ICourseRefitService courseRefitService, ICategoryRefitService categoryRefitService,
+        IStorageRefitService storageRefitService, IOptions<AppOptions> options, HttpClient httpClient)
     {
         _courseRefitService = courseRefitService;
         _categoryRefitService = categoryRefitService;
         _storageRefitService = storageRefitService;
+        _httpClient = httpClient;
+        this.options = options.Value;
     }
 
     [HttpGet]
@@ -30,6 +38,12 @@ public class CourseController : Controller
         return View(model);
     }
 
+    [HttpDelete]
+    public async Task<IActionResult> Delete(long id)
+    {
+        await _courseRefitService.Delete(id);
+        return Ok();
+    }
     [HttpPost]
     public async Task<IActionResult> Create(CourseCreateViewModel model)
     {
@@ -38,25 +52,25 @@ public class CourseController : Controller
             ViewBag.Categories = await GetAllCategoryDropDown();
             return View(model);
         }
+
         try
         {
             using var stream = model.CoverImage.OpenReadStream();
             var streamPart = new StreamPart(stream, model.CoverImage.FileName, model.CoverImage.ContentType);
             var fileResponse = await _storageRefitService.UploadFile(streamPart);
-            
+
             var courseDto = new CourseCreateDTO
             {
                 Title = model.Title,
                 Description = model.Description,
                 CategoryId = model.CategoryId,
                 Price = model.Price,
-                FileId = fileResponse.Data.Id 
+                FileId = fileResponse.Data.Id
             };
 
             var result = await _courseRefitService.Create(courseDto);
             TempData["SuccessMessage"] = "Course created successfully! Now add modules to your course.";
             return RedirectToAction("Create", "Module", new { courseId = result.Data.Id });
-
         }
         catch (Exception ex)
         {
@@ -70,7 +84,7 @@ public class CourseController : Controller
     public async Task<IActionResult> Index()
     {
         var response = await _courseRefitService.GetAll();
-        
+
         if (!response.IsSuccessful)
         {
             TempData["Error"] = response.Error.Message;
@@ -81,7 +95,7 @@ public class CourseController : Controller
 
         return View(viewModels);
     }
-    
+
     [HttpGet]
     public async Task<IActionResult> Details(long id)
     {
@@ -96,7 +110,100 @@ public class CourseController : Controller
         var course = response.Data;
         return View(course);
     }
-    
+
+    [HttpGet]
+    public async Task<IActionResult> DownloadFile(string bucket, string fileName)
+    {
+        var apiUrl =
+            $"{options.BackendApi!.TrimEnd('/')}/storage/download?bucket={bucket}&fileName={fileName}";
+        var response = await _httpClient.GetAsync(apiUrl, HttpCompletionOption.ResponseHeadersRead);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            return StatusCode((int)response.StatusCode, "file read error");
+        }
+
+        var stream = await response.Content.ReadAsStreamAsync();
+        var contentType = response.Content.Headers.ContentType?.ToString() ?? "application/octet-stream";
+        var fileSize = response.Content.Headers.ContentLength;
+        if (fileSize > 0)
+        {
+            Response.Headers.Append("Content-Length", fileSize.ToString());
+        }
+
+        var contentDisposition = response.Content.Headers.ContentDisposition;
+        var Name = contentDisposition?.FileName?.Trim('"') ?? "downloadedFile";
+        return new FileStreamResult(stream, contentType)
+        {
+            FileDownloadName = Name
+        };
+    }
+
+    private async Task<(Stream Stream, string FileName, string ContentType)> DownloadFileAsStreamAsync(string bucket,
+        string fileName)
+    {
+        var apiUrl =
+            $"{options.BackendApi!.TrimEnd('/')}/storage/download?bucket={bucket}&fileName={fileName}";
+        var response = await _httpClient.GetAsync(apiUrl, HttpCompletionOption.ResponseHeadersRead);
+
+        if (!response.IsSuccessStatusCode)
+            throw new Exception("File read error");
+
+        var stream = await response.Content.ReadAsStreamAsync();
+        var contentType = response.Content.Headers.ContentType?.ToString() ?? "application/octet-stream";
+        var contentDisposition = response.Content.Headers.ContentDisposition;
+        var name = contentDisposition?.FileName?.Trim('"') ?? fileName;
+
+        return (stream, name, contentType);
+    }
+
+
+    [HttpGet]
+    public async Task<IActionResult> Edit(long id)
+    {
+        var course = await _courseRefitService.GetById(id);
+        if (!course.IsSuccessful)
+        {
+            TempData["Error"] = "Module not found";
+            return RedirectToAction("Index", "Course");
+        }
+
+        IFormFile formFile = null;
+
+        try
+        {
+            var (stream, fileName, contentType) = await DownloadFileAsStreamAsync(
+                course.Data.CoverImage.Bucket,
+                course.Data.CoverImage.StorageName);
+
+            var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+            memoryStream.Position = 0;
+
+            formFile = new FormFile(memoryStream, 0, memoryStream.Length, "CoverImage", fileName)
+            {
+                Headers = new HeaderDictionary(),
+                ContentType = GetContentType(course.Data.CoverImage.FileName)
+            };
+        }
+        catch
+        {
+            TempData["Error"] = "Cover image load failed.";
+        }
+        ViewBag.Categories = await GetAllCategoryDropDown();
+        var editViewModel = new CourseEditViewModel
+        {
+            Id = course.Data.Id,
+            Title = course.Data.Title,
+            Description = course.Data.Description,
+            CategoryId = course.Data.CategoryId,
+            Price = course.Data.Price,
+            CoverImage = formFile
+        };
+
+        return View(editViewModel);
+    }
+
     private async Task<List<SelectListItem>> GetAllCategoryDropDown()
     {
         var categories = await _categoryRefitService.GetAllCategories(new Filter());
@@ -106,5 +213,17 @@ public class CourseController : Controller
             Text = a.Name,
             Value = a.Id.ToString(),
         }).ToList();
+    }
+
+    private string GetContentType(string fileName)
+    {
+        return Path.GetExtension(fileName).ToLower() switch
+        {
+            ".jpg" or ".jpeg" => "image/jpeg",
+            ".png" => "image/png",
+            ".gif" => "image/gif",
+            ".pdf" => "application/pdf",
+            _ => "application/octet-stream"
+        };
     }
 }

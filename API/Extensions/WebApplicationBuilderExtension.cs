@@ -21,7 +21,7 @@ namespace API.Extensions
             services.AddAuditing().AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies()
                 .UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
                 .AddAuditInterceptors());
-                
+
             return services;
         }
 
@@ -30,7 +30,7 @@ namespace API.Extensions
         {
             services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddScoped<AuditService>();
-            
+
             configureOptions?.Invoke(new AuditOptions(services));
             return services;
         }
@@ -49,6 +49,7 @@ namespace API.Extensions
 
             return optionsBuilder;
         }
+
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -59,9 +60,11 @@ namespace API.Extensions
             services.AddScoped<IStorageService, StorageService>();
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IModuleService, ModuleService>();
-           
+            services.AddScoped<IContentService, ContentService>();
+
             return services;
         }
+
         public static IServiceCollection AddAuthServices(this IServiceCollection services)
         {
             services.AddIdentityCore<AppUser>(options =>

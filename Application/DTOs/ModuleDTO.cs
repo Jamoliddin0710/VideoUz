@@ -1,3 +1,5 @@
+using Domain.Entities;
+
 namespace Application.DTOs;
 
 public class ModuleDTO
@@ -7,6 +9,8 @@ public class ModuleDTO
     public string Title { get; set; }
     public string Description { get; set; }
     public int Order { get; set; }
+    public List<Content> Contents { get; set; }
+    public CourseDTO? Course { get; set; }
 }
 public class CreateModuleDTO
 {

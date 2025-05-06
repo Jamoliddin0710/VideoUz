@@ -11,4 +11,5 @@ public interface ICourseService
     Task<CourseDTO> GetbyId(long courseId);
     Task<FilterResponseModel<CourseListViewModel>> GetAll(long userId);
     Task<CourseDetailViewModel> GetCourseDetails(long courseId);
+    Task<bool> Delete(long Id);
 }

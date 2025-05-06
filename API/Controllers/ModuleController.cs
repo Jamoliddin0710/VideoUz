@@ -26,4 +26,17 @@ public class ModuleController : BaseApiController
         var result = await _moduleService.Create(dto);
         return Ok(result);
     }
+
+    [HttpDelete]
+    public async Task<ActionResult<object>> Delete(long moduleId)
+    {
+        var result = await _moduleService.Delete(moduleId);
+        return Ok(result);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<ServiceResponse<ModuleDTO>>> GetById(long Id)
+    {
+        return Ok(await _moduleService.GetById(Id));
+    }
 }

@@ -73,7 +73,7 @@ public class ModuleController : Controller
             {
                 TempData["SuccessMessage"] = $"Module '{model.Title}' created successfully!";
 
-                return RedirectToAction("Create", "Content", new { moduleId = response.Data.Id });
+                return RedirectToAction("Details", "Course", new { id = model.CourseId });
             }
 
             ModelState.AddModelError("", response.Error.Message);
@@ -84,5 +84,42 @@ public class ModuleController : Controller
             ModelState.AddModelError("", ex.Message);
             return View(model);
         }
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> Delete(long id)
+    {
+        await _moduleService.Delete(id);
+        return Ok();
+    }
+    
+    [HttpGet]
+    public async Task<IActionResult> Edit(long id)
+    {
+        var moduleResponse = await _moduleService.GetById(id);
+        
+        if (!moduleResponse.IsSuccessful)
+        {
+            TempData["Error"] = "Module not found";
+            return RedirectToAction("Index", "Course");
+        }
+
+        var module = moduleResponse.Data;
+        var courseResponse = await _courseService.GetById(module.CourseId);
+        if (courseResponse.IsSuccessful)
+        {
+            ViewBag.CourseName = courseResponse.Data.Title;
+        }
+
+        var viewModel = new ModuleEditViewModel
+        {
+            Id = module.Id,
+            CourseId = module.CourseId,
+            Title = module.Title,
+            Description = module.Description,
+            Order = module.Order
+        };
+
+        return View(viewModel);
     }
 }

@@ -4,6 +4,7 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250506121025_content")]
+    partial class content
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -351,9 +354,6 @@ namespace Infrastructure.Migrations
                     b.Property<int?>("Duration")
                         .HasColumnType("int");
 
-                    b.Property<long?>("FileId")
-                        .HasColumnType("bigint");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -380,11 +380,14 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<long?>("fileId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("FileId");
-
                     b.HasIndex("ModuleId");
+
+                    b.HasIndex("fileId");
 
                     b.ToTable("Contents");
                 });
@@ -1398,15 +1401,15 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Content", b =>
                 {
-                    b.HasOne("Domain.Entities.Courses.FileItem", "FileItem")
-                        .WithMany()
-                        .HasForeignKey("FileId");
-
                     b.HasOne("Domain.Entities.Module", "Module")
                         .WithMany("Contents")
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Domain.Entities.Courses.FileItem", "FileItem")
+                        .WithMany()
+                        .HasForeignKey("fileId");
 
                     b.Navigation("FileItem");
 

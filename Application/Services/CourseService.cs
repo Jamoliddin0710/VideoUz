@@ -35,7 +35,7 @@ public class CourseService : ICourseService
 
     public async Task<CourseDTO> GetbyId(long courseId)
     {
-        var course = await _unitOfWork.CourseRepo.GetByIdAsync(courseId);
+        var course = await _unitOfWork.CourseRepo.GetByIdAsync(courseId, includeProperties: "CoverImage");
         return course.Adapt<CourseDTO>();
     }
 
@@ -44,7 +44,7 @@ public class CourseService : ICourseService
         var courses =
             await _unitOfWork.CourseRepo.GetAllAsync(a => a.AuthorId == userId,
                 includeProperties: "Modules,Enrollments,Category,CoverImage");
-        
+
         var coverImageNames = courses
             .Select(x => x.CoverImage.StorageName)
             .Distinct()
@@ -81,7 +81,8 @@ public class CourseService : ICourseService
 
     public async Task<CourseDetailViewModel> GetCourseDetails(long courseId)
     {
-        var course = await _unitOfWork.CourseRepo.GetByIdAsync(courseId, includeProperties:"Category,Modules.Contents");
+        var course =
+            await _unitOfWork.CourseRepo.GetByIdAsync(courseId, includeProperties: "Category,Modules.Contents");
         var url = await _storageService.GetFileUrlAsync(course.CoverImage.StorageName);
         var result = new CourseDetailViewModel()
         {
@@ -97,5 +98,12 @@ public class CourseService : ICourseService
         };
 
         return result;
+    }
+
+    public async Task<bool> Delete(long Id)
+    {
+        var course = await _unitOfWork.CourseRepo.GetByIdAsync(Id);
+        _unitOfWork.CourseRepo.Remove(course);
+        return await _unitOfWork.CompleteAsync();
     }
 }

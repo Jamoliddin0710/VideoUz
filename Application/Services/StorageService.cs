@@ -74,10 +74,13 @@ public class StorageService : IStorageService
     {
         throw new NotImplementedException();
     }
-
-    public Task<bool> DeleteFileAsync(string fileName)
+    
+    public async Task DeleteFileAsync(string bucketName, string fileName)
     {
-        throw new NotImplementedException();
+        await minioClient.RemoveObjectAsync(new RemoveObjectArgs()
+            .WithBucket(bucketName.ToLower())
+            .WithObject(fileName.ToLower())
+        );
     }
 
     public async Task<string> GetFileUrlAsync(string storageName)

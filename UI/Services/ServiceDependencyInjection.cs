@@ -49,6 +49,11 @@ public static class ServiceDependencyInjection
             .AddHttpMessageHandler<AuthTokenHandler>()
             .ConfigureHttpClient(CreateHttpClient(url));
         
+        services
+            .AddRefitClient<IContentRefitService>()
+            .AddHttpMessageHandler<AuthTokenHandler>()
+            .ConfigureHttpClient(CreateHttpClient(url));
+        
         return services;
     }
     

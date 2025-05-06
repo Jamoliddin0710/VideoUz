@@ -52,7 +52,12 @@ public class CourseController : BaseApiController
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<CourseDetailViewModel>>> Details(long courseId)
     {
-        var course = await _courseService.GetCourseDetails(courseId);
-        return Ok(course);
+        return Ok(await _courseService.GetCourseDetails(courseId));
+    }
+
+    [HttpDelete]
+    public async Task<ActionResult<ServiceResponse<bool>>> Delete(long id)
+    {
+        return Ok(await _courseService.Delete(id));
     }
 }

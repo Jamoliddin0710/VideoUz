@@ -4,6 +4,6 @@ public enum ContentType
 {
     Video,
     Document,
-    Audio,
+    Text,
     Quiz
 }
