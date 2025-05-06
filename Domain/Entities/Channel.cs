@@ -11,7 +11,7 @@ public class Channel : BaseEntity
     public long AppUserId { get; set; }
     //Navigation
     [ForeignKey(nameof(AppUserId))]
-    public AppUser AppUser { get; set; }
+    public virtual AppUser AppUser { get; set; }
     
     public virtual ICollection<Video> Videos { get; set; }
     public virtual ICollection<Subscribe> Subscribers{ get; set; }

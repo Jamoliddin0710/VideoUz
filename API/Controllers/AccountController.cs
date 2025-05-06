@@ -3,13 +3,9 @@ using System.Security.Claims;
 using System.Text;
 using Application.DTOs;
 using Application.Models;
-using Application.Utility;
 using Domain.Entities;
-using Infrastructure.DTOs;
-using Infrastructure.ViewModels;
 using Mapster;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +32,7 @@ public class AccountController : BaseApiController
         if (user == null)
         {
             user = await _userManager.FindByEmailAsync(loginDto.UserName);
-            
+          
             if (user == null)
             {
                 return Unauthorized(new ServiceResponse<TokenModel>
@@ -51,7 +47,8 @@ public class AccountController : BaseApiController
         var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
         if (result.Succeeded)
         {
-            var token = await GenerateJwtToken(user);
+            var userroles = (await _userManager.GetRolesAsync(user)).ToList();
+            var token = await GenerateJwtToken(user, userroles);
             return new ServiceResponse<TokenModel>()
             {
                 Data = token,
@@ -116,7 +113,7 @@ public class AccountController : BaseApiController
         
         await _userManager.AddToRoleAsync(user, nameof(Role.User));
         
-        var token = await GenerateJwtToken(user);
+        var token = await GenerateJwtToken(user, new List<string>(){nameof(Role.User)});
         return new ServiceResponse<TokenModel>()
         {
             Data = token,
@@ -124,32 +121,28 @@ public class AccountController : BaseApiController
         };
     }
 
-    private async Task<TokenModel> GenerateJwtToken(AppUser user)
+    private async Task<TokenModel> GenerateJwtToken(AppUser user , List<string> roles)
     {
-        // Create claims identity with default authentication scheme
-        var claimIdentity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-
-        // Add claims
+        var claimIdentity = new ClaimsIdentity(JwtBearerDefaults.AuthenticationScheme);
         claimIdentity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
         claimIdentity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
         claimIdentity.AddClaim(new Claim(ClaimTypes.GivenName, user.Name));
         claimIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
-        // Add issued and expiration claims
-        claimIdentity.AddClaim(new Claim(ClaimTypes.Expiration, DateTime.UtcNow.AddHours(24).ToString())); 
-        var roles = _userManager.GetRolesAsync(user).Result;
         foreach (var role in roles)
         {
-            claimIdentity.AddClaim(new Claim(ClaimTypes.Role, role));  
+            claimIdentity.AddClaim(new Claim(ClaimTypes.Role, role));
         }
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("testusername0012232434343863486837467834"));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        var key = Encoding.UTF8.GetBytes("c5d4daef4df64b08b4ce630a38c0005e10a5953f519c2f1d143379784689fdd4");
+        var creds = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
+
 
         // Create token
         var token = new JwtSecurityToken(
             issuer: "localhost:5151",  
             audience: "localhost:5261",
             claims: claimIdentity.Claims,
-            expires: (DateTime.UtcNow.AddHours(24)),
+            expires: DateTime.UtcNow.AddHours(24),
             signingCredentials: creds
         );
         

@@ -53,3 +53,10 @@ public sealed class ErrorModel
         Details = details;
     }
 }
+
+public class FilterResponseModel<T>
+{
+    public int ItemsCount { get; set; }
+
+    public IEnumerable<T> Data { get; set; }
+}

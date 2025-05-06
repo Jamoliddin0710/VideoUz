@@ -19,4 +19,6 @@ public static class SD
         }
         return string.Empty;
     }
+
+    public const int MB = 100;
 }

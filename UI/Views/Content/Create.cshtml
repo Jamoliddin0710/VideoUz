@@ -1,0 +1,112 @@
+@using Domain.Entities
+@model ContentCreateViewModel
+@{
+    ViewData["Title"] = "Kontent yaratish";
+}
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <h2>Yangi kontent qo'shish</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Bosh sahifa</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="Course" asp-action="Details"
+                                                   asp-route-id="@ViewBag.CourseId">@ViewBag.CourseTitle</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="Module" asp-action="Details"
+                                                   asp-route-id="@Model.ModuleId">@ViewBag.ModuleTitle</a></li>
+                    <li class="breadcrumb-item active">Kontent yaratish</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form asp-action="Create" asp-controller="Content" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="ModuleId"/>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Title" class="form-label">Kontent nomi</label>
+                            <input asp-for="Title" class="form-control" placeholder="Kontent nomini kiriting"/>
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="ContentType" class="form-label">Kontent turi</label>
+                            <select asp-for="ContentType" class="form-select" id="contentTypeSelect"
+                                    asp-items="Html.GetEnumSelectList<ContentType>()">
+                            </select>
+                            <span asp-validation-for="ContentType" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3" id="fileUploadBlock">
+                            <label asp-for="File" class="form-label">Fayl yuklash</label>
+                            <input type="file" asp-for="File" class="form-control"/>
+                            <div class="form-text">
+                                Video uchun: MP4, WebM formatlar. Dokument uchun: PDF, DOCX, PPTX formatlar.
+                            </div>
+                            <span asp-validation-for="File" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3" id="textContentBlock" style="display:none;">
+                            <label asp-for="ContentData" class="form-label">Matn</label>
+                            <textarea asp-for="ContentData" class="form-control" rows="10"
+                                      placeholder="Kurs kontentini kiriting..."></textarea>
+                            <span asp-validation-for="ContentData" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group d-flex justify-content-between mt-4">
+                            <a asp-controller="Module" asp-action="Details" asp-route-id="@Model.ModuleId"
+                               class="btn btn-secondary">Bekor qilish</a>
+                            <button type="submit" class="btn btn-primary">Saqlash</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Ko'rsatmalar</h5>
+                </div>
+                <div class="card-body">
+                    <h6>Video</h6>
+                    <p>Video formatlar: MP4, WebM. Maksimal hajm 500MB.</p>
+
+                    <h6>Dokument</h6>
+                    <p>Qo'llab-quvvatlanadigan formatlar: PDF, DOCX, PPTX, XLS.</p>
+
+                    <h6>Matn</h6>
+                    <p>Matn formatlash uchun Markdown yoki HTML dan foydalanishingiz mumkin.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            $('#contentTypeSelect').change(function () {
+                var selectedType = $(this).val();
+
+                if (selectedType === '@((int)ContentType.Text)') {
+                    $('#fileUploadBlock').hide();
+                    $('#textContentBlock').show();
+                } else {
+                    $('#fileUploadBlock').show();
+                    $('#textContentBlock').hide();
+                }
+            });
+
+
+            $('#contentTypeSelect').trigger('change');
+        });
+    </script>
+}

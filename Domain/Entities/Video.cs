@@ -14,9 +14,9 @@ public class Video : BaseEntity
     
     //Navigation
     [ForeignKey(nameof(CategoryId))]
-    public Category Category { get; set; }
+    public virtual Category Category { get; set; }
     [ForeignKey(nameof(ChannelId))]
-    public Channel Channel { get; set; }
-    public ICollection<Comment> Comments { get; set; }
-    public ICollection<LikeDislike> LikeDislikes { get; set; }
+    public virtual Channel Channel { get; set; }
+    public virtual ICollection<Comment> Comments { get; set; }
+    public virtual ICollection<LikeDislike> LikeDislikes { get; set; }
 }

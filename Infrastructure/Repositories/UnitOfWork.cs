@@ -18,6 +18,10 @@ public class UnitOfWork : IUnitOfWork
     public IChannelRepo ChannelRepo => new ChannelRepo(_context);
     public ICategoryRepo CategoryRepo => new CategoryRepo(_context);
     public IVideoRepo VideoRepo => new VideoRepo(_context);
+    public ICourseRepo CourseRepo => new CourseRepo(_context);
+    public IFileRepo FileRepo => new FileRepo(_context);
+    public IModuleRepo ModuleRepo => new ModuleRepo(_context);
+    public IContentRepo ContentRepo => new ContentRepo(_context);
 
     public async Task<bool> CompleteAsync()
     {

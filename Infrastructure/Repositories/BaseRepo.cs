@@ -25,8 +25,7 @@ public class BaseRepo<T> : IBaseRepo<T> where T : BaseEntity
     {
         _dbSet.Entry(source).CurrentValues.SetValues(destination);
     }
-
-
+    
     public void Remove(T entity)
     {
         _dbSet.Remove(entity);
@@ -46,7 +45,7 @@ public class BaseRepo<T> : IBaseRepo<T> where T : BaseEntity
     public async Task<T> GetByIdAsync(long Id, string includeProperties = null)
     {
         IQueryable<T> query = _dbSet.AsQueryable();
-        if (string.IsNullOrWhiteSpace(includeProperties))
+        if (!string.IsNullOrWhiteSpace(includeProperties))
         {
             query =  GetQueryWithIncludeProperties(query, includeProperties);
         }
@@ -69,7 +68,7 @@ public class BaseRepo<T> : IBaseRepo<T> where T : BaseEntity
         var props = includeProperties.Split(',', StringSplitOptions.RemoveEmptyEntries);
         foreach (var prop in props)
         {
-            query = query.Include(prop);
+            query = query.Include(prop.Trim());
         }
 
         return query;
@@ -78,7 +77,12 @@ public class BaseRepo<T> : IBaseRepo<T> where T : BaseEntity
     public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null, string includeProperties = null,
         Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null)
     {
-        var query = _dbSet.AsQueryable().Where(predicate);
+        var query = _dbSet.AsQueryable();
+        if (predicate is not null)
+        {
+            query = query.Where(predicate);
+        }
+       
         if (!string.IsNullOrWhiteSpace(includeProperties))
         {  
             query = GetQueryWithIncludeProperties(query, includeProperties);
