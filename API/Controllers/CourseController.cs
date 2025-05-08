@@ -68,8 +68,8 @@ public class CourseController : BaseApiController
     }
 
     [HttpGet]
-    public async Task<ActionResult<ServiceResponse<bool>>> Published(long courseId)
+    public async Task<ActionResult<ServiceResponse<bool>>> Published(long id)
     {
-        return Ok(await _courseService.PublishCourse(courseId));
+        return Ok(await _courseService.PublishCourse(id));
     }
 }
