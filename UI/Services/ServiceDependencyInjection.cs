@@ -40,17 +40,17 @@ public static class ServiceDependencyInjection
             .ConfigureHttpClient(CreateHttpClient(url));
         
         services
-            .AddRefitClient<IModuleRefitService>()
-            .AddHttpMessageHandler<AuthTokenHandler>()
-            .ConfigureHttpClient(CreateHttpClient(url));
-        
-        services
             .AddRefitClient<ICourseRefitService>()
             .AddHttpMessageHandler<AuthTokenHandler>()
             .ConfigureHttpClient(CreateHttpClient(url));
         
         services
             .AddRefitClient<IContentRefitService>()
+            .AddHttpMessageHandler<AuthTokenHandler>()
+            .ConfigureHttpClient(CreateHttpClient(url));
+        
+        services
+            .AddRefitClient<IModuleRefitService>()
             .AddHttpMessageHandler<AuthTokenHandler>()
             .ConfigureHttpClient(CreateHttpClient(url));
         

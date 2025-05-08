@@ -1,6 +1,7 @@
 
 using System.Reflection;
 using Domain.Entities;
+using Infrastructure.Config;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Module = Domain.Entities.Module;
@@ -15,11 +16,10 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, long>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        /*
           //long way to config
         modelBuilder.ApplyConfiguration(new CommentConfig());
         modelBuilder.ApplyConfiguration(new LikeDislikeConfig());
-        modelBuilder.ApplyConfiguration(new SubscribeConfig());*/
+        modelBuilder.ApplyConfiguration(new SubscribeConfig());
         
         //short way to config
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

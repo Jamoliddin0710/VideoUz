@@ -24,8 +24,8 @@ public class Course : BaseEntity
     public decimal Price { get; set; }
     
     public long CoverImageId { get; set; }
+    [ForeignKey(nameof(CoverImageId))]
     public virtual FileItem CoverImage { get; set; }
-
     public bool IsPublished { get; set; } = false;
     
     [ForeignKey("AuthorId")]

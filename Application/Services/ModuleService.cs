@@ -42,7 +42,15 @@ public class ModuleService : IModuleService
 
     public async Task<ModuleDTO> GetById(long Id)
     {
-      var module = await _unitOfWork.ModuleRepo.GetByIdAsync(Id, includeProperties:"Course");
-      return module.Adapt<ModuleDTO>();
+        try
+        {
+            var module = await _unitOfWork.ModuleRepo.GetByIdAsync(Id, includeProperties:"Course");
+            return module.Adapt<ModuleDTO>();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 }

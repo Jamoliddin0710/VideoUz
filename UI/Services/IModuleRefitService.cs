@@ -13,6 +13,5 @@ public interface IModuleRefitService
     [Delete("/module/Delete")]
     Task<ServiceResponse<object>> Delete([Query] long moduleId);
     [Get("/module/getbyid")]
-    Task<ServiceResponse<ModuleDTO>> GetById(long Id);
-
+    Task<ServiceResponse<ModuleDTO?>> GetById(long Id);
 }

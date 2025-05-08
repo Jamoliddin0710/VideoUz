@@ -12,7 +12,7 @@ public class Content : BaseEntity
 
     [Required] public ContentType ContentType { get; set; }
 
-    public string? ContentData { get; set; }
+    public string?  ContentData { get; set; }
     public int Order { get; set; }
 
     public long? FileId { get; set; }

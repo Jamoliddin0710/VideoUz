@@ -204,6 +204,12 @@ public class CourseController : Controller
         return View(editViewModel);
     }
 
+    [HttpGet]
+    public async Task<IActionResult> PublishCourse(long id)
+    {
+        await _courseRefitService.PublishCourse(id);
+        return Ok();
+    }
     private async Task<List<SelectListItem>> GetAllCategoryDropDown()
     {
         var categories = await _categoryRefitService.GetAllCategories(new Filter());

@@ -1,4 +1,6 @@
 
+using System.Text.Json.Serialization;
+
 namespace Application.DTOs;
 
 public sealed class ServiceResponse<T>
@@ -12,6 +14,7 @@ public sealed class ServiceResponse<T>
         
     }
     
+    [JsonConstructor]
     public ServiceResponse(bool isSuccessful, ErrorModel error, T? data)
     {
         IsSuccessful = isSuccessful;

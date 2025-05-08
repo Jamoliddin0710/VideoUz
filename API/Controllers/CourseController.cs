@@ -55,9 +55,21 @@ public class CourseController : BaseApiController
         return Ok(await _courseService.GetCourseDetails(courseId));
     }
 
+    [HttpGet]
+    public async Task<ActionResult<ServiceResponse<CourseDTO>>> GetcourseByModule(long modelId)
+    {
+        return Ok(await _courseService.GetcourseByModule(modelId));
+    }
+
     [HttpDelete]
     public async Task<ActionResult<ServiceResponse<bool>>> Delete(long id)
     {
         return Ok(await _courseService.Delete(id));
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<ServiceResponse<bool>>> Published(long courseId)
+    {
+        return Ok(await _courseService.PublishCourse(courseId));
     }
 }

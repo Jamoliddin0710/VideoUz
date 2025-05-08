@@ -5,7 +5,7 @@ namespace Domain.Entities;
 public class AppUser :  IdentityUser<long> 
 {
     public string Name { get; set; }
-    public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedDate { get; set; }
     public virtual Channel Channel { get; set; }
     public virtual ICollection<Comment> Comments { get; set; }
     public virtual ICollection<Subscribe> Subscribtions { get; set; }

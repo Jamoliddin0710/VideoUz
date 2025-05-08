@@ -39,6 +39,13 @@ public class CourseService : ICourseService
         return course.Adapt<CourseDTO>();
     }
 
+    public async Task<CourseDTO> GetcourseByModule(long moduleId)
+    {
+        var courses = await _unitOfWork.CourseRepo.GetAllAsync(includeProperties: "Modules");
+        var course = await _unitOfWork.CourseRepo.GetFirstOrDefaultAsync(a=>a.Modules.Any(a=>a.Id == moduleId));
+        return course.Adapt<CourseDTO>();
+    }
+
     public async Task<FilterResponseModel<CourseListViewModel>> GetAll(long userId)
     {
         var courses =
@@ -83,6 +90,9 @@ public class CourseService : ICourseService
     {
         var course =
             await _unitOfWork.CourseRepo.GetByIdAsync(courseId, includeProperties: "Category,Modules.Contents");
+        if(course is null)
+            throw new ApplicationException("Course doesn't exists ");
+            
         var url = await _storageService.GetFileUrlAsync(course.CoverImage.StorageName);
         var result = new CourseDetailViewModel()
         {
@@ -105,5 +115,14 @@ public class CourseService : ICourseService
         var course = await _unitOfWork.CourseRepo.GetByIdAsync(Id);
         _unitOfWork.CourseRepo.Remove(course);
         return await _unitOfWork.CompleteAsync();
+    }
+
+    public async Task<bool> PublishCourse(long courseId)
+    {
+        var course = await _unitOfWork.CourseRepo.GetByIdAsync(courseId);
+        if(course is null)
+            throw new Exception("course doesn't exists");
+        course.IsPublished = true;
+       return await _unitOfWork.CompleteAsync();
     }
 }

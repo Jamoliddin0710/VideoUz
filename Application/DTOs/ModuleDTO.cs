@@ -9,7 +9,7 @@ public class ModuleDTO
     public string Title { get; set; }
     public string Description { get; set; }
     public int Order { get; set; }
-    public List<Content> Contents { get; set; }
+    public List<ContentDTO> Contents { get; set; }
     public CourseDTO? Course { get; set; }
 }
 public class CreateModuleDTO
@@ -19,3 +19,4 @@ public class CreateModuleDTO
     public string Description { get; set; }
     public int Order { get; set; }
 }
+

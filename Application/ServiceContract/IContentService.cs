@@ -5,5 +5,7 @@ namespace Application.ServiceContract;
 
 public interface IContentService
 {
-    Task<bool> Create(CreateContentDTO createViewModel);
+    Task<ContentDTO> Create(CreateContentDTO createViewModel);
+    Task<ContentDTO> GetById(long id);
+    Task<bool> Delete(long id);
 }

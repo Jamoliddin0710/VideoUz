@@ -47,10 +47,10 @@
                         <i class="fas fa-upload"></i> Publish Course
                     </a>
                 }
-                <a asp-action="Delete" asp-controller="Course" asp-route-id="@Model.Id" class="btn btn-danger"
-                   onclick="deleteModule(@Model.Id)">
+                <button class="btn btn-danger"
+                   onclick="deleteCourse(@Model.Id)">
                     <i class="fas fa-trash"></i> Delete Course
-                </a>
+                </button>
             </div>
         </div>
         
@@ -136,12 +136,15 @@
                                                            class="btn btn-sm btn-outline-primary">
                                                             Edit
                                                         </a>
-                                                        <a asp-controller="Content" asp-action="Delete" 
+                                                        <button class="btn btn-sm btn-outline-danger" onclick="deleteContent(@content.Id)">
+                                                            Delete
+                                                        </button>
+                                                        @*<a asp-controller="Content" asp-action="Delete" 
                                                            asp-route-id="@content.Id" 
                                                            class="btn btn-sm btn-outline-danger"
                                                            onclick="return confirm('Delete this content?')">
                                                             Delete
-                                                        </a>
+                                                        </a>*@
                                                     </div>
                                                 </div>
                                             }
@@ -192,6 +195,44 @@
                         if (response.ok) {
                             alert('Deleted successfully!');
                             location.reload();  
+                        } else {
+                            alert('Failed to delete the item.');
+                        }
+                    })
+                    .catch(error => {
+                        alert('Error: ' + error);
+                    });
+            }
+        }
+
+        function deleteCourse(id) {
+            if (confirm('Are you sure?')) {
+                fetch(`/Course/Delete/${id}`, {
+                    method: 'DELETE',
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Deleted successfully!');
+                            location.reload();
+                        } else {
+                            alert('Failed to delete the item.');
+                        }
+                    })
+                    .catch(error => {
+                        alert('Error: ' + error);
+                    });
+            }
+        }
+        
+        function deleteContent(id){
+            if (confirm('Are you sure?')) {
+                fetch(`/Content/Delete/${id}`, {
+                    method: 'DELETE',
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Deleted successfully!');
+                            location.reload();
                         } else {
                             alert('Failed to delete the item.');
                         }

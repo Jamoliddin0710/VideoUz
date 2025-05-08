@@ -5,13 +5,12 @@ namespace Application.DTOs;
 
 public class ContentDTO
 {
+    public long Id { get; set; }
     public long ModuleId { get; set; }
-    [Required]
-    [StringLength(200)]
     public string Title { get; set; }
-    [Required]
-    public ContentType ContentType { get; set; } 
+    public ContentType ContentType { get; set; }
     public string ContentData { get; set; }
     public int Order { get; set; }
-    public int? Duration { get; set; } 
+    public int? Duration { get; set; }
+    public FileItemDTO FileItem { get; set; }
 }
