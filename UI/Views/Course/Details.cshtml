@@ -1,3 +1,5 @@
+@using Application.Helpers
+@using Domain.Entities
 @model CourseDetailViewModel
 
 @{
@@ -14,10 +16,10 @@
                     <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
                 </ol>
             </nav>
-            
+
             <h1 class="display-4">@Model.Title</h1>
             <p class="lead">@Model.Description</p>
-            
+
             <div class="d-flex align-items-center mb-3">
                 <span class="badge bg-primary me-2">@Model.Category.Name</span>
                 <span class="badge bg-success me-2">$@Model.Price</span>
@@ -31,13 +33,13 @@
                 }
                 <small class="text-muted">Created: @Model.CreatedDate.ToString("MMM dd, yyyy")</small>
             </div>
-            
+
             <!-- Action Buttons -->
             <div class="mb-4">
                 <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
                     <i class="fas fa-edit"></i> Edit Course
                 </a>
-                <a asp-controller="Module" asp-action="Create" asp-route-courseId="@Model.Id" 
+                <a asp-controller="Module" asp-action="Create" asp-route-courseId="@Model.Id"
                    class="btn btn-success">
                     <i class="fas fa-plus"></i> Add Module
                 </a>
@@ -48,12 +50,12 @@
                     </a>
                 }
                 <button class="btn btn-danger"
-                   onclick="deleteCourse(@Model.Id)">
+                        onclick="deleteCourse(@Model.Id)">
                     <i class="fas fa-trash"></i> Delete Course
                 </button>
             </div>
         </div>
-        
+
         <div class="col-md-4">
             @if (!string.IsNullOrEmpty(Model.CoverImageUrl))
             {
@@ -68,12 +70,12 @@
             }
         </div>
     </div>
-    
+
     <!-- Modules Section -->
     <div class="row">
         <div class="col-12">
             <h2 class="mb-4">Course Modules</h2>
-            
+
             @if (Model?.Modules != null && Model.Modules.Any())
             {
                 <div class="accordion" id="modulesAccordion">
@@ -81,7 +83,7 @@
                     {
                         <div class="accordion-item mb-3">
                             <h2 class="accordion-header" id="heading-@module.Id">
-                                <button class="accordion-button collapsed" type="button" 
+                                <button class="accordion-button collapsed" type="button"
                                         data-bs-toggle="collapse" data-bs-target="#module-@module.Id">
                                     <span class="badge bg-primary me-2">Module @module.Order</span>
                                     <strong>@module.Title</strong>
@@ -90,35 +92,36 @@
                                     </span>
                                 </button>
                             </h2>
-                            <div id="module-@module.Id" class="accordion-collapse collapse" 
+                            <div id="module-@module.Id" class="accordion-collapse collapse"
                                  data-bs-parent="#modulesAccordion">
                                 <div class="accordion-body">
                                     <p>@module.Description</p>
-                                    
+
                                     <div class="mb-3">
-                                        <a asp-controller="Content" asp-action="Create" 
-                                           asp-route-moduleId="@module.Id" 
+                                        <a asp-controller="Content" asp-action="Create"
+                                           asp-route-moduleId="@module.Id"
                                            class="btn btn-sm btn-success">
                                             <i class="fas fa-plus"></i> Add Content
                                         </a>
-                                        <a asp-controller="Module" asp-action="Edit" 
-                                           asp-route-id="@module.Id" 
+                                        <a asp-controller="Module" asp-action="Edit"
+                                           asp-route-id="@module.Id"
                                            class="btn btn-sm btn-primary">
                                             <i class="fas fa-edit"></i> Edit Module
                                         </a>
-                                        <a   class="btn btn-sm btn-danger"
+                                        <a class="btn btn-sm btn-danger"
                                            onclick="deleteModule(@module.Id)">
                                             <i class="fas fa-trash"></i> Delete
                                         </a>
                                     </div>
-                                    
+
                                     @if (module.Contents != null && module.Contents.Any())
                                     {
                                         <h5>Contents:</h5>
                                         <div class="list-group">
                                             @foreach (var content in module.Contents)
                                             {
-                                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                                <div
+                                                    class="list-group-item d-flex justify-content-between align-items-center">
                                                     <div>
                                                         <span class="badge bg-secondary me-2">@content.Order</span>
                                                         <strong>@content.Title</strong>
@@ -131,12 +134,13 @@
                                                         }
                                                     </div>
                                                     <div>
-                                                        <a asp-controller="Content" asp-action="Edit" 
-                                                           asp-route-id="@content.Id" 
+                                                        <a asp-controller="Content" asp-action="Edit"
+                                                           asp-route-id="@content.Id"
                                                            class="btn btn-sm btn-outline-primary">
                                                             Edit
                                                         </a>
-                                                        <button class="btn btn-sm btn-outline-danger" onclick="deleteContent(@content.Id)">
+                                                        <button class="btn btn-sm btn-outline-danger"
+                                                                onclick="deleteContent(@content.Id)">
                                                             Delete
                                                         </button>
                                                         @*<a asp-controller="Content" asp-action="Delete" 
@@ -166,10 +170,13 @@
                     <h4 class="alert-heading">No modules yet!</h4>
                     <p>Start by adding modules to your course.</p>
                     <hr>
-                    <a asp-controller="Module" asp-action="Create" asp-route-courseId="@Model.Id" 
-                       class="btn btn-primary">
-                        <i class="fas fa-plus"></i> Add First Module
-                    </a>
+                    @if (User.IsUserRole(nameof(Role.Teacher)))
+                    {
+                        <a asp-controller="Module" asp-action="Create" asp-route-courseId="@Model.Id"
+                           class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add First Module
+                        </a>
+                    }
                 </div>
             }
         </div>
@@ -178,10 +185,10 @@
 
 @section Scripts {
     <script>
-    
+
         var accordionItems = document.querySelectorAll('.accordion-button');
-        accordionItems.forEach(function(item) {
-            item.addEventListener('click', function() {
+        accordionItems.forEach(function (item) {
+            item.addEventListener('click', function () {
                 // Accordion logic
             });
         });
@@ -194,7 +201,7 @@
                     .then(response => {
                         if (response.ok) {
                             alert('Deleted successfully!');
-                            location.reload();  
+                            location.reload();
                         } else {
                             alert('Failed to delete the item.');
                         }
@@ -223,8 +230,8 @@
                     });
             }
         }
-        
-        function deleteContent(id){
+
+        function deleteContent(id) {
             if (confirm('Are you sure?')) {
                 fetch(`/Content/Delete/${id}`, {
                     method: 'DELETE',
@@ -246,18 +253,18 @@
 }
 
 
-    <style>
-        .accordion-button:not(.collapsed) {
-            background-color: #f8f9fa;
-            color: #0d6efd;
-        }
-        
-        .accordion-button:focus {
-            box-shadow: none;
-            border-color: rgba(0,0,0,.125);
-        }
-        
-        .list-group-item {
-            border-left: 3px solid #0d6efd;
-        }
-    </style>
+<style>
+    .accordion-button:not(.collapsed) {
+        background-color: #f8f9fa;
+        color: #0d6efd;
+    }
+
+    .accordion-button:focus {
+        box-shadow: none;
+        border-color: rgba(0, 0, 0, .125);
+    }
+
+    .list-group-item {
+        border-left: 3px solid #0d6efd;
+    }
+</style>

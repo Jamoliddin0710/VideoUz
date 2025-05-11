@@ -1,7 +1,6 @@
-using System.ComponentModel.DataAnnotations;
+
 using Application.DTOs;
 using Application.Helpers;
-using Application.ServiceContract;
 using Infrastructure.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,7 +8,6 @@ using Microsoft.Extensions.Options;
 using Refit;
 using UI.Models;
 using UI.Services;
-
 namespace UI.Controllers;
 
 public class CourseController : Controller

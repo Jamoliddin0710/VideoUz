@@ -19,8 +19,10 @@ public interface ICourseRefitService
     Task<ServiceResponse<CourseDetailViewModel>> GetCourseWithDetails(long courseId);
     [Delete("/course/delete")]
     Task<ServiceResponse<CourseDetailViewModel>> Delete(long id);
+    [Get("/course/GetcourseByModuleId")]
+    Task<ServiceResponse<long?>> GetcourseByModuleId(long Id);   
     [Get("/course/getcoursebymodule")]
-    Task<ServiceResponse<CourseDTO?>> GetcourseByModule(long Id);   
+    Task<ServiceResponse<CourseDTO?>> GetcourseByModule(long Id);  
     [Get("/course/published")]
     Task<ServiceResponse<object?>> PublishCourse(long Id);
 }

@@ -1,0 +1,561 @@
+@model VideoContentViewModel
+
+@{
+    ViewData["Title"] = Model.Title;
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@Model.Title - @Model.Course.Name</title>
+    
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    
+    <style>
+        body {
+            background-color: #1c1d1f;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        .video-header {
+            background-color: #1c1d1f;
+            border-bottom: 1px solid #3e4143;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 60px;
+        }
+        
+        .course-info {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+        
+        .course-title {
+            font-size: 16px;
+            color: #fff;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+        
+        .back-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        
+        .progress-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .share-btn {
+            background: none;
+            border: 1px solid #3e4143;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .main-container {
+            display: flex;
+            margin-top: 60px;
+            height: calc(100vh - 60px);
+        }
+        
+        .video-section {
+            flex: 1;
+            background-color: #000;
+            position: relative;
+        }
+        
+        .video-player {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .sidebar {
+            width: 400px;
+            background-color: #1c1d1f;
+            border-left: 1px solid #3e4143;
+            overflow-y: auto;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #3e4143;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            border-bottom: 2px solid #f69c08;
+            background-color: #2d2f31;
+        }
+        
+        .content-list {
+            padding: 0;
+        }
+        
+        .module-header {
+            background-color: #2d2f31;
+            padding: 15px 20px;
+            border-bottom: 1px solid #3e4143;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .module-title {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .module-info {
+            color: #9ca3af;
+            font-size: 12px;
+        }
+        
+        .content-item {
+            padding: 12px 35px;
+            border-bottom: 1px solid #3e4143;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .content-item:hover {
+            background-color: #2d2f31;
+        }
+        
+        .content-item.active {
+            background-color: #3e4143;
+        }
+        
+        .content-icon {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .content-info {
+            flex: 1;
+        }
+        
+        .content-title {
+            color: #fff;
+            font-size: 14px;
+        }
+        
+        .content-duration {
+            color: #9ca3af;
+            font-size: 12px;
+        }
+        
+        .checkmark {
+            color: #73d13d;
+            margin-left: auto;
+        }
+        
+        .video-controls-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .video-section:hover .video-controls-overlay {
+            opacity: 1;
+        }
+        
+        .progress-bar-container {
+            background-color: rgba(255,255,255,0.3);
+            height: 4px;
+            border-radius: 2px;
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar {
+            background-color: #f69c08;
+            height: 100%;
+            border-radius: 2px;
+            width: 0%;
+        }
+        
+        .video-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .left-controls, .right-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .control-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        
+        .time-display {
+            color: #fff;
+            font-size: 14px;
+        }
+        
+        .notes-section {
+            padding: 20px;
+        }
+        
+        .note-form {
+            margin-bottom: 20px;
+        }
+        
+        .note-textarea {
+            width: 100%;
+            height: 80px;
+            background-color: #2d2f31;
+            border: 1px solid #3e4143;
+            color: #fff;
+            padding: 10px;
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+        
+        .note-btn {
+            background-color: #5624d0;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .notes-list {
+            color: #9ca3af;
+        }
+        
+        @@media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: 50%;
+            }
+            
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .video-section {
+                height: 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="video-header">
+        <div class="course-info">
+            <button class="back-btn" onclick="goBack()">
+                <i class="fas fa-times"></i>
+            </button>
+            <a href="@Url.Action("Details", "Course", new { id = Model.Course.Id })" class="course-title">
+                @Model.Course.Name
+            </a>
+        </div>
+        <div class="progress-info">
+            <div class="ai-assistant-btn">
+                <i class="fas fa-robot"></i> AI Assistant
+            </div>
+            <span>Your progress</span>
+            <button class="share-btn">
+                <i class="fas fa-share"></i> Share
+            </button>
+            <button class="share-btn">
+                <i class="fas fa-ellipsis-v"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Video Section -->
+        <div class="video-section">
+            <video id="courseVideo" class="video-player" preload="auto">
+                <source src="@Model.ContentData" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            
+            <div class="video-controls-overlay">
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="videoProgress"></div>
+                </div>
+                <div class="video-controls">
+                    <div class="left-controls">
+                        <button class="control-btn" id="playPauseBtn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="control-btn" id="prevBtn">
+                            <i class="fas fa-step-backward"></i>
+                        </button>
+                        <button class="control-btn" id="nextBtn">
+                            <i class="fas fa-step-forward"></i>
+                        </button>
+                        <div class="time-display">
+                            <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
+                        </div>
+                    </div>
+                    <div class="right-controls">
+                        <button class="control-btn" id="volumeBtn">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                        <button class="control-btn" id="speedBtn">1x</button>
+                        <button class="control-btn" id="settingsBtn">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                        <button class="control-btn" id="pipBtn">
+                            <i class="fas fa-external-link-alt"></i>
+                        </button>
+                        <button class="control-btn" id="fullscreenBtn">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="tabs">
+                <button class="tab active" data-tab="content">Course content</button>
+                <button class="tab" data-tab="overview">Overview</button>
+                <button class="tab" data-tab="notes">Notes</button>
+                <button class="tab" data-tab="qa">Q&A</button>
+                <button class="tab" data-tab="reviews">Reviews</button>
+                <button class="tab" data-tab="tools">Learning tools</button>
+            </div>
+            
+            <div class="tab-content" id="contentTab">
+                <div class="current-section">
+                    <div style="padding: 20px; border-bottom: 1px solid #3e4143;">
+                        <h6 style="color: #9ca3af; margin: 0; font-size: 12px;">Section @Model.Module.Order: @Model.Module.Title</h6>
+                        <p style="margin: 5px 0 0 0;">@Model.Order / @Model.Module.Contents.Count() | @Model.Duration min</p>
+                    </div>
+                </div>
+                
+                <div class="content-list">
+                    @foreach (var module in Model.Course.Modules.OrderBy(m => m.Order))
+                    {
+                        <div class="module" data-module-id="@module.Id">
+                            <div class="module-header">
+                                <div>
+                                    <div class="module-title">Section @module.Order: @module.Title</div>
+                                    <div class="module-info">@module.Contents.Count() / @module.Contents.Sum(c => c.Duration ?? 0) min</div>
+                                </div>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            
+                            <div class="module-contents" style="@(module.Id == Model.Module.Id ? "" : "display: none;")">
+                                @foreach (var content in module.Contents.OrderBy(c => c.Order))
+                                {
+                                    <div class="content-item @(content.Id == Model.Id ? "active" : "")" 
+                                         onclick="navigateToContent(@content.Id)">
+                                        <div class="content-icon">
+                                            @if (content.ContentType == "Video")
+                                            {
+                                                <i class="fas fa-play-circle"></i>
+                                            }
+                                            else if (content.ContentType == "Document")
+                                            {
+                                                <i class="fas fa-file"></i>
+                                            }
+                                        </div>
+                                        <div class="content-info">
+                                            <div class="content-title">
+                                                @content.Order. @content.Title
+                                            </div>
+                                            <div class="content-duration">@content.Duration min</div>
+                                        </div>
+                                        @if (Model.EnrolledUser?.Progress?.Any(p => p.ContentId == content.Id && p.Status == "Completed") == true)
+                                        {
+                                            <div class="checkmark">
+                                                <i class="fas fa-check"></i>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            
+            <div class="tab-content" id="notesTab" style="display: none;">
+                <div class="notes-section">
+                    <div class="note-form">
+                        <textarea class="note-textarea" placeholder="Take note at @Model.Order. @Model.Title"></textarea>
+                        <button class="note-btn">Save</button>
+                    </div>
+                    <div class="notes-list">
+                        <p>You have no notes on this lecture yet.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        let video = document.getElementById('courseVideo');
+        let playPauseBtn = document.getElementById('playPauseBtn');
+        let currentTimeSpan = document.getElementById('currentTime');
+        let durationSpan = document.getElementById('duration');
+        let progressBar = document.getElementById('videoProgress');
+        
+        // Video controls
+        playPauseBtn.addEventListener('click', togglePlayPause);
+        
+        function togglePlayPause() {
+            if (video.paused) {
+                video.play();
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
+                video.pause();
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        }
+        
+        video.addEventListener('timeupdate', updateProgress);
+        video.addEventListener('loadedmetadata', updateDuration);
+        
+        function updateProgress() {
+            let percentage = (video.currentTime / video.duration) * 100;
+            progressBar.style.width = percentage + '%';
+            currentTimeSpan.textContent = formatTime(video.currentTime);
+        }
+        
+        function updateDuration() {
+            durationSpan.textContent = formatTime(video.duration);
+        }
+        
+        function formatTime(seconds) {
+            let minutes = Math.floor(seconds / 60);
+            seconds = Math.floor(seconds % 60);
+            return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                // Hide all tab contents
+                document.querySelectorAll('.tab-content').forEach(content => content.style.display = 'none');
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Show corresponding content
+                if (this.dataset.tab === 'content') {
+                    document.getElementById('contentTab').style.display = 'block';
+                } else if (this.dataset.tab === 'notes') {
+                    document.getElementById('notesTab').style.display = 'block';
+                }
+            });
+        });
+        
+        // Module toggle
+        document.querySelectorAll('.module-header').forEach(header => {
+            header.addEventListener('click', function() {
+                let moduleContents = this.nextElementSibling;
+                let chevron = this.querySelector('.fa-chevron-down');
+                
+                if (moduleContents.style.display === 'none') {
+                    moduleContents.style.display = 'block';
+                    chevron.classList.remove('fa-chevron-down');
+                    chevron.classList.add('fa-chevron-up');
+                } else {
+                    moduleContents.style.display = 'none';
+                    chevron.classList.remove('fa-chevron-up');
+                    chevron.classList.add('fa-chevron-down');
+                }
+            });
+        });
+        
+        // Navigation functions
+        function navigateToContent(contentId) {
+            window.location.href = '@Url.Action("WatchVideo", "Content")/' + contentId;
+        }
+        
+        function goBack() {
+            window.location.href = '@Url.Action("Details", "Course", new { id = Model.Course.Id })';
+        }
+        
+        // Auto-save progress
+        setInterval(function() {
+            if (!video.paused) {
+                fetch('/Student/UpdateProgress', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        userId: '@Model.EnrolledUser.Id',
+                        contentId: @Model.Id,
+                        currentTime: video.currentTime,
+                        duration: video.duration
+                    })
+                });
+            }
+        }, 30000); // Save every 30 seconds
+        
+        // Mark as completed when video ends
+        video.addEventListener('ended', function() {
+            fetch('/Student/CompleteContent', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    userId: '@Model.EnrolledUser.Id',
+                    contentId: @Model.Id,
+                    completedDate: new Date().toISOString()
+                })
+            });
+        });
+    </script>
+</body>
+</html>

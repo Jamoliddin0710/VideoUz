@@ -111,9 +111,9 @@ public class AccountController : BaseApiController
             };
         }
         
-        await _userManager.AddToRoleAsync(user, nameof(Role.User));
+        await _userManager.AddToRoleAsync(user, nameof(Role.Student));
         
-        var token = await GenerateJwtToken(user, new List<string>(){nameof(Role.User)});
+        var token = await GenerateJwtToken(user, new List<string>(){nameof(Role.Student)});
         return new ServiceResponse<TokenModel>()
         {
             Data = token,

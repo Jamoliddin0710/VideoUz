@@ -14,4 +14,5 @@ public interface ICourseService
     Task<CourseDetailViewModel> GetCourseDetails(long courseId);
     Task<bool> Delete(long Id);
     Task<bool> PublishCourse(long courseId);
+    Task<long> GetCourseIdbyModule(long moduleId);
 }

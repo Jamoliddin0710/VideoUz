@@ -4,6 +4,7 @@ using Application.ServiceContract;
 using Domain.Entities;
 using Domain.RepositoryContracts;
 using Mapster;
+using Microsoft.AspNetCore.Identity;
 
 namespace Application.Services;
 
@@ -11,11 +12,13 @@ public class CourseService : ICourseService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IStorageService _storageService;
+    private readonly UserManager<AppUser> _userManager;
 
-    public CourseService(IUnitOfWork unitOfWork, IStorageService storageService)
+    public CourseService(IUnitOfWork unitOfWork, IStorageService storageService, UserManager<AppUser> userManager)
     {
         _unitOfWork = unitOfWork;
         _storageService = storageService;
+        _userManager = userManager;
     }
 
     public async Task<CourseDTO> Create(CourseCreateDTO coursedto, long userId)
@@ -41,16 +44,26 @@ public class CourseService : ICourseService
 
     public async Task<CourseDTO> GetcourseByModule(long moduleId)
     {
-        var courses = await _unitOfWork.CourseRepo.GetAllAsync(includeProperties: "Modules");
-        var course = await _unitOfWork.CourseRepo.GetFirstOrDefaultAsync(a=>a.Modules.Any(a=>a.Id == moduleId));
+        var course = await _unitOfWork.CourseRepo.GetFirstOrDefaultAsync(a => a.Modules.Any(a => a.Id == moduleId));
         return course.Adapt<CourseDTO>();
     }
 
     public async Task<FilterResponseModel<CourseListViewModel>> GetAll(long userId)
     {
-        var courses =
-            await _unitOfWork.CourseRepo.GetAllAsync(a => a.AuthorId == userId,
-                includeProperties: "Modules,Enrollments,Category,CoverImage");
+        var user = await _userManager.FindByIdAsync(userId.ToString());
+        var roles = await _userManager.GetRolesAsync(user);
+        var courses = new List<Course>();
+        if (roles.Any(a => a == nameof(Role.Teacher)))
+        {
+            courses =
+                (await _unitOfWork.CourseRepo.GetAllAsync(a => a.AuthorId == userId,
+                    includeProperties: "Modules,Enrollments,Category,CoverImage")).ToList();
+        }
+        else
+        {
+            courses = (await _unitOfWork.CourseRepo.GetAllAsync(a => a.IsPublished,
+                includeProperties: "Modules,Enrollments,Category,CoverImage")).ToList();
+        }
 
         var coverImageNames = courses
             .Select(x => x.CoverImage.StorageName)
@@ -90,9 +103,9 @@ public class CourseService : ICourseService
     {
         var course =
             await _unitOfWork.CourseRepo.GetByIdAsync(courseId, includeProperties: "Category,Modules.Contents");
-        if(course is null)
+        if (course is null)
             throw new ApplicationException("Course doesn't exists ");
-            
+
         var url = await _storageService.GetFileUrlAsync(course.CoverImage.StorageName);
         var result = new CourseDetailViewModel()
         {
@@ -120,9 +133,14 @@ public class CourseService : ICourseService
     public async Task<bool> PublishCourse(long courseId)
     {
         var course = await _unitOfWork.CourseRepo.GetByIdAsync(courseId);
-        if(course is null)
+        if (course is null)
             throw new Exception("course doesn't exists");
         course.IsPublished = true;
-       return await _unitOfWork.CompleteAsync();
+        return await _unitOfWork.CompleteAsync();
+    }
+
+    public async Task<long> GetCourseIdbyModule(long moduleId)
+    {
+        return (await _unitOfWork.ModuleRepo.GetFirstOrDefaultAsync(a => a.Id == moduleId)).CourseId;
     }
 }
