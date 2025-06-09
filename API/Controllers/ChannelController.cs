@@ -8,15 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
-public class ChannelController : BaseApiController
+public class ChannelController(IChannelService _channelService) : BaseApiController
 {
-    private readonly IChannelService _channelService;
-
-    public ChannelController(IChannelService channelService)
-    {
-        _channelService = channelService;
-    }
-
     [HttpPost]
     public async Task<IActionResult> Create(CreateOrUpdateChannelDTO createOrUpdateChannelDto)
     {
@@ -41,7 +34,7 @@ public class ChannelController : BaseApiController
     {
         return Ok(await _channelService.GetByIdAsync(Id));
     }
-    
+
     [HttpGet]
     [AllowAnonymous]
     public async Task<ActionResult<ServiceResponse<FilterResponseModel<ChannelDTO>>>> GetUserChannels()
@@ -67,7 +60,7 @@ public class ChannelController : BaseApiController
         if (userId.HasValue)
         {
             var result = await _channelService.UsersChannelExists(userId.Value);
-            return Ok(result); 
+            return Ok(result);
         }
 
         return Ok(false);

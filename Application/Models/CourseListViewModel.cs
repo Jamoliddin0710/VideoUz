@@ -11,5 +11,6 @@ public class CourseListViewModel
     public bool IsPublished { get; set; }
     public int ModulesCount { get; set; }
     public int StudentsCount { get; set; }
+    public string User { get; set; }
     public DateTime CreatedDate { get; set; }
 }

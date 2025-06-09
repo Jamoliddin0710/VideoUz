@@ -6,17 +6,8 @@ using UI.Services;
 
 namespace UI.Controllers;
 
-public class ModuleController : Controller
+public class ModuleController(IModuleRefitService _moduleService, ICourseRefitService _courseService) : Controller
 {
-    private readonly IModuleRefitService _moduleService;
-    private readonly ICourseRefitService _courseService;
-
-    public ModuleController(IModuleRefitService moduleService, ICourseRefitService courseService)
-    {
-        _moduleService = moduleService;
-        _courseService = courseService;
-    }
-
     [HttpGet]
     public async Task<IActionResult> Create(long courseId)
     {
@@ -92,12 +83,12 @@ public class ModuleController : Controller
         await _moduleService.Delete(id);
         return Ok();
     }
-    
+
     [HttpGet]
     public async Task<IActionResult> Edit(long id)
     {
         var moduleResponse = await _moduleService.GetById(id);
-        
+
         if (!moduleResponse.IsSuccessful)
         {
             TempData["Error"] = "Module not found";

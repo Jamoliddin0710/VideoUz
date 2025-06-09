@@ -16,10 +16,11 @@ public class QuizAttempt : BaseEntity
     public DateTime? EndTime { get; set; }
 
     public int Score { get; set; }
+    public int MaxScore { get; set; }
+    public int CorrectAnswerCount { get; set; }
 
     public bool IsPassed { get; set; }
-
-    // Navigation properties
+    
     [ForeignKey("QuizId")]
     public virtual Quiz Quiz { get; set; }
 

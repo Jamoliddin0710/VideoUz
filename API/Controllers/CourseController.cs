@@ -7,15 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
-public class CourseController : BaseApiController
+public class CourseController(ICourseService _courseService) : BaseApiController
 {
-    private readonly ICourseService _courseService;
-
-    public CourseController(ICourseService courseService)
-    {
-        _courseService = courseService;
-    }
-
     [HttpPost]
     public async Task<ActionResult<ServiceResponse<CourseDTO>>> Create([FromBody] CourseCreateDTO courseCreateDto)
     {
@@ -42,10 +35,18 @@ public class CourseController : BaseApiController
         var userId = User.GetUserId();
         if (!userId.HasValue)
         {
-            return Unauthorized();
+            return Ok(await _courseService.GetAll());
         }
 
         var course = await _courseService.GetAll(userId.Value);
+        return Ok(course);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<ServiceResponse<StudentCourseDetailsViewModel>>> StudentCourseDetails(long id)
+    {
+        var userId = User.GetUserId();
+        var course = await _courseService.GetStudentCourseDetails(id, userId ?? 0);
         return Ok(course);
     }
 
@@ -62,9 +63,9 @@ public class CourseController : BaseApiController
     }
 
     [HttpGet]
-    public async Task<ActionResult<ServiceResponse<long>>> GetcourseByModuleId(long moduleId)
+    public async Task<ActionResult<ServiceResponse<long>>> GetcourseByModuleId(long id)
     {
-        return Ok(await _courseService.GetCourseIdbyModule(moduleId));
+        return Ok(await _courseService.GetCourseIdbyModule(id));
     }
 
     [HttpDelete]
@@ -77,5 +78,33 @@ public class CourseController : BaseApiController
     public async Task<ActionResult<ServiceResponse<bool>>> Published(long id)
     {
         return Ok(await _courseService.PublishCourse(id));
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<ServiceResponse<CourseStatisticsResponse>>> GetStatistics(long id)
+    {
+        return Ok(await _courseService.GetCourseStatistics(id));
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<ServiceResponse<bool>>> EnrollCourse(long id)
+    {
+        var userid = User.GetUserId();
+        return Ok(await _courseService.EnrollCourse(id, userid ?? 0));
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<ServiceResponse<FilterResponseModel<MyLearningResponse>>>> MyCourses()
+    {
+        var userId = User.GetUserId();
+        return Ok(await _courseService.MyCourses(userId ?? 0));
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<ServiceResponse<FilterResponseModel<MyLearningResponse>>>>
+        GetFilteredMyCourses(Filter filter)
+    {
+        var userId = User.GetUserId();
+        return Ok(await _courseService.GetFilteredMyCourses(userId ?? 0, filter));
     }
 }

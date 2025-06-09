@@ -7,21 +7,243 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - UI</title>
+    <title>@ViewData["Title"] - course.uz</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
           integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/UI.styles.css" asp-append-version="true"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+
+        .navbar-nav .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .navbar-nav .nav-link:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #fff;
+            transition: width 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover:before {
+            width: 100%;
+        }
+
+        .navbar-nav .nav-link.active {
+            font-weight: 600;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .dropdown-item {
+            transition: all 0.2s ease;
+            padding: 8px 20px;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f0f7ff;
+            transform: translateX(5px);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .navbar-brand:hover {
+            transform: scale(1.05);
+        }
+
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            margin-top: 30px;
+        }
+
+        .footer a {
+            color: #0d6efd;
+            transition: color 0.2s;
+        }
+
+        .footer a:hover {
+            color: #0a58ca;
+            text-decoration: none;
+        }
+
+        @@media (max-width: 768px) {
+            .navbar-nav .nav-link:before {
+                display: none;
+            }
+        }
+
+
+        /* chat bot style*/
+        /* O'ng tarafdagi chat panel */
+        .ai-chat-container {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 350px;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ai-chat-container.active {
+            right: 0;
+        }
+
+        .ai-chat-header {
+            padding: 15px;
+            background-color: #0d6efd;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-chat-header h5 {
+            margin: 0;
+        }
+
+        .ai-chat-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        .ai-chat-body {
+            flex: 1;
+            padding: 10px; 
+            overflow-y: auto;
+            line-height: 1.2;
+        }
+
+       
+        .message p {
+            margin: 0; 
+            padding: 0;
+        }
+
+        .ai-chat-footer {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+        }
+
+        .ai-chat-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+        }
+
+        .ai-chat-send {
+            padding: 8px 15px;
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        /* Xabarlar */
+        /* Xabarlar stilini tuzatish */
+        .message {
+            margin-bottom: 5px; /* Oldingi 15px edi, 5px ga kamaytirdik */
+            max-width: 80%;
+            padding: 10px;
+            border-radius: 10px;
+            word-wrap: break-word;
+            white-space: normal;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+
+        .user-message {
+            background-color: #0d6efd;
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 2px;
+        }
+
+        .ai-message {
+            background-color: #f1f1f1;
+            color: #333;
+            margin-right: auto;
+            border-bottom-left-radius: 2px;
+        }
+
+        /* Chat tugmasi */
+        .ai-chat-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 9998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .ai-chat-button .notification {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+            border: 2px solid white;
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-primary border-bottom box-shadow mb-3"
-         data-bs-theme="dark">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
         <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">VideoHub</a>
+            @if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="AIChat">
+                    <i class="fas fa-graduation-cap me-2"></i>course.uz
+                </a>
+            }
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
                     aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -29,35 +251,28 @@
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-white @Html.IsActive("Index", "Home")" asp-area="" asp-controller="Home"
-                           asp-action="Index">Home</a>
-                    </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link text-white @Html.IsActive("Create", "Course")" asp-area=""
-                           asp-controller="Course" asp-action="Index">Course</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white @Html.IsActive("Create", "Course")" asp-area=""
-                           asp-controller="Video" asp-action="CreateEditVideo">Video</a>
-                    </li>
                     @if (User.IsUserRole(nameof(Role.Admin)))
                     {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="admindropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="False">
-                                Administrator
+                                <i class="fas fa-user-shield me-1"></i> Administrator
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="admindropdown">
                                 <li>
                                     <a class="dropdown-item" asp-controller="Admin" asp-action="Category">
-                                        Category
+                                        <i class="fas fa-tags me-2"></i> Category
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" asp-controller="Course" asp-action="Index">
-                                        Course
+                                        <i class="fas fa-book-open me-2"></i> Course
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="Users">
+                                        <i class="fas fa-book-open me-2"></i> Users
                                     </a>
                                 </li>
                             </ul>
@@ -66,14 +281,14 @@
                     @if (User.IsUserRole(nameof(Role.Student)))
                     {
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="admindropdown" role="button"
+                            <a class="nav-link dropdown-toggle" href="#" id="studentdropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="False">
-                                Student
+                                <i class="fas fa-user-graduate me-1"></i> Student
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="admindropdown">
+                            <ul class="dropdown-menu" aria-labelledby="studentdropdown">
                                 <li>
                                     <a class="dropdown-item" asp-controller="Course" asp-action="Index">
-                                        Course
+                                        <i class="fas fa-book-reader me-2"></i> Course
                                     </a>
                                 </li>
                             </ul>
@@ -82,14 +297,14 @@
                     @if (User.IsUserRole(nameof(Role.Teacher)))
                     {
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="admindropdown" role="button"
+                            <a class="nav-link dropdown-toggle" href="#" id="teacherdropdown" role="button"
                                data-bs-toggle="dropdown" aria-expanded="False">
-                                Teacher
+                                <i class="fas fa-chalkboard-teacher me-1"></i> Teacher
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="admindropdown">
+                            <ul class="dropdown-menu" aria-labelledby="teacherdropdown">
                                 <li>
                                     <a class="dropdown-item" asp-controller="Course" asp-action="Index">
-                                        Course
+                                        <i class="fas fa-chalkboard me-2"></i> Course
                                     </a>
                                 </li>
                             </ul>
@@ -98,7 +313,6 @@
 
                 </ul>
             </div>
-
             <partial name="LoginPartialView"/>
         </div>
     </nav>
@@ -110,18 +324,194 @@
 </div>
 
 <footer class="border-top footer text-muted">
-    <div class="container text-center">
-        &copy; @DateTime.Now.Year <a asp-area="" asp-controller="Home" asp-action="Index">VideoUz</a>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start">
+                &copy; @DateTime.Now.Year <a asp-area="" asp-controller="Home" asp-action="Index">course.uz</a>
+                — Barcha huquqlar himoyalangan
+            </div>
+            <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
+                <a href="#" class="text-decoration-none mx-2"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-decoration-none mx-2"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-decoration-none mx-2"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-decoration-none mx-2"><i class="fab fa-youtube"></i></a>
+            </div>
+
+        </div>
     </div>
+
+
+    <button class="ai-chat-button" id="aiChatButton">
+        <i class="fas fa-robot"></i>
+        <span class="notification"></span>
+    </button>
+
+    <!-- Chat panel -->
+    <div class="ai-chat-container" id="aiChatContainer">
+        <div class="ai-chat-header">
+            <h5><i class="fas fa-robot mr-2"></i> AI yordamchi</h5>
+            <button class="ai-chat-close" id="aiChatClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="ai-chat-body" id="aiChatBody">
+            <!-- Xabarlar shu yerda ko'rsatiladi -->
+            <div class="message ai-message">
+                Salom! Men AI yordamchiman. Sizga qanday yordam bera olaman?
+            </div>
+        </div>
+        <div class="ai-chat-footer">
+            <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="Xabaringizni kiriting...">
+            <button class="ai-chat-send" id="aiChatSend">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
 </footer>
+
 <partial name="_Notification"/>
 <partial name="_Confirmation"/>
+
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
+<script>
+
+    $(document).ready(function () {
+        const currentLocation = window.location.pathname;
+        $('nav .nav-link').each(function () {
+            const $this = $(this);
+            if ($this.attr('href') && currentLocation.indexOf($this.attr('href')) > -1) {
+                $this.addClass('active');
+            }
+        });
+
+        $('.dropdown').on('show.bs.dropdown', function () {
+            $(this).find('.dropdown-menu').first().stop(true, true).slideDown(200);
+        });
+
+        $('.dropdown').on('hide.bs.dropdown', function () {
+            $(this).find('.dropdown-menu').first().stop(true, true).slideUp(100);
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM yuklandi, chat widgetni ishga tushirish...');
+
+      
+        const chatButton = document.getElementById('aiChatButton');
+        const chatContainer = document.getElementById('aiChatContainer');
+        const chatClose = document.getElementById('aiChatClose');
+        const chatInput = document.getElementById('aiChatInput');
+        const chatSend = document.getElementById('aiChatSend');
+        const chatBody = document.getElementById('aiChatBody');
+        const notification = document.querySelector('.notification');
+
+      
+        if (!chatButton) console.error('aiChatButton elementini topib bo\'lmadi');
+        if (!chatContainer) console.error('aiChatContainer elementini topib bo\'lmadi');
+        if (!chatClose) console.error('aiChatClose elementini topib bo\'lmadi');
+        if (!chatInput) console.error('aiChatInput elementini topib bo\'lmadi');
+        if (!chatSend) console.error('aiChatSend elementini topib bo\'lmadi');
+        if (!chatBody) console.error('aiChatBody elementini topib bo\'lmadi');
+
+        if (!chatButton || !chatContainer || !chatClose || !chatInput || !chatSend || !chatBody) {
+            console.error('Bir yoki bir necha chat elementlari topilmadi. Kod to\'xtatiladi.');
+            return;
+        }
+
+        console.log('Barcha chat elementlari topildi, eventlarni ulash...');
+
+        // Chat panelni ochish
+        chatButton.addEventListener('click', function() {
+            chatContainer.classList.add('active');
+            if (notification) notification.style.display = 'none';
+            chatInput.focus();
+
+            // Yangi xabar bo'lsa pastga scroll qilish
+            chatBody.scrollTop = chatBody.scrollHeight;
+        });
+
+        // Chat panelni yopish
+        chatClose.addEventListener('click', function() {
+            chatContainer.classList.remove('active');
+        });
+
+        // Xabar yuborish funksiyasi
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (message === '') return;
+
+            // Foydalanuvchi xabarini ko'rsatish
+            const userMessageElement = document.createElement('div');
+            userMessageElement.className = 'message user-message';
+            userMessageElement.textContent = message;
+            chatBody.appendChild(userMessageElement);
+
+            // Input-ni tozalash
+            chatInput.value = '';
+
+            // Yangi xabar bo'lsa pastga scroll qilish
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            // AI xabarini tayyorlash
+            setTimeout(function() {
+                const aiMessageElement = document.createElement('div');
+                aiMessageElement.className = 'message ai-message';
+
+            
+
+                // Yangi xabar bo'lsa pastga scroll qilish
+                chatBody.scrollTop = chatBody.scrollHeight;
+
+                // Asl AJAX qism:
+                
+                $.ajax({
+                    url: '/Content/SendChatMessage',
+                    type: 'POST',
+                    data: {message: message},
+                    success: function(response) {
+                        if(response.isSuccess) {
+                            aiMessageElement.textContent = response.result.content;
+                        } else {
+                            aiMessageElement.textContent = 'Kechirasiz, noma\'lum xatolik yuz berdi.';
+                        }
+                        chatBody.appendChild(aiMessageElement);
+                        chatBody.scrollTop = chatBody.scrollHeight;
+                    },
+                    error: function() {
+                        aiMessageElement.textContent = 'Xatolik yuz berdi. Iltimos, qayta urinib ko\'ring.';
+                        chatBody.appendChild(aiMessageElement);
+                        chatBody.scrollTop = chatBody.scrollHeight;
+                    }
+                });
+            }, 1000);
+        }
+
+        // Xabar yuborish uchun tugma bosish
+        chatSend.addEventListener('click', sendMessage);
+
+        // Enter tugmasini bosish
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Demo uchun bildirishnoma ko'rsatish
+        if (notification) {
+            setTimeout(function() {
+                notification.style.display = 'block';
+            }, 3000);
+        }
+
+        console.log('Chat widget muvaffaqiyatli ishga tushirildi');
+    });
+</script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

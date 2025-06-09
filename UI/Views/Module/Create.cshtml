@@ -1,7 +1,7 @@
 @model ModuleCreateViewModel
 
 @{
-    ViewData["Title"] = "Create Module";
+    ViewData["Title"] = "Modul yaratish";
 }
 
 <div class="container mt-4">
@@ -9,8 +9,8 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header bg-primary text-white">
-                    <h3 class="mb-0">Create Module #@ViewBag.ModuleNumber</h3>
-                    <small>For course: @ViewBag.CourseName</small>
+                    <h3 class="mb-0">Modul yaratish #@ViewBag.ModuleNumber</h3>
+                    <small>Kurs uchun: @ViewBag.CourseName</small>
                 </div>
 
                 <div class="card-body">
@@ -18,7 +18,7 @@
                     {
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             @TempData["SuccessMessage"]
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Yopish">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -28,33 +28,33 @@
                         <input type="hidden" asp-for="CourseId" />
 
                         <div class="form-group">
-                            <label asp-for="Title" class="control-label"></label>
-                            <input asp-for="Title" class="form-control" placeholder="Enter module title" />
+                            <label asp-for="Title" class="control-label">Sarlavha</label>
+                            <input asp-for="Title" class="form-control" placeholder="Modul sarlavhasini kiriting" />
                             <span asp-validation-for="Title" class="text-danger"></span>
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="Description" class="control-label"></label>
+                            <label asp-for="Description" class="control-label">Tavsif</label>
                             <textarea asp-for="Description" class="form-control" rows="4"
-                                      placeholder="Enter module description (optional)"></textarea>
+                                      placeholder="Modul tavsifini kiriting (ixtiyoriy)"></textarea>
                             <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="Order" class="control-label"></label>
+                            <label asp-for="Order" class="control-label">Tartib raqami</label>
                             <input asp-for="Order" type="number" class="form-control" readonly />
                             <small class="form-text text-muted">
-                                This module will be #@ViewBag.ModuleNumber in the course
+                                Bu modul kursda #@ViewBag.ModuleNumber tartibida bo'ladi
                             </small>
                         </div>
 
                         <div class="form-group mt-4">
-                            <button type="submit" class="btn btn-primary" form="createmoduleform" >
-                                <i class="fas fa-save"></i> Create Module
+                            <button type="submit" class="btn btn-primary" form="createmoduleform">
+                                <i class="fas fa-save"></i> Modul qo‘shish
                             </button>
                             <a asp-controller="Course" asp-action="Details"
                                asp-route-id="@Model.CourseId" class="btn btn-secondary">
-                                <i class="fas fa-times"></i> Cancel
+                                <i class="fas fa-times"></i> Bekor qilish
                             </a>
                         </div>
                     </form>
@@ -66,7 +66,7 @@
             <!-- Mavjud modullar ro'yxati -->
             <div class="card">
                 <div class="card-header">
-                    <h5 class="mb-0">Existing Modules</h5>
+                    <h5 class="mb-0">Mavjud modullar</h5>
                 </div>
                 <div class="card-body">
                     @if (ViewBag.ExistingModules != null && ViewBag.ExistingModules.Count > 0)
@@ -80,7 +80,7 @@
                                         @module.Title
                                     </span>
                                     <small class="text-muted">
-                                        @module.Contents?.Count contents
+                                        @module.Contents?.Count  ta kontent
                                     </small>
                                 </li>
                             }
@@ -88,21 +88,21 @@
                     }
                     else
                     {
-                        <p class="text-muted">No modules yet. This will be the first module.</p>
+                        <p class="text-muted">Hozirda yaratilgan modul mavjud emas. 1-modulni yaratishingiz mumkin</p>
                     }
                 </div>
             </div>
-            
+
             <div class="card mt-3">
                 <div class="card-header">
-                    <h5 class="mb-0">Tips</h5>
+                    <h5 class="mb-0">Maslahatlar</h5>
                 </div>
                 <div class="card-body">
                     <ul class="list-unstyled">
-                        <li><i class="fas fa-check text-success"></i> Keep module titles clear and concise</li>
-                        <li><i class="fas fa-check text-success"></i> Break down complex topics into smaller modules</li>
-                        <li><i class="fas fa-check text-success"></i> Maintain logical order between modules</li>
-                        <li><i class="fas fa-check text-success"></i> Each module should have 3-7 content items</li>
+                        <li><i class="fas fa-check text-success"></i> Modul sarlavhalarini aniq va ixcham yozing</li>
+                        <li><i class="fas fa-check text-success"></i> Murakkab mavzularni kichik modullarga bo‘ling</li>
+                        <li><i class="fas fa-check text-success"></i> Modullar orasidagi mantiqiy tartibni saqlang</li>
+                        <li><i class="fas fa-check text-success"></i> Har bir modulda 3-7 ta kontent bo‘lishi kerak</li>
                     </ul>
                 </div>
             </div>

@@ -9,5 +9,12 @@ public interface IUnitOfWork : IDisposable
     IFileRepo FileRepo { get; }
     IModuleRepo ModuleRepo { get; }
     IContentRepo ContentRepo { get; }
+    IProgressRepo ProgressRepo { get; }
+    IEnrollmentRepo EnrollmentRepo { get; }
+    IQuizRepo QuizRepo { get; }
+    IQuizAttemptRepo QuizAttemptRepo { get; }
+    IQuizAnswerRepo QuizAnswerRepo { get; }
+    IQuestionRepo QuestionRepo { get; }
+    IQuestionOptionRepo QuestionOptionRepo { get; }
     Task<bool> CompleteAsync();
 }

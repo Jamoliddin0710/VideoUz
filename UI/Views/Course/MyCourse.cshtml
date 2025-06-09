@@ -1,0 +1,833 @@
+@model CourseDetailViewModel;
+<div class="container-fluid my-4">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card course-sidebar">
+                @*<div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Kurs</h5>
+                    <div class="input-group input-group-sm">
+                        <input type="text" class="form-control" id="contentSearch" placeholder="Qidirish...">
+                        <button class="btn btn-outline-secondary" type="button" id="clearSearchBtn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>*@
+                <div class="card-body p-0">
+                    <div class="accordion" id="courseContentAccordion">
+                        @foreach (var module in (List<ModuleViewModel>)Model.Modules)
+                        {
+                            <div class="accordion-item" data-module-id="@module.Id">
+                                <h2 class="accordion-header" id="heading-@module.Id">
+                                    <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#module-@module.Id">
+                                        <div class="w-100">
+                                            <div><strong>@module.Title</strong></div>
+                                            <div class="small text-muted mt-1">
+                                                @module.Contents?.Count() kontent
+                                            </div>
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="module-@module.Id" class="accordion-collapse collapse"
+                                     data-bs-parent="#courseContentAccordion">
+                                    <div class="accordion-body p-0">
+                                        <ul class="list-group list-group-flush">
+                                            @if (module.Contents != null && module.Contents.Any())
+                                            {
+                                                foreach (var content in module.Contents)
+                                                {
+                                                    <li class="list-group-item content-item"
+                                                        data-content-id="@content.Id"
+                                                        data-content-title="@content.Title"
+                                                        data-content-type="@content.ContentType"
+                                                        data-content-url="@content.ContentUrl"
+                                                        data-content-description="@content.Description"
+                                                        data-quiz-id="@(content.QuizId > 0 ? content.QuizId : 0)">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="me-2">
+                                                                @switch (content.ContentType.ToString().ToLower())
+                                                                {
+                                                                    case "video":
+                                                                        <i class="fas fa-play-circle text-primary"></i>
+                                                                        break;
+                                                                    case "document":
+                                                                        var extension = System.IO.Path.GetExtension(content.ContentUrl)?.ToLower();
+                                                                        if (extension == ".pdf")
+                                                                        {
+                                                                            <i class="fas fa-file-pdf text-danger"></i>
+                                                                        }
+                                                                        else if (extension == ".doc" || extension == ".docx")
+                                                                        {
+                                                                            <i class="fas fa-file-word text-primary"></i>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <i class="fas fa-file-alt text-secondary"></i>
+                                                                        }
+                                                                        break;
+                                                                    case "text":
+                                                                        <i class="fas fa-file-alt text-info"></i>
+                                                                        break;
+                                                                    case "quiz":
+                                                                        <i class="fas fa-tasks text-warning"></i>
+                                                                        break;
+                                                                    default:
+                                                                        <i class="fas fa-book text-secondary"></i>
+                                                                        break;
+                                                                }
+                                                            </div>
+                                                            <div class="flex-grow-1">
+                                                                <div>@content.Title</div>
+                                                                @if (content.Duration.HasValue)
+                                                                {
+                                                                    <small
+                                                                        class="text-muted">@content.Duration daqiqa</small>
+                                                                }
+                                                            </div>
+                                                            <div class="ms-2">
+                                                                <span class="badge rounded-pill bg-light text-dark">
+                                                                    @content.ContentType.ToString()
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <li class="list-group-item">Kontent topilmadi</li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="card mb-4">
+                <div class="content-container">
+                    <div id="contentViewer">
+                        <div class="content-placeholder">
+                            <i class="fas fa-book-open"></i>
+                            <p>Kursni boshlash uchun chap tomondagi kontentni tanlang</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div id="contentDetails">
+                        <h2 id="contentTitle">@Model.Title</h2>
+                        <p id="contentDescription">@Model.Description</p>
+
+                        <!-- Quiz button container -->
+                        <div id="quizButtonContainer" class="mt-4 d-none">
+                            <a id="startQuizBtn" class="btn btn-primary btn-lg start-quiz-btn"
+                               asp-action="StartQuiz" asp-controller="Quiz" asp-route-contentId="">
+                                <i class="fas fa-tasks me-2"></i> Testni boshlash
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.13.216/pdf.min.js"></script>
+<script>
+    // PDF.js worker path
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.13.216/pdf.worker.min.js';
+</script>
+
+<script>
+    $(document).ready(function () {
+        // Qidiruv funksiyalari
+        $("#contentSearch").on("keyup", function () {
+            const searchTerm = $(this).val().toLowerCase();
+            filterContent(searchTerm);
+        });
+
+        $("#clearSearchBtn").click(function () {
+            $("#contentSearch").val("");
+            filterContent("");
+        });
+
+        // Kontentni tanlash
+        $(".content-item").click(function () {
+            $(".content-item").removeClass("active");
+            $(this).addClass("active");
+
+            const contentId = $(this).data("content-id");
+            const contentTitle = $(this).data("content-title");
+            const contentType = $(this).data("content-type").toLowerCase();
+            const contentUrl = $(this).data("content-url") || "";
+            const contentDescription = $(this).data("content-description") || "";
+            const quizId = $(this).data("quiz-id") || 0;
+
+            // Quiz tugmasini yangilash
+            updateQuizButton(contentId, quizId);
+
+            // Kontentni ko'rsatish
+            displayContent(contentTitle, contentType, contentUrl, contentDescription);
+        });
+
+        // Quiz tugmasini yangilash
+        function updateQuizButton(contentId, quizId) {
+            // Agar quiz mavjud bo'lsa, quiz tugmasini ko'rsatish
+            if (quizId && quizId > 0) {
+                $("#startQuizBtn").attr("asp-route-contentId", contentId);
+                $("#startQuizBtn").attr("asp-route-quizId", quizId);
+                $("#startQuizBtn").attr("href", `/Quiz/StartQuiz?contentId=${contentId}&quizId=${quizId}`);
+                $("#quizButtonContainer").removeClass("d-none");
+            } else {
+                // Quiz yo'q bo'lsa, tugmani yashirish
+                $("#quizButtonContainer").addClass("d-none");
+            }
+        }
+
+        // Qidirish funksiyasi
+        function filterContent(searchTerm) {
+            if (!searchTerm) {
+                $(".accordion-item").show();
+                $(".content-item").show();
+                $("#no-results-message").remove();
+                return;
+            }
+
+            // Barcha modullerni yashirish
+            $(".accordion-item").hide();
+
+            // Qidiruv so'ziga mos kontentni va tegishli modullarni ko'rsatish
+            $(".content-item").each(function () {
+                const contentTitle = $(this).data("content-title").toLowerCase();
+
+                if (contentTitle.includes(searchTerm)) {
+                    $(this).show();
+                    // Tegishli modulni ko'rsatish va ochish
+                    const moduleItem = $(this).closest(".accordion-item");
+                    moduleItem.show();
+                    moduleItem.find(".accordion-collapse").addClass("show");
+                    moduleItem.find(".accordion-button").removeClass("collapsed");
+                } else {
+                    $(this).hide();
+                }
+            });
+
+            // Natija topilmasa xabar ko'rsatish
+            if ($(".content-item:visible").length === 0) {
+                if ($("#no-results-message").length === 0) {
+                    $("#courseContentAccordion").append(`
+                        <div id="no-results-message" class="text-center p-4">
+                            "${searchTerm}" so'zi bo'yicha natija topilmadi.
+                            <button class="btn btn-link" id="clearSearchResults">Qidiruvni tozalash</button>
+                        </div>
+                    `);
+
+                    $("#clearSearchResults").click(function () {
+                        $("#contentSearch").val("");
+                        filterContent("");
+                    });
+                }
+            } else {
+                $("#no-results-message").remove();
+            }
+        }
+
+        // Kontentni ko'rsatish funksiyasi
+        function displayContent(contentTitle, contentType, contentUrl, contentDescription) {
+            // Sarlavha va tavsifni yangilash
+            $("#contentTitle").text(contentTitle);
+            $("#contentDescription").text(contentDescription || "");
+
+            // Kontent turiga qarab ko'rsatish
+            switch (contentType) {
+                case 'video':
+                    displayVideo(contentUrl, contentTitle);
+                    break;
+
+                case 'document':
+                    displayDocument(contentUrl, contentTitle);
+                    break;
+
+                case 'text':
+                    displayText(contentTitle, contentDescription);
+                    break;
+
+                case 'quiz':
+                    displayQuiz(contentTitle, contentUrl);
+                    break;
+
+                default:
+                    displayDefault(contentTitle, contentUrl);
+                    break;
+            }
+        }
+
+        // Video kontentini ko'rsatish
+        function displayVideo(contentUrl, contentTitle) {
+            if (!contentUrl) {
+                $("#contentViewer").html(`
+                    <div class="content-placeholder">
+                        <i class="fas fa-exclamation-triangle text-warning"></i>
+                        <p>Video URL topilmadi</p>
+                    </div>
+                `);
+                return;
+            }
+
+            $("#contentViewer").html(`
+                <div class="video-wrapper">
+                    <video controls class="w-100 h-100">
+                        <source src="${contentUrl}" type="video/mp4">
+                        Brauzeringiz HTML5 video playerini qo'llab-quvvatlamaydi.
+                    </video>
+                </div>
+            `);
+        }
+
+        // PDF va DOC dokumentlarini ko'rsatish
+        function displayDocument(contentUrl, contentTitle) {
+            if (!contentUrl) {
+                $("#contentViewer").html(`
+                    <div class="content-placeholder">
+                        <i class="fas fa-exclamation-triangle text-warning"></i>
+                        <p>Dokument URL topilmadi</p>
+                    </div>
+                `);
+                return;
+            }
+
+            const fileExtension = contentUrl.split('.').pop().toLowerCase();
+
+            if (fileExtension === 'pdf') {
+                // PDF viewer
+                $("#contentViewer").html(`
+                    <div class="document-container">
+                        <div class="document-toolbar">
+                            <button id="prevPage" class="btn btn-sm btn-outline-secondary me-2">
+                                <i class="fas fa-chevron-left"></i> Oldingi
+                            </button>
+                            <span id="pageInfo" class="mx-2">Sahifa: <span id="currentPage">1</span> / <span id="totalPages">?</span></span>
+                            <button id="nextPage" class="btn btn-sm btn-outline-secondary ms-2">
+                                Keyingi <i class="fas fa-chevron-right"></i>
+                            </button>
+                            <button id="zoomIn" class="btn btn-sm btn-outline-secondary ms-3">
+                                <i class="fas fa-search-plus"></i>
+                            </button>
+                            <button id="zoomOut" class="btn btn-sm btn-outline-secondary ms-1">
+                                <i class="fas fa-search-minus"></i>
+                            </button>
+                            <a href="${contentUrl}" target="_blank" class="btn btn-sm btn-primary ms-3">
+                                <i class="fas fa-external-link-alt"></i> Yangi oynada ochish
+                            </a>
+                        </div>
+                        <div id="pdfContainer" class="pdf-container">
+                            <canvas id="pdfViewer"></canvas>
+                            <div id="pdfLoader" class="text-center p-5">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Yuklanmoqda...</span>
+                                </div>
+                                <p class="mt-3">PDF yuklanmoqda...</p>
+                            </div>
+                        </div>
+                    </div>
+                `);
+
+                // PDF.js orqali PDF faylni yuklash va ko'rsatish
+                let currentPDF = null;
+                let currentPage = 1;
+                let pageCount = 0;
+                let currentScale = 1.0;
+
+                // PDF yuklanayotganini ko'rsatish
+                $("#pdfLoader").show();
+
+                // PDF yuklash
+                pdfjsLib.getDocument(contentUrl).promise.then(function (pdf) {
+                    currentPDF = pdf;
+                    pageCount = pdf.numPages;
+                    $("#totalPages").text(pageCount);
+
+                    // Birinchi sahifani ko'rsatish
+                    renderPage(1);
+                }).catch(function (error) {
+                    console.error("PDF yuklanishida xatolik:", error);
+                    $("#pdfContainer").html(`
+                        <div class="alert alert-danger m-3">
+                            <i class="fas fa-exclamation-circle"></i> 
+                            PDF faylni yuklashda xatolik: ${error.message}
+                        </div>
+                    `);
+                });
+
+                // PDF sahifasini ko'rsatish
+                function renderPage(pageNumber) {
+                    currentPage = pageNumber;
+                    $("#currentPage").text(pageNumber);
+
+                    currentPDF.getPage(pageNumber).then(function (page) {
+                        const canvas = document.getElementById("pdfViewer");
+                        const context = canvas.getContext("2d");
+
+                        const viewport = page.getViewport({scale: currentScale});
+                        canvas.width = viewport.width;
+                        canvas.height = viewport.height;
+
+                        // Yuklash indikatorini ko'rsatish
+                        $("#pdfLoader").show();
+
+                        const renderContext = {
+                            canvasContext: context,
+                            viewport: viewport
+                        };
+
+                        page.render(renderContext).promise.then(function () {
+                            // Yuklash indikatorini yashirish
+                            $("#pdfLoader").hide();
+                        });
+                    });
+                }
+
+                // Sahifalarni o'zgartirish
+                $("#prevPage").click(function () {
+                    if (currentPage > 1) {
+                        renderPage(currentPage - 1);
+                    }
+                });
+
+                $("#nextPage").click(function () {
+                    if (currentPage < pageCount) {
+                        renderPage(currentPage + 1);
+                    }
+                });
+
+                // Zoom funksiyalari
+                $("#zoomIn").click(function () {
+                    currentScale = Math.min(currentScale + 0.2, 3.0);
+                    renderPage(currentPage);
+                });
+
+                $("#zoomOut").click(function () {
+                    currentScale = Math.max(currentScale - 0.2, 0.5);
+                    renderPage(currentPage);
+                });
+
+            } else if (fileExtension === 'doc' || fileExtension === 'docx') {
+                // Microsoft Office Online Viewer yoki Google Docs Viewer orqali DOC/DOCX faylini ko'rsatish
+                const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(contentUrl)}&embedded=true`;
+
+                $("#contentViewer").html(`
+                    <div class="document-container">
+                        <div class="document-toolbar">
+                            <a href="${contentUrl}" target="_blank" class="btn btn-sm btn-primary">
+                                <i class="fas fa-download"></i> Faylni yuklab olish
+                            </a>
+                            <a href="${googleDocsViewerUrl}" target="_blank" class="btn btn-sm btn-outline-secondary ms-2">
+                                <i class="fas fa-external-link-alt"></i> Yangi oynada ochish
+                            </a>
+                        </div>
+                        <div class="doc-container">
+                            <iframe src="${googleDocsViewerUrl}" frameborder="0" width="100%" height="600"></iframe>
+                        </div>
+                    </div>
+                `);
+            } else {
+                // Boshqa turdagi fayllar uchun
+                $("#contentViewer").html(`
+                    <div class="content-placeholder">
+                        <i class="fas fa-file"></i>
+                        <p>${contentTitle}</p>
+                        <p class="text-muted mb-3">Bu turdagi fayl to'g'ridan-to'g'ri ko'rsatilmaydi</p>
+                        <a href="${contentUrl}" class="btn btn-primary" target="_blank">
+                            <i class="fas fa-download"></i> Faylni yuklab olish
+                        </a>
+                    </div>
+                `);
+            }
+        }
+
+        // Matn kontentini ko'rsatish
+        function displayText(contentTitle, contentDescription) {
+            $("#contentViewer").html(`
+                <div class="text-content">
+                    <div class="p-4">
+                        <h3>${contentTitle}</h3>
+                        <div class="mt-3">
+                            ${contentDescription ? contentDescription : "Ta'rif mavjud emas."}
+                        </div>
+                    </div>
+                </div>
+            `);
+        }
+
+        // Test kontentini ko'rsatish
+        function displayQuiz(contentTitle, contentUrl) {
+            if (!contentUrl) {
+                $("#contentViewer").html(`
+                    <div class="content-placeholder">
+                        <i class="fas fa-tasks text-warning"></i>
+                        <p>Test URL topilmadi</p>
+                    </div>
+                `);
+                return;
+            }
+
+            $("#contentViewer").html(`
+                <div class="quiz-container">
+                    <div class="p-4 text-center">
+                        <div class="quiz-preview-icon mb-4">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h3>${contentTitle}</h3>
+                        <p class="mb-4">Bu test kursni o'zlashtirishingizni tekshirish uchun mo'ljallangan.</p>
+                        <div class="quiz-features mb-4">
+                            <div class="row justify-content-center">
+                                <div class="col-md-4">
+                                    <div class="quiz-feature-item">
+                                        <i class="fas fa-question-circle"></i>
+                                        <span>10 ta savol</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="quiz-feature-item">
+                                        <i class="fas fa-clock"></i>
+                                        <span>20 daqiqa</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="quiz-feature-item">
+                                        <i class="fas fa-award"></i>
+                                        <span>70% o'tish bali</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="${contentUrl}" class="btn btn-primary btn-lg mt-3">
+                            <i class="fas fa-play-circle me-2"></i> Testni boshlash
+                        </a>
+                    </div>
+                </div>
+            `);
+        }
+
+        // Boshqa turdagi kontentlarni ko'rsatish
+        function displayDefault(contentTitle, contentUrl) {
+            $("#contentViewer").html(`
+                <div class="content-placeholder">
+                    <i class="fas fa-file-alt"></i>
+                    <p>${contentTitle}</p>
+                    ${contentUrl ?
+                `<a href="${contentUrl}" class="btn btn-primary mt-3" target="_blank">
+                           <i class="fas fa-external-link-alt"></i> Kontentni ochish
+                       </a>` :
+                '<p class="text-muted">Kontent URL mavjud emas</p>'}
+                </div>
+            `);
+        }
+    });
+</script>
+
+<style>
+    /* General */
+    .course-sidebar {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        height: calc(100vh - 120px);
+        position: sticky;
+        top: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .course-sidebar .card-body {
+        overflow-y: auto;
+        flex: 1;
+    }
+
+    .course-sidebar .card-header {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    /* Accordion styles */
+    .accordion-button {
+        padding: 15px;
+        background-color: #f8f9fa;
+        color: #343a40;
+    }
+
+    .accordion-button:not(.collapsed) {
+        background-color: #e9ecef;
+        color: #212529;
+    }
+
+    .accordion-button:focus {
+        box-shadow: none;
+        border-color: rgba(0, 0, 0, .125);
+    }
+
+    /* Content item styles */
+    .content-item {
+        cursor: pointer;
+        padding: 10px 15px;
+        transition: background-color 0.2s;
+    }
+
+    .content-item:hover {
+        background-color: #f1f3f5;
+    }
+
+    .content-item.active {
+        background-color: #e9ecef;
+        border-left: 3px solid #007bff;
+    }
+
+    /* Content container */
+    .content-container {
+        position: relative;
+        background-color: #f8f9fa;
+        border-radius: 8px 8px 0 0;
+        overflow: hidden;
+    }
+
+    #contentViewer {
+        min-height: 480px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .content-placeholder {
+        text-align: center;
+        color: #adb5bd;
+        padding: 40px;
+        width: 100%;
+    }
+
+    .content-placeholder i {
+        font-size: 4rem;
+        margin-bottom: 15px;
+    }
+
+    /* Video styles */
+    .video-wrapper {
+        width: 100%;
+        height: 100%;
+    }
+
+    video {
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+    }
+
+    /* Document styles */
+    .document-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+    }
+
+    .document-toolbar {
+        padding: 10px 15px;
+        background-color: #f1f3f5;
+        border-bottom: 1px solid #dee2e6;
+        display: flex;
+        align-items: center;
+    }
+
+    .pdf-container {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        background-color: #e9ecef;
+        overflow-x: auto;
+        min-height: 600px;
+        position: relative;
+    }
+
+    #pdfViewer {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color: white;
+    }
+
+    .doc-container {
+        height: 600px;
+        width: 100%;
+    }
+
+    .doc-container iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    /* Text styles */
+    .text-content {
+        width: 100%;
+        height: 100%;
+        min-height: 400px;
+        background-color: white;
+        overflow-y: auto;
+    }
+
+    /* Quiz styles */
+    .quiz-container {
+        width: 100%;
+        min-height: 400px;
+        background-color: white;
+    }
+
+    .quiz-preview-icon {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto;
+        border-radius: 50%;
+        background-color: #f0f7ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .quiz-preview-icon i {
+        font-size: 3rem;
+        color: #0d6efd;
+    }
+
+    .quiz-feature-item {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .quiz-feature-item i {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: #6c757d;
+        display: block;
+    }
+
+    /* Quiz button */
+    #quizButtonContainer {
+        text-align: center;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+        transition: all 0.3s ease;
+    }
+
+    #quizButtonContainer:hover {
+        background-color: #f1f3f5;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .start-quiz-btn {
+        padding: 12px 24px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        border-radius: 50px;
+    }
+
+    .start-quiz-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4);
+    }
+
+    .start-quiz-btn:active {
+        transform: translateY(1px);
+    }
+
+    .start-quiz-btn i {
+        font-size: 1.2rem;
+    }
+
+    .start-quiz-btn::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 10px;
+        height: 10px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        transition: transform 0.5s ease;
+        z-index: 0;
+    }
+
+    .start-quiz-btn:hover::after {
+        transform: translate(-50%, -50%) scale(15);
+    }
+
+    /* Content details */
+    #contentDetails {
+        padding: 20px 0;
+    }
+
+    #contentTitle {
+        font-size: 1.75rem;
+        margin-bottom: 15px;
+        color: #212529;
+    }
+
+    #contentDescription {
+        color: #495057;
+        margin-bottom: 20px;
+    }
+
+    /* Search styles */
+    #contentSearch {
+        border-radius: 4px;
+        font-size: 0.875rem;
+    }
+
+    #clearSearchBtn {
+        padding: 0.25rem 0.5rem;
+    }
+
+    /* Responsive styles */
+    @@media (max-width: 992px) {
+    .course-sidebar {
+        height: auto;
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    #contentViewer {
+        min-height: 400px;
+    }
+
+    .quiz-features .row > div {
+        margin-bottom: 10px;
+    }
+    }
+
+    @@media (max-width: 768px) {
+    #contentViewer {
+        min-height: 300px;
+    }
+
+    .pdf-container, .doc-container {
+        height: 400px;
+    }
+
+    .start-quiz-btn {
+        width: 100%;
+    }
+    }
+</style>

@@ -12,13 +12,12 @@ public class Quiz : BaseEntity
     [StringLength(200)]
     public string Title { get; set; }
 
-    public string Description { get; set; }
+    public string Description { get; set; } = string.Empty;
 
-    public int PassingScore { get; set; }
+    public int PassingScore { get; set; } = 60;
 
-    public int TimeLimit { get; set; } // in minutes, 0 means no limit
-
-    // Navigation properties
+    public int TimeLimit { get; set; } 
+    
     [ForeignKey("ContentId")]
     public virtual Content Content { get; set; }
 

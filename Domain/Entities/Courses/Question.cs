@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Entities.Courses;
 
 namespace Domain.Entities;
 
@@ -11,9 +12,8 @@ public class Question : BaseEntity
     [Required]
     public string QuestionText { get; set; }
 
-    [Required]
-    [StringLength(50)]
-    public string QuestionType { get; set; } 
+
+    public QuestionType QuestionType { get; set; } 
 
     public int Points { get; set; }
 

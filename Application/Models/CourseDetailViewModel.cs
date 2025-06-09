@@ -1,3 +1,5 @@
+using Domain.Entities;
+
 namespace Application.Models;
 
 public class CourseDetailViewModel
@@ -32,7 +34,10 @@ public class ContentViewModel
 {
     public long Id { get; set; }
     public string Title { get; set; }
-    public string ContentType { get; set; }
+    public ContentType ContentType { get; set; }
+    public string ContentUrl { get; set; }
+    public string Description { get; set; }
     public int Order { get; set; }
     public int? Duration { get; set; } 
+    public long? QuizId { get; set; }
 }

@@ -9,15 +9,8 @@ using Refit;
 namespace API.Controllers;
 
 [AllowAnonymous]
-public class CategoryController : BaseApiController
+public class CategoryController(ICategoryService _categoryService) : BaseApiController
 {
-    private readonly ICategoryService _categoryService;
-
-    public CategoryController(ICategoryService categoryService)
-    {
-        _categoryService = categoryService;
-    }
-
     [HttpPost]
     public async Task<ActionResult<ServiceResponse<object>>> AddOrEditCategory([FromBody]CreateOrEditCategoryDTO category)
     {

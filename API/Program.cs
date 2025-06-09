@@ -1,9 +1,7 @@
 using System.Text;
 using System.Text.Json.Serialization;
-using API.Controllers;
 using API.Extensions;
 using Application.DTOs;
-using Application.Models;
 using Domain.Entities;
 using Infrastructure;
 using Infrastructure.Data;
@@ -16,16 +14,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpContextAccessor();
 builder.Services.Configure<MinioOptions>(
     builder.Configuration.GetSection("MinioOptions"));
+
+builder.Services.AddMapster();
+
 builder.Services.AddConfigurationService(builder.Configuration)
     .AddAuthServices().AddServices();
 builder.Services.AddEndpointsApiExplorer();
-
-
 builder.Configuration.AddEnvironmentVariables();
 builder.Services.Configure<FileUploadOption>(builder.Configuration.GetSection("FileUpload"));
 
 builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -63,10 +64,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = "localhost:5151", 
-            ValidAudience = "localhost:5261", 
+            ValidIssuer = "localhost:5151",
+            ValidAudience = "localhost:5261",
             ClockSkew = TimeSpan.Zero,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("c5d4daef4df64b08b4ce630a38c0005e10a5953f519c2f1d143379784689fdd4"))
+            IssuerSigningKey =
+                new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes("c5d4daef4df64b08b4ce630a38c0005e10a5953f519c2f1d143379784689fdd4"))
         };
     });
 
@@ -89,9 +92,10 @@ app.UseAuthorization();
 app.MapControllers();
 await InitializeContext();
 app.Run();
+
 async Task InitializeContext()
 {
-    var scope  = app.Services.CreateScope();
+    var scope = app.Services.CreateScope();
     var services = scope.ServiceProvider;
     try
     {

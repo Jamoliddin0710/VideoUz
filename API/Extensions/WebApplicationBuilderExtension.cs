@@ -1,15 +1,17 @@
-﻿using System;
-using Application.ServiceContract;
+﻿using Application.ServiceContract;
 using Application.Services;
 using Domain.Entities;
 using Domain.RepositoryContracts;
 using Infrastructure;
+using Infrastructure.Client;
 using Infrastructure.Repositories;
-using Microsoft.AspNetCore.Authentication;
+using Mapster;
+using MapsterMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Refit;
 
 namespace API.Extensions
 {
@@ -30,6 +32,14 @@ namespace API.Extensions
         {
             services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddScoped<AuditService>();
+            services.AddRefitClient<IGPTRefitService>()
+                .ConfigureHttpClient(c =>
+                {
+                    /*c.BaseAddress = new Uri("https://api.openai.com");
+                    c.DefaultRequestHeaders.Add("Authorization",
+                        "Bearer gpt-key");*/
+                    c.Timeout = TimeSpan.FromMinutes(5);
+                });
 
             configureOptions?.Invoke(new AuditOptions(services));
             return services;
@@ -61,6 +71,7 @@ namespace API.Extensions
             services.AddScoped<ICourseService, CourseService>();
             services.AddScoped<IModuleService, ModuleService>();
             services.AddScoped<IContentService, ContentService>();
+            services.AddScoped<IQuizService, QuizService>();
 
             return services;
         }
@@ -92,6 +103,28 @@ namespace API.Extensions
                     options.LogoutPath = "/Account/Logout";
                     options.ExpireTimeSpan = TimeSpan.FromHours(20);
                 });
+            return services;
+        }
+
+        public static IServiceCollection AddMapster(this IServiceCollection services,
+            Action<TypeAdapterConfig> options = null)
+        {
+            var config = TypeAdapterConfig.GlobalSettings;
+            
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a => !a.IsDynamic && !string.IsNullOrWhiteSpace(a.Location))
+                .ToList();
+
+            foreach (var assembly in assemblies)
+            {
+                config.Scan(assembly);
+            }
+            
+            options?.Invoke(config);
+
+            services.AddSingleton(config);
+            services.AddScoped<IMapper, Mapper>();
+
             return services;
         }
     }

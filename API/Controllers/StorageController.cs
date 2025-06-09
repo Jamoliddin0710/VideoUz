@@ -8,15 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
-public class StorageController : BaseApiController
+public class StorageController(IStorageService _storageService) : BaseApiController
 {
-    private readonly IStorageService _storageService;
-
-    public StorageController(IStorageService storageService)
-    {
-        _storageService = storageService;
-    }
-
     [HttpPost]
     public async Task<ActionResult<ServiceResponse<FileItem>>> UploadFile(IFormFile file)
     {
@@ -25,7 +18,6 @@ public class StorageController : BaseApiController
     }
 
     [HttpGet]
-    [AllowAnonymous]
     public async Task<IActionResult> Download(string bucket, string fileName)
     {
         try

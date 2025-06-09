@@ -1,0 +1,21 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  api:
+    build:
+      context: "D:\\testproject\\VideoUz\\src\\VideoUz"
+      dockerfile: "API/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/API.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "api:dev"
+    ports: []
+    volumes:
+    - "D:\\testproject\\VideoUz\\src\\VideoUz\\API:/app:rw"
+    - "D:\\testproject\\VideoUz\\src\\VideoUz:/src:rw"
+    - "C:\\Users\\j_shermatov\\.nuget\\packages:/home/app/.nuget/packages"
+    working_dir: "/app"

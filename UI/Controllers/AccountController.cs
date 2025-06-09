@@ -12,22 +12,13 @@ using UI.Services;
 namespace UI.Controllers;
 
 [Route("[controller]/[action]")]
-public class AccountController : Controller
+public class AccountController(IAccountRefitClient _accountRefitClient, IHttpContextAccessor accessor) : Controller
 {
-    private readonly IAccountRefitClient _accountRefitClient;
-    private readonly IHttpContextAccessor accessor;
-    public AccountController(IAccountRefitClient accountRefitClient, IHttpContextAccessor accessor)
-    {
-        _accountRefitClient = accountRefitClient;
-        this.accessor = accessor;
-    }
-
-    // GET
     [HttpGet]
     public async Task<IActionResult> Login(string returnUrl = null)
     {
         var login = new LoginDTO();
-        
+
         return View(login);
     }
 
@@ -44,17 +35,17 @@ public class AccountController : Controller
         {
             return Redirect("/");
         }
-        
+
         var response = await _accountRefitClient.Login(login);
-        
+
         if (string.IsNullOrWhiteSpace(response.Data?.Token))
             return Redirect("/");
-        
+
         var info = AuthHelper.JwtToModel(response?.Data?.Token);
-        
+
         return await Auth(info, response.Data.Token);
     }
-    
+
     [HttpGet]
     public async Task<IActionResult> Register()
     {
@@ -70,22 +61,22 @@ public class AccountController : Controller
         {
             return View(registerDto);
         }
-        
+
         if (HttpContext?.User?.Identity?.IsAuthenticated ?? false)
         {
             return Redirect("/");
         }
-        
+
         var response = await _accountRefitClient.Register(registerDto);
-        
+
         if (string.IsNullOrWhiteSpace(response.Data?.Token))
             return Redirect("/");
-        
+
         var info = AuthHelper.JwtToModel(response?.Data?.Token);
-        
+
         return await Auth(info, response.Data.Token);
-        
     }
+
     private async Task<ActionResult> Auth(CallbackResponseModel model, string token)
     {
         var identity = new ClaimsIdentity(
@@ -113,12 +104,13 @@ public class AccountController : Controller
 
         await HttpContext!.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProp);
 
-        return Redirect("/");
+        return RedirectToAction("Index", "Course");
     }
+
     public async Task<IActionResult> Logout()
     {
-      await HttpContext!.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-      return RedirectToAction("Index", "Home");
+        await HttpContext!.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        return RedirectToAction("Index", "Home");
     }
 
     public async Task<IActionResult> AccessDenied()

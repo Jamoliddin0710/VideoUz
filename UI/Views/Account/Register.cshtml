@@ -1,49 +1,163 @@
 @model Application.DTOs.RegisterDTO
 
-<div class="d-flex justify-content-center ">
-    <div class="col-lg-5">
-        <main class="form-signin">
-            <form method="post" asp-action="Register" asp-controller="Account">
-                @*<input hidden type="text" asp-for="ReturnUrl"/>*@
-                <div class="text-center my-4">
-                    <h3 class="mb-3 font-weight-normal"> Register </h3>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-header bg-primary text-white text-center py-4">
+                    <h3 class="mb-0 font-weight-bold"><i class="fas fa-user-plus me-2"></i>Ro'yxatdan o'tish</h3>
                 </div>
+                <div class="card-body p-4">
+                    <form method="post" asp-action="Register" asp-controller="Account" id="registerForm">
+                      
 
-                <div class="form-floating  mb-3">
-                    <input type="text" asp-for="Name" class="form-control " placeholder="Username or Name"/>
-                    <label asp-for="Name"></label>
-                    <span asp-validation-for="Name" class="text-danger"></span>
+                        <div class="form-floating mb-3">
+                            <input type="text" asp-for="Name" class="form-control custom-input" placeholder="Ism"
+                                   required autocomplete="name" />
+                            <label asp-for="Name">
+                                <i class="fas fa-user text-muted me-2"></i>To'liq ismingiz
+                            </label>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="email" asp-for="Email" class="form-control custom-input" placeholder="Email"
+                                   required autocomplete="email" />
+                            <label asp-for="Email">
+                                <i class="fas fa-envelope text-muted me-2"></i>Email manzil
+                            </label>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3 password-container">
+                            <input type="password" asp-for="Password" id="password" class="form-control custom-input"
+                                   placeholder="Parol" required autocomplete="new-password" />
+                            <label asp-for="Password">
+                                <i class="fas fa-lock text-muted me-2"></i>Parol
+                            </label>
+                            <span class="password-toggle" onclick="togglePassword('password')">
+                                <i class="fas fa-eye"></i>
+                            </span>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-4 password-container">
+                            <input type="password" asp-for="ConfirmPassword" id="confirmPassword" class="form-control custom-input"
+                                   placeholder="Parolni tasdiqlang" required autocomplete="new-password" />
+                            <label asp-for="ConfirmPassword">
+                                <i class="fas fa-lock text-muted me-2"></i>Parolni tasdiqlang
+                            </label>
+                            <span class="password-toggle" onclick="togglePassword('confirmPassword')">
+                                <i class="fas fa-eye"></i>
+                            </span>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                        </div>
+
+                        <div class="d-grid gap-2 mb-3">
+                            <button class="btn btn-primary btn-lg py-3 register-btn" type="submit">
+                                <i class="fas fa-sign-in-alt me-2"></i>Ro'yxatdan o'tish
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-floating mb-3">
-                    <input type="text" asp-for="Email" class="form-control " placeholder="Email"/>
-                    <label asp-for="Email"></label>
-                    <span asp-validation-for="Email" class="text-danger"></span>
+                <div class="card-footer text-center py-3 bg-light">
+                    <div class="small">
+                        Akkauntingiz bormi?
+                        <a asp-controller="Account" asp-action="Login" class="text-decoration-none">
+                            <i class="fas fa-sign-in-alt me-1"></i>Kirish
+                        </a>
+                    </div>
                 </div>
-                <div class="form-floating  mb-3">
-                    <input type="text" asp-for="Password" class="form-control" placeholder="Password"/>
-                    <label asp-for="Password"></label>
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                <div class="form-floating  mb-3">
-                    <input type="text" asp-for="ConfirmPassword" class="form-control" placeholder="ConfirmPassword"/>
-                    <label asp-for="ConfirmPassword"></label>
-                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                </div>
-                <div class="form-floating">
-                    <div asp-validation-summary="All" class="text-danger"></div>
-                </div>
-                <div class="d-grid m-4 px-1">
-                    <button class="btn btn-lg btn-info" type="submit">
-                        Login
-                    </button>
-                </div>
-            </form>
-        </main>
+            </div>
+        </div>
     </div>
 </div>
-
 
 @section Scripts
 {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+     
+        function togglePassword(inputId) {
+            const passwordInput = document.getElementById(inputId);
+            const toggleIcon = event.currentTarget.querySelector('i');
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleIcon.classList.remove("fa-eye");
+                toggleIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                toggleIcon.classList.remove("fa-eye-slash");
+                toggleIcon.classList.add("fa-eye");
+            }
+        }
+
+       
+        document.getElementById('registerForm').addEventListener('submit', function() {
+            const button = document.querySelector('.register-btn');
+            button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Ro\'yxatdan o\'tilmoqda...';
+            button.disabled = true;
+        });
+    </script>
+    <style>
+        
+        .custom-input:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6c757d;
+            z-index: 10;
+        }
+
+        .password-toggle:hover {
+            color: #0d6efd;
+        }
+
+        .register-btn {
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card {
+            transition: all 0.3s ease;
+        }
+
+        .form-control {
+            transition: border-color 0.2s ease;
+        }
+        
+        .form-floating input:focus + label {
+            color: #0d6efd;
+        }
+        
+        @@keyframes formEnter {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            animation: formEnter 0.5s ease-out;
+        }
+    </style>
 }

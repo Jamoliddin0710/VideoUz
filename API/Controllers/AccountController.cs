@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Application.DTOs;
 using Application.Models;
+using Application.ServiceContract;
 using Domain.Entities;
 using Mapster;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -13,26 +14,21 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace API.Controllers;
 
-public class AccountController : BaseApiController
+public class AccountController(
+    UserManager<AppUser> _userManager,
+    SignInManager<AppUser> _signInManager,
+    IAccountService _accountService)
+    : BaseApiController
 {
-    private readonly UserManager<AppUser> _userManager;
-    private readonly SignInManager<AppUser> _signInManager;
-
-    public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
-    {
-        _userManager = userManager;
-        _signInManager = signInManager;
-    }
-
     [HttpPost]
     [AllowAnonymous]
-    public async Task<ActionResult<ServiceResponse<TokenModel>>> Login([FromBody]LoginDTO loginDto)
+    public async Task<ActionResult<ServiceResponse<TokenModel>>> Login([FromBody] LoginDTO loginDto)
     {
         var user = await _userManager.FindByNameAsync(loginDto.UserName);
         if (user == null)
         {
             user = await _userManager.FindByEmailAsync(loginDto.UserName);
-          
+
             if (user == null)
             {
                 return Unauthorized(new ServiceResponse<TokenModel>
@@ -40,10 +36,9 @@ public class AccountController : BaseApiController
                     IsSuccessful = false,
                     Error = new ErrorModel("401", "User not found")
                 });
-
             }
         }
-        
+
         var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
         if (result.Succeeded)
         {
@@ -55,7 +50,7 @@ public class AccountController : BaseApiController
                 IsSuccessful = true,
             };
         }
-        
+
         if (result.IsLockedOut)
         {
             return BadRequest(new ServiceResponse<TokenModel>
@@ -76,12 +71,12 @@ public class AccountController : BaseApiController
     {
         return _userManager.Users.Any(u => u.UserName == userName);
     }
-    
+
     private async Task<bool> CheckEmailExists(string email)
     {
         return _userManager.Users.Any(u => u.UserName == email);
     }
-    
+
     [HttpPost]
     [AllowAnonymous]
     public async Task<ActionResult<ServiceResponse<TokenModel>>> Register(RegisterDTO userRegisterDto)
@@ -90,7 +85,7 @@ public class AccountController : BaseApiController
         {
             throw new ApplicationException("User already exists Username is dublicate");
         }
-      
+
         if (await CheckEmailExists(userRegisterDto.Email))
         {
             throw new ApplicationException("User already exists Email is dublicate");
@@ -99,7 +94,7 @@ public class AccountController : BaseApiController
         var user = userRegisterDto.Adapt<AppUser>();
         user.UserName = userRegisterDto.Name;
         var result = await _userManager.CreateAsync(user, userRegisterDto.Password);
-        
+
         if (!result.Succeeded)
         {
             return new ServiceResponse<TokenModel>()
@@ -110,10 +105,9 @@ public class AccountController : BaseApiController
                 }
             };
         }
-        
+
         await _userManager.AddToRoleAsync(user, nameof(Role.Student));
-        
-        var token = await GenerateJwtToken(user, new List<string>(){nameof(Role.Student)});
+        var token = await GenerateJwtToken(user, new List<string>() { nameof(Role.Student) });
         return new ServiceResponse<TokenModel>()
         {
             Data = token,
@@ -121,7 +115,7 @@ public class AccountController : BaseApiController
         };
     }
 
-    private async Task<TokenModel> GenerateJwtToken(AppUser user , List<string> roles)
+    private async Task<TokenModel> GenerateJwtToken(AppUser user, List<string> roles)
     {
         var claimIdentity = new ClaimsIdentity(JwtBearerDefaults.AuthenticationScheme);
         claimIdentity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
@@ -136,25 +130,46 @@ public class AccountController : BaseApiController
         var key = Encoding.UTF8.GetBytes("c5d4daef4df64b08b4ce630a38c0005e10a5953f519c2f1d143379784689fdd4");
         var creds = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
 
-
-        // Create token
         var token = new JwtSecurityToken(
-            issuer: "localhost:5151",  
+            issuer: "localhost:5151",
             audience: "localhost:5261",
             claims: claimIdentity.Claims,
             expires: DateTime.UtcNow.AddHours(24),
             signingCredentials: creds
         );
-        
+
         var tokenModel = new TokenModel()
         {
-            Token = new JwtSecurityTokenHandler().WriteToken(token),  
+            Token = new JwtSecurityTokenHandler().WriteToken(token),
             Expiration = token.ValidTo,
-            RefreshToken = Guid.NewGuid().ToString(), 
-            RefreshTokenExpiration = DateTime.UtcNow.AddDays(5),  
+            RefreshToken = Guid.NewGuid().ToString(),
+            RefreshTokenExpiration = DateTime.UtcNow.AddDays(5),
         };
 
         return tokenModel;
     }
+    
+    [HttpGet]
+    public async Task<ActionResult<ServiceResponse<FilterResponseModel<UserDTO>>>> GetAllUsers()
+    {
+        return Ok(await _accountService.GetUsers());
+    }
 
+    [HttpPut]
+    public async Task<ActionResult<ServiceResponse<bool>>> Update(UpdateUserDTO model)
+    {
+        return Ok(await _accountService.Update(model));
+    }
+
+    [HttpDelete]
+    public async Task<ActionResult<ServiceResponse<bool>>> Delete(long id)
+    {
+        return Ok(await _accountService.Delete(id));
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<ServiceResponse<FilterResponseModel<string>>>> GetAllRoles()
+    {
+        return Ok(await _accountService.GetAllRoles());
+    }
 }

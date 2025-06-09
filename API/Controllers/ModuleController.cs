@@ -4,15 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
-public class ModuleController : BaseApiController
+public class ModuleController(IModuleService _moduleService) : BaseApiController
 {
-    private readonly IModuleService _moduleService;
-
-    public ModuleController(IModuleService moduleService)
-    {
-        _moduleService = moduleService;
-    }
-
     [HttpGet]
     public async Task<ActionResult<ServiceResponse<FilterResponseModel<ModuleDTO>>>> GetModulesByCourses(long courseId)
     {

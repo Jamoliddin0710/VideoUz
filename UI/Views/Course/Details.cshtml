@@ -2,12 +2,8 @@
 @using Domain.Entities
 @model CourseDetailViewModel
 
-@{
-    ViewData["Title"] = Model.Title;
-}
-
 <div class="container mt-4">
-    <!-- Course Header Section -->
+  
     <div class="row mb-4">
         <div class="col-md-8">
             <nav aria-label="breadcrumb">
@@ -33,27 +29,28 @@
                 }
                 <small class="text-muted">Created: @Model.CreatedDate.ToString("MMM dd, yyyy")</small>
             </div>
-
-            <!-- Action Buttons -->
-            <div class="mb-4">
-                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
-                    <i class="fas fa-edit"></i> Edit Course
-                </a>
-                <a asp-controller="Module" asp-action="Create" asp-route-courseId="@Model.Id"
-                   class="btn btn-success">
-                    <i class="fas fa-plus"></i> Add Module
-                </a>
-                @if (!Model.IsPublished)
-                {
-                    <a asp-action="Publish" asp-route-id="@Model.Id" class="btn btn-warning">
-                        <i class="fas fa-upload"></i> Publish Course
+            @if (!User.IsUserRole(nameof(Role.Student)))
+            {
+                <div class="mb-4">
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
+                        <i class="fas fa-edit"></i> Edit Course
                     </a>
-                }
-                <button class="btn btn-danger"
-                        onclick="deleteCourse(@Model.Id)">
-                    <i class="fas fa-trash"></i> Delete Course
-                </button>
-            </div>
+                    <a asp-controller="Module" asp-action="Create" asp-route-courseId="@Model.Id"
+                       class="btn btn-success">
+                        <i class="fas fa-plus"></i> Add Module
+                    </a>
+                    @if (!Model.IsPublished)
+                    {
+                        <a asp-action="PublishCourse" asp-route-id="@Model.Id" class="btn btn-warning">
+                            <i class="fas fa-upload"></i> Publish Course
+                        </a>
+                    }
+                    <button class="btn btn-danger"
+                            onclick="deleteCourse(@Model.Id)">
+                        <i class="fas fa-trash"></i> Delete Course
+                    </button>
+                </div>
+            }
         </div>
 
         <div class="col-md-4">
@@ -68,10 +65,29 @@
                     <p class="mt-2 text-muted">No cover image</p>
                 </div>
             }
+            @if (User.IsUserRole(nameof(Role.Student)))
+            {
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h5>
+                            <span class="me-2">Course price</span>
+                            <span class="me-2">@ViewBag.statistics.Price</span>
+                        </h5>
+                        <h5>
+                            <span class="me-2">Modules Count</span>
+                            <span class="me-2">@ViewBag.statistics.ModuleCount</span>
+                        </h5>
+                        <h5>
+                            <span class="me-2">Content count</span>
+                            <span class="me-2">@ViewBag.statistics.ContentCount</span>
+                        </h5>
+                        <a asp-action="EnrollmentCourse"  asp-controller="Course" asp-route-courseId="@Model.Id" class="btn btn-success">Darsni boshlash</a>
+                    </div>
+                </div>
+            }
         </div>
     </div>
-
-    <!-- Modules Section -->
+    
     <div class="row">
         <div class="col-12">
             <h2 class="mb-4">Course Modules</h2>
@@ -96,24 +112,25 @@
                                  data-bs-parent="#modulesAccordion">
                                 <div class="accordion-body">
                                     <p>@module.Description</p>
-
-                                    <div class="mb-3">
-                                        <a asp-controller="Content" asp-action="Create"
-                                           asp-route-moduleId="@module.Id"
-                                           class="btn btn-sm btn-success">
-                                            <i class="fas fa-plus"></i> Add Content
-                                        </a>
-                                        <a asp-controller="Module" asp-action="Edit"
-                                           asp-route-id="@module.Id"
-                                           class="btn btn-sm btn-primary">
-                                            <i class="fas fa-edit"></i> Edit Module
-                                        </a>
-                                        <a class="btn btn-sm btn-danger"
-                                           onclick="deleteModule(@module.Id)">
-                                            <i class="fas fa-trash"></i> Delete
-                                        </a>
-                                    </div>
-
+                                    @if (!User.IsUserRole(nameof(Role.Student)))
+                                    {
+                                        <div class="mb-3">
+                                            <a asp-controller="Content" asp-action="Create"
+                                               asp-route-moduleId="@module.Id"
+                                               class="btn btn-sm btn-success">
+                                                <i class="fas fa-plus"></i> Add Content
+                                            </a>
+                                            <a asp-controller="Module" asp-action="Edit"
+                                               asp-route-id="@module.Id"
+                                               class="btn btn-sm btn-primary">
+                                                <i class="fas fa-edit"></i> Edit Module
+                                            </a>
+                                            <a class="btn btn-sm btn-danger"
+                                               onclick="deleteModule(@module.Id)">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </a>
+                                        </div>
+                                    }
                                     @if (module.Contents != null && module.Contents.Any())
                                     {
                                         <h5>Contents:</h5>
@@ -133,23 +150,21 @@
                                                             </small>
                                                         }
                                                     </div>
-                                                    <div>
-                                                        <a asp-controller="Content" asp-action="Edit"
-                                                           asp-route-id="@content.Id"
-                                                           class="btn btn-sm btn-outline-primary">
-                                                            Edit
-                                                        </a>
-                                                        <button class="btn btn-sm btn-outline-danger"
-                                                                onclick="deleteContent(@content.Id)">
-                                                            Delete
-                                                        </button>
-                                                        @*<a asp-controller="Content" asp-action="Delete" 
-                                                           asp-route-id="@content.Id" 
-                                                           class="btn btn-sm btn-outline-danger"
-                                                           onclick="return confirm('Delete this content?')">
-                                                            Delete
-                                                        </a>*@
-                                                    </div>
+                                                    @if (!User.IsUserRole(nameof(Role.Student)))
+                                                    {
+                                                        <div>
+                                                            <a asp-controller="Content" asp-action="Edit"
+                                                               asp-route-id="@content.Id"
+                                                               class="btn btn-sm btn-outline-primary">
+                                                                Edit
+                                                            </a>
+                                                            <button class="btn btn-sm btn-outline-danger"
+                                                                    onclick="deleteContent(@content.Id)">
+                                                                Delete
+                                                            </button>
+
+                                                        </div>
+                                                    }
                                                 </div>
                                             }
                                         </div>
@@ -189,7 +204,7 @@
         var accordionItems = document.querySelectorAll('.accordion-button');
         accordionItems.forEach(function (item) {
             item.addEventListener('click', function () {
-                // Accordion logic
+              
             });
         });
 

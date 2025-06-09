@@ -20,6 +20,7 @@ public class CourseDTO
     public string Description { get; set; }
     public long CategoryId { get; set; }
     public decimal  Price { get; set; }
+    public string? CoverImageUrl { get; set; }
     public FileItemDTO CoverImage { get; set; }
 }
 

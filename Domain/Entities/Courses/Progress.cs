@@ -13,11 +13,10 @@ public class Progress : BaseEntity
 
     [Required]
     [StringLength(20)]
-    public string Status { get; set; } // "Not Started", "In Progress", "Completed"
+    public string Status { get; set; } 
 
     public DateTime? CompletedDate { get; set; }
-
-    // Navigation properties
+    
     [ForeignKey("UserId")]
     public virtual AppUser User { get; set; }
 

@@ -21,11 +21,16 @@ public class BaseRepo<T> : IBaseRepo<T> where T : BaseEntity
         _dbSet.Add(entity);
     }
 
+    public void AddRange(IEnumerable<T> entities)
+    {
+        _dbSet.AddRange(entities);
+    }
+
     public void Update(T source, T destination)
     {
         _dbSet.Entry(source).CurrentValues.SetValues(destination);
     }
-    
+
     public void Remove(T entity)
     {
         _dbSet.Remove(entity);
@@ -47,8 +52,9 @@ public class BaseRepo<T> : IBaseRepo<T> where T : BaseEntity
         IQueryable<T> query = _dbSet.AsQueryable();
         if (!string.IsNullOrWhiteSpace(includeProperties))
         {
-            query =  GetQueryWithIncludeProperties(query, includeProperties);
+            query = GetQueryWithIncludeProperties(query, includeProperties);
         }
+
         return await query.FirstOrDefaultAsync(e => e.Id == Id);
     }
 
@@ -57,9 +63,9 @@ public class BaseRepo<T> : IBaseRepo<T> where T : BaseEntity
         IQueryable<T> query = _dbSet.AsQueryable();
         if (!string.IsNullOrWhiteSpace(includeProperties))
         {
-           query = GetQueryWithIncludeProperties(query, includeProperties);
+            query = GetQueryWithIncludeProperties(query, includeProperties);
         }
-        
+
         return await query.FirstOrDefaultAsync(predicate);
     }
 
@@ -74,7 +80,8 @@ public class BaseRepo<T> : IBaseRepo<T> where T : BaseEntity
         return query;
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null, string includeProperties = null,
+    public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null,
+        string includeProperties = null,
         Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null)
     {
         var query = _dbSet.AsQueryable();
@@ -82,12 +89,12 @@ public class BaseRepo<T> : IBaseRepo<T> where T : BaseEntity
         {
             query = query.Where(predicate);
         }
-       
+
         if (!string.IsNullOrWhiteSpace(includeProperties))
-        {  
+        {
             query = GetQueryWithIncludeProperties(query, includeProperties);
         }
-        
+
         return await query.ToListAsync();
     }
 

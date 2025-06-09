@@ -1,6 +1,6 @@
-
 using Application.DTOs;
 using Application.Helpers;
+using Application.Models;
 using Infrastructure.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,26 +8,16 @@ using Microsoft.Extensions.Options;
 using Refit;
 using UI.Models;
 using UI.Services;
+
 namespace UI.Controllers;
 
-public class CourseController : Controller
+public class CourseController(
+    ICourseRefitService _courseRefitService,
+    ICategoryRefitService _categoryRefitService,
+    IStorageRefitService _storageRefitService,
+    HttpClient _httpClient,
+    IOptions<AppOptions> options) : Controller
 {
-    private readonly ICourseRefitService _courseRefitService;
-    private readonly ICategoryRefitService _categoryRefitService;
-    private readonly IStorageRefitService _storageRefitService;
-    private readonly HttpClient _httpClient;
-    private AppOptions options;
-
-    public CourseController(ICourseRefitService courseRefitService, ICategoryRefitService categoryRefitService,
-        IStorageRefitService storageRefitService, IOptions<AppOptions> options, HttpClient httpClient)
-    {
-        _courseRefitService = courseRefitService;
-        _categoryRefitService = categoryRefitService;
-        _storageRefitService = storageRefitService;
-        _httpClient = httpClient;
-        this.options = options.Value;
-    }
-
     [HttpGet]
     public async Task<IActionResult> Create()
     {
@@ -42,6 +32,7 @@ public class CourseController : Controller
         await _courseRefitService.Delete(id);
         return Ok();
     }
+
     [HttpPost]
     public async Task<IActionResult> Create(CourseCreateViewModel model)
     {
@@ -98,22 +89,24 @@ public class CourseController : Controller
     public async Task<IActionResult> Details(long id)
     {
         var response = await _courseRefitService.GetCourseWithDetails(id);
-
+        var statistics = await _courseRefitService.GetStatistics(id);
         if (!response.IsSuccessful)
         {
             TempData["Error"] = "Course not found";
             return RedirectToAction(nameof(Index));
         }
 
+        ViewBag.statistics = statistics.Data;
         var course = response.Data;
         return View(course);
     }
+
 
     [HttpGet]
     public async Task<IActionResult> DownloadFile(string bucket, string fileName)
     {
         var apiUrl =
-            $"{options.BackendApi!.TrimEnd('/')}/storage/download?bucket={bucket}&fileName={fileName}";
+            $"{options.Value.BackendApi!.TrimEnd('/')}/storage/download?bucket={bucket}&fileName={fileName}";
         var response = await _httpClient.GetAsync(apiUrl, HttpCompletionOption.ResponseHeadersRead);
 
         if (!response.IsSuccessStatusCode)
@@ -141,7 +134,7 @@ public class CourseController : Controller
         string fileName)
     {
         var apiUrl =
-            $"{options.BackendApi!.TrimEnd('/')}/storage/download?bucket={bucket}&fileName={fileName}";
+            $"{options.Value.BackendApi!.TrimEnd('/')}/storage/download?bucket={bucket}&fileName={fileName}";
         var response = await _httpClient.GetAsync(apiUrl, HttpCompletionOption.ResponseHeadersRead);
 
         if (!response.IsSuccessStatusCode)
@@ -167,7 +160,6 @@ public class CourseController : Controller
         }
 
         IFormFile formFile = null;
-
         try
         {
             var (stream, fileName, contentType) = await DownloadFileAsStreamAsync(
@@ -188,6 +180,7 @@ public class CourseController : Controller
         {
             TempData["Error"] = "Cover image load failed.";
         }
+
         ViewBag.Categories = await GetAllCategoryDropDown();
         var editViewModel = new CourseEditViewModel
         {
@@ -208,6 +201,7 @@ public class CourseController : Controller
         await _courseRefitService.PublishCourse(id);
         return Ok();
     }
+
     private async Task<List<SelectListItem>> GetAllCategoryDropDown()
     {
         var categories = await _categoryRefitService.GetAllCategories(new Filter());
@@ -229,5 +223,32 @@ public class CourseController : Controller
             ".pdf" => "application/pdf",
             _ => "application/octet-stream"
         };
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> EnrollmentCourse(long courseId)
+    {
+        await _courseRefitService.EnrolleCourse(courseId);
+        return RedirectToAction("MyLearning");
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> MyLearning()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> GetMyCourses([FromBody] Filter filter)
+    {
+        var result = await _courseRefitService.GetFilteredMyCourses(filter);
+        return Json(new APIResponse(200, result: result.Data.Data));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> MyCourse(long id)
+    {
+        var response = await _courseRefitService.GetCourseWithDetails(id);
+        return View(response.Data);
     }
 }
