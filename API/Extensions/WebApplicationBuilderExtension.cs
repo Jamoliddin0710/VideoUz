@@ -1,12 +1,17 @@
-﻿using System;
-using Application.ServiceContract;
+﻿using Application.ServiceContract;
 using Application.Services;
 using Domain.Entities;
+using Domain.RepositoryContracts;
 using Infrastructure;
-using Microsoft.AspNetCore.Authentication;
+using Infrastructure.Client;
+using Infrastructure.Repositories;
+using Mapster;
+using MapsterMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Refit;
 
 namespace API.Extensions
 {
@@ -15,16 +20,62 @@ namespace API.Extensions
         public static IServiceCollection AddConfigurationService(this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddDbContext<AppDbContext>
-                (options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            services.AddAuditing().AddDbContext<AppDbContext>(options => options.UseLazyLoadingProxies()
+                .UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
+                .AddAuditInterceptors());
+
             return services;
+        }
+
+        public static IServiceCollection AddAuditing(this IServiceCollection services,
+            Action<AuditOptions> configureOptions = null)
+        {
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<AuditService>();
+            services.AddRefitClient<IGPTRefitService>()
+                .ConfigureHttpClient(c =>
+                {
+                    /*c.BaseAddress = new Uri("https://api.openai.com");
+                    c.DefaultRequestHeaders.Add("Authorization",
+                        "Bearer gpt-key");*/
+                    c.Timeout = TimeSpan.FromMinutes(5);
+                });
+
+            configureOptions?.Invoke(new AuditOptions(services));
+            return services;
+        }
+
+        public static DbContextOptionsBuilder AddAuditInterceptors(this DbContextOptionsBuilder optionsBuilder)
+        {
+            var coreOptionsExtension = optionsBuilder.Options.GetExtension<CoreOptionsExtension>();
+            var clonedCoreOptionsExtension = new CoreOptionsExtension()
+                .WithApplicationServiceProvider(coreOptionsExtension.ApplicationServiceProvider);
+
+            ((IDbContextOptionsBuilderInfrastructure)optionsBuilder)
+                .AddOrUpdateExtension(clonedCoreOptionsExtension);
+
+            optionsBuilder.AddInterceptors(
+                coreOptionsExtension.ApplicationServiceProvider!.GetRequiredService<AuditService>());
+
+            return optionsBuilder;
         }
 
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IChannelService, ChannelService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddSingleton<IMinioClientFactory, MinioClientFactory>();
+            services.AddScoped<IStorageService, StorageService>();
+            services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<IModuleService, ModuleService>();
+            services.AddScoped<IContentService, ContentService>();
+            services.AddScoped<IQuizService, QuizService>();
+
             return services;
         }
+
         public static IServiceCollection AddAuthServices(this IServiceCollection services)
         {
             services.AddIdentityCore<AppUser>(options =>
@@ -52,6 +103,28 @@ namespace API.Extensions
                     options.LogoutPath = "/Account/Logout";
                     options.ExpireTimeSpan = TimeSpan.FromHours(20);
                 });
+            return services;
+        }
+
+        public static IServiceCollection AddMapster(this IServiceCollection services,
+            Action<TypeAdapterConfig> options = null)
+        {
+            var config = TypeAdapterConfig.GlobalSettings;
+            
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a => !a.IsDynamic && !string.IsNullOrWhiteSpace(a.Location))
+                .ToList();
+
+            foreach (var assembly in assemblies)
+            {
+                config.Scan(assembly);
+            }
+            
+            options?.Invoke(config);
+
+            services.AddSingleton(config);
+            services.AddScoped<IMapper, Mapper>();
+
             return services;
         }
     }

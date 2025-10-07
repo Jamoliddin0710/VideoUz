@@ -1,35 +1,41 @@
+using System.Text;
 using System.Text.Json.Serialization;
 using API.Extensions;
+using Application.DTOs;
 using Domain.Entities;
 using Infrastructure;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpContextAccessor();
+builder.Services.Configure<MinioOptions>(
+    builder.Configuration.GetSection("MinioOptions"));
+
+builder.Services.AddMapster();
+
 builder.Services.AddConfigurationService(builder.Configuration)
-    .AddAuthServices();
+    .AddAuthServices().AddServices();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddServices();
+builder.Configuration.AddEnvironmentVariables();
+builder.Services.Configure<FileUploadOption>(builder.Configuration.GetSection("FileUpload"));
 
 builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
+
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-
-    // If you're using JWT Bearer authentication, for example, you can set it here:
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
+        Description = "Enter like this => Bearer <your_jwt_token>",
+        Name = "Authorization",
         In = ParameterLocation.Header,
-        Scheme = "Bearer",
-        BearerFormat = "JWT",
-        Type = SecuritySchemeType.Http,
-        Description = "Enter 'Bearer' followed by your token."
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
     });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -39,16 +45,35 @@ builder.Services.AddSwaggerGen(c =>
             {
                 Reference = new OpenApiReference
                 {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
+                    Id = "Bearer",
+                    Type = ReferenceType.SecurityScheme
+                },
             },
-            new string[] {}
+            Array.Empty<string>()
         }
     });
 });
 
+builder.Services.AddHttpClient();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = "localhost:5151",
+            ValidAudience = "localhost:5261",
+            ClockSkew = TimeSpan.Zero,
+            IssuerSigningKey =
+                new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes("c5d4daef4df64b08b4ce630a38c0005e10a5953f519c2f1d143379784689fdd4"))
+        };
+    });
 
+builder.Services.AddAuthorization();
 var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
 // Configure the HTTP request pipeline.
@@ -63,12 +88,14 @@ app.UseAuthentication();
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthorization();
+
 app.MapControllers();
 await InitializeContext();
 app.Run();
+
 async Task InitializeContext()
 {
-    var scope  = app.Services.CreateScope();
+    var scope = app.Services.CreateScope();
     var services = scope.ServiceProvider;
     try
     {

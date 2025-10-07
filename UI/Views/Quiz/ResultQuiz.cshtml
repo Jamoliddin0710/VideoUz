@@ -1,0 +1,646 @@
+@model QuizResultViewModel
+
+<div class="container quiz-results-page my-4">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="summary-card mb-4">
+                <div class="summary-header @(Model.IsPassed ? "header-success" : "header-failed")">
+                    <h2 class="summary-title">
+                        @(Model.IsPassed ? "Tabriklaymiz!" : "Afsuski")
+                    </h2>
+                    <p class="summary-subtitle">
+                        @(Model.IsPassed ? "Siz testdan muvaffaqiyatli o'tdingiz!" : "Test sinovidan o'ta olmadingiz.")
+                    </p>
+                </div>
+                
+                <div class="summary-body">
+                    <div class="text-center mb-4">
+                        <div class="score-circle @(Model.IsPassed ? "score-success" : "score-failed")">
+                            <div class="score-value">@Model.Percentage%</div>
+                            <div class="score-label">Natija</div>
+                        </div>
+                    </div>
+                    
+                    <div class="result-progress">
+                        <div class="progress-label d-flex justify-content-between">
+                            <span>0%</span>
+                            <span>@Model.PassingScore%</span>
+                            <span>100%</span>
+                        </div>
+                        <div class="progress" style="height: 12px;">
+                            <div class="progress-bar @(Model.IsPassed ? "bg-success" : "bg-danger")" 
+                                role="progressbar" 
+                                style="width: @Model.Percentage%;" 
+                                aria-valuenow="@Model.Percentage" 
+                                aria-valuemin="0" 
+                                aria-valuemax="100">
+                            </div>
+                        </div>
+                        <div class="pass-marker" style="left: @Model.PassingScore%;">
+                            <div class="pass-line"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="result-details mt-4">
+                        <table class="table table-borderless">
+                            <tbody>
+                                <tr>
+                                    <th>Test nomi:</th>
+                                    <td>@Model.QuizTitle</td>
+                                </tr>
+                                <tr>
+                                    <th>To'plangan ball:</th>
+                                    <td>@Model.Score / @Model.MaxScore</td>
+                                </tr>
+                                <tr>
+                                    <th>To'g'ri javoblar:</th>
+                                    <td>@Model.CorrectAnswers / @Model.TotalQuestions</td>
+                                </tr>
+                                <tr>
+                                    <th>O'tish bali:</th>
+                                    <td>@Model.PassingScore%</td>
+                                </tr>
+                                <tr>
+                                    <th>Boshlangan vaqt:</th>
+                                    <td>@Model.StartTime.ToString("dd.MM.yyyy HH:mm")</td>
+                                </tr>
+                                <tr>
+                                    <th>Yakunlangan vaqt:</th>
+                                    <td>@(Model.EndTime?.ToString("dd.MM.yyyy HH:mm") ?? "-")</td>
+                                </tr>
+                                <tr>
+                                    <th>Sarflangan vaqt:</th>
+                                    <td>
+                                        @if (Model.EndTime.HasValue)
+                                        {
+                                            var duration = Model.EndTime.Value - Model.StartTime;
+                                            @($"{Math.Floor(duration.TotalMinutes)} daqiqa {duration.Seconds} soniya")
+                                        }
+                                        else
+                                        {
+                                            <span>-</span>
+                                        }
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="result-actions">
+                        @if (!Model.IsPassed)
+                        {
+                            <a href="@Url.Action("StartQuiz", "Quiz", new { contentId = Model.ContentId})" 
+                               class="btn btn-warning btn-lg w-100 mb-3">
+                                <i class="fas fa-redo me-2"></i> Qayta urinish
+                            </a>
+                        }
+                        <a href="@Url.Action("MyCourse", "Course", new { id = ViewBag.CourseId })" 
+                           class="btn btn-primary btn-lg w-100">
+                            <i class="fas fa-arrow-left me-2"></i> Kursga qaytish
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-card">
+                <div class="stats-header">
+                    <h4><i class="fas fa-chart-pie me-2"></i> Statistika</h4>
+                </div>
+                <div class="stats-body">
+                    <div class="stats-item">
+                        <div class="stats-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stats-content">
+                            <div class="stats-value">@Model.CorrectAnswers</div>
+                            <div class="stats-label">To'g'ri javoblar</div>
+                        </div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-icon">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <div class="stats-content">
+                            <div class="stats-value">@(Model.TotalQuestions - Model.CorrectAnswers)</div>
+                            <div class="stats-label">Noto'g'ri javoblar</div>
+                        </div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="stats-content">
+                            <div class="stats-value">@Model.Percentage%</div>
+                            <div class="stats-label">Natija foizi</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-8">
+            <div class="answers-card">
+                <div class="answers-header">
+                    <h3><i class="fas fa-tasks me-2"></i> Javoblar tahlili</h3>
+                    <div class="filter-buttons">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-sm btn-outline-secondary active" data-filter="all">
+                                Barcha
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-success" data-filter="correct">
+                                To'g'ri javoblar
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-danger" data-filter="incorrect">
+                                Noto'g'ri javoblar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="answers-body">
+                    @foreach (var answer in Model.Answers.OrderBy(a => a.QuestionOrder))
+                    {
+                        <div class="answer-item mb-4 @(answer.IsCorrect ? "correct-answer" : "incorrect-answer")">
+                            <div class="answer-header">
+                                <div class="answer-number">Savol @answer.QuestionOrder</div>
+                                <div class="answer-result @(answer.IsCorrect ? "result-correct" : "result-incorrect")">
+                                    @if (answer.IsCorrect)
+                                    {
+                                        <i class="fas fa-check-circle me-1"></i> <span>To'g'ri</span>
+                                    }
+                                    else
+                                    {
+                                        <i class="fas fa-times-circle me-1"></i> <span>Noto'g'ri</span>
+                                    }
+                                </div>
+                            </div>
+                            
+                            <div class="answer-content">
+                                <div class="question-text">@answer.QuestionText</div>
+                                
+                                <div class="options-list mt-3">
+                                    @foreach (var option in answer.Options)
+                                    {
+                                        string optionClass = "";
+                                        string optionIcon = "";
+                                        
+                                        if (option.Id == answer.SelectedOptionId)
+                                        {
+                                            if (option.IsCorrect)
+                                            {
+                                                optionClass = "selected-correct";
+                                                optionIcon = "fas fa-check-circle text-success";
+                                            }
+                                            else
+                                            {
+                                                optionClass = "selected-incorrect";
+                                                optionIcon = "fas fa-times-circle text-danger";
+                                            }
+                                        }
+                                        else if (option.IsCorrect)
+                                        {
+                                            optionClass = "correct-option";
+                                            optionIcon = "fas fa-check-circle text-success";
+                                        }
+                                        else
+                                        {
+                                            optionIcon = "far fa-circle";
+                                        }
+                                        
+                                        <div class="option-item @optionClass">
+                                            <div class="option-icon">
+                                                <i class="@optionIcon"></i>
+                                            </div>
+                                            <div class="option-text">
+                                                @option.OptionText
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                
+                                @if (!answer.IsCorrect && !string.IsNullOrEmpty(answer.Explanation))
+                                {
+                                    <div class="answer-explanation mt-3">
+                                        <div class="explanation-title">
+                                            <i class="fas fa-info-circle me-2"></i> Izoh
+                                        </div>
+                                        <div class="explanation-content">
+                                            @answer.Explanation
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Filter javoblar
+            $(".filter-buttons .btn").click(function() {
+                // Active class o'zgartirish
+                $(".filter-buttons .btn").removeClass("active");
+                $(this).addClass("active");
+                
+                // Filter qiymati
+                const filterType = $(this).data("filter");
+                
+                // Barcha javoblarni filter qilish
+                if (filterType === "all") {
+                    $(".answer-item").show();
+                } else if (filterType === "correct") {
+                    $(".answer-item").hide();
+                    $(".correct-answer").show();
+                } else if (filterType === "incorrect") {
+                    $(".answer-item").hide();
+                    $(".incorrect-answer").show();
+                }
+            });
+            
+            // Progress bar animation
+            $('.progress-bar').css('width', '0%').animate({
+                width: '@Model.Percentage%'
+            }, 1000);
+        });
+    </script>
+}
+
+<style>
+    /* Quiz Results Page Styles */
+    .quiz-results-page {
+        margin-top: 30px;
+        margin-bottom: 50px;
+    }
+    
+    /* Summary Card */
+    .summary-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+    
+    .summary-header {
+        color: white;
+        padding: 25px 20px;
+        text-align: center;
+    }
+    
+    .header-success {
+        background-color: #28a745;
+    }
+    
+    .header-failed {
+        background-color: #dc3545;
+    }
+    
+    .summary-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+    
+    .summary-subtitle {
+        opacity: 0.9;
+        margin-bottom: 0;
+    }
+    
+    .summary-body {
+        padding: 25px;
+    }
+    
+    /* Score Circle */
+    .score-circle {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .score-success {
+        background-color: #d4edda;
+        border: 6px solid #28a745;
+    }
+    
+    .score-failed {
+        background-color: #f8d7da;
+        border: 6px solid #dc3545;
+    }
+    
+    .score-value {
+        font-size: 2.8rem;
+        font-weight: 700;
+        line-height: 1;
+    }
+    
+    .score-label {
+        font-size: 1rem;
+        color: #6c757d;
+        margin-top: 5px;
+    }
+    
+    /* Progress Bar */
+    .result-progress {
+        position: relative;
+        margin-top: 30px;
+    }
+    
+    .progress-label {
+        margin-bottom: 5px;
+        font-size: 0.8rem;
+        color: #6c757d;
+    }
+    
+    .pass-marker {
+        position: absolute;
+        bottom: 0;
+        height: 20px;
+    }
+    
+    .pass-line {
+        position: absolute;
+        width: 2px;
+        height: 20px;
+        background-color: #212529;
+        bottom: 0;
+    }
+    
+    /* Result Details */
+    .result-details table th {
+        font-weight: 600;
+        width: 40%;
+        color: #495057;
+    }
+    
+    .result-details table td {
+        font-weight: 500;
+    }
+    
+    .result-actions {
+        margin-top: 20px;
+    }
+    
+    /* Stats Card */
+    .stats-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+    
+    .stats-header {
+        padding: 15px 20px;
+        border-bottom: 1px solid #dee2e6;
+        background-color: #f8f9fa;
+    }
+    
+    .stats-header h4 {
+        margin: 0;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #343a40;
+    }
+    
+    .stats-body {
+        display: flex;
+        padding: 15px;
+    }
+    
+    .stats-item {
+        flex: 1;
+        text-align: center;
+        padding: 10px;
+        border-right: 1px solid #dee2e6;
+    }
+    
+    .stats-item:last-child {
+        border-right: none;
+    }
+    
+    .stats-icon {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+    
+    .stats-item:nth-child(1) .stats-icon {
+        color: #28a745;
+    }
+    
+    .stats-item:nth-child(2) .stats-icon {
+        color: #dc3545;
+    }
+    
+    .stats-item:nth-child(3) .stats-icon {
+        color: #0d6efd;
+    }
+    
+    .stats-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+    
+    .stats-label {
+        font-size: 0.8rem;
+        color: #6c757d;
+    }
+    
+    /* Answers Card */
+    .answers-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+    
+    .answers-header {
+        padding: 15px 20px;
+        border-bottom: 1px solid #dee2e6;
+        background-color: #f8f9fa;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .answers-header h3 {
+        margin: 0;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #343a40;
+    }
+    
+    .answers-body {
+        padding: 20px;
+    }
+    
+    /* Answer Item */
+    .answer-item {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        overflow: hidden;
+        margin-bottom: 20px;
+        border-left: 4px solid #dee2e6;
+    }
+    
+    .correct-answer {
+        border-left-color: #28a745;
+    }
+    
+    .incorrect-answer {
+        border-left-color: #dc3545;
+    }
+    
+    .answer-header {
+        padding: 12px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #dee2e6;
+    }
+    
+    .answer-number {
+        font-weight: 600;
+        color: #495057;
+    }
+    
+    .answer-result {
+        font-weight: 600;
+    }
+    
+    .result-correct {
+        color: #28a745;
+    }
+    
+    .result-incorrect {
+        color: #dc3545;
+    }
+    
+    .answer-content {
+        padding: 20px;
+    }
+    
+    .question-text {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #212529;
+        margin-bottom: 15px;
+    }
+    
+    /* Option Items */
+    .option-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+    }
+    
+    .option-item.selected-correct {
+        background-color: #d4edda;
+        border-color: #28a745;
+    }
+    
+    .option-item.selected-incorrect {
+        background-color: #f8d7da;
+        border-color: #dc3545;
+    }
+    
+    .option-item.correct-option {
+        background-color: rgba(40, 167, 69, 0.1);
+        border-color: #aedcbc;
+    }
+    
+    .option-icon {
+        margin-right: 15px;
+        width: 24px;
+        text-align: center;
+    }
+    
+    .option-text {
+        flex-grow: 1;
+    }
+    
+    /* Explanation */
+    .answer-explanation {
+        background-color: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 15px;
+        border-radius: 4px;
+        margin-top: 15px;
+    }
+    
+    .explanation-title {
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #212529;
+    }
+    
+    .explanation-content {
+        color: #495057;
+    }
+    
+    /* Responsive */
+    @@media (max-width: 992px) {
+        .answers-card {
+            margin-top: 20px;
+        }
+    }
+    
+    @@media (max-width: 768px) {
+        .score-circle {
+            width: 120px;
+            height: 120px;
+        }
+        
+        .score-value {
+            font-size: 2rem;
+        }
+        
+        .stats-body {
+            flex-direction: column;
+        }
+        
+        .stats-item {
+            border-right: none;
+            border-bottom: 1px solid #dee2e6;
+            padding: 15px 10px;
+        }
+        
+        .stats-item:last-child {
+            border-bottom: none;
+        }
+        
+        .answers-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .filter-buttons {
+            margin-top: 10px;
+            width: 100%;
+        }
+        
+        .filter-buttons .btn-group {
+            width: 100%;
+            display: flex;
+        }
+        
+        .filter-buttons .btn {
+            flex: 1;
+        }
+    }
+</style>

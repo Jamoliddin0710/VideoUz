@@ -3,6 +3,6 @@ namespace Domain.Entities;
 public enum Role
 {
     Admin,
-    User, 
-    Moderator,
+    Teacher,
+    Student
 }

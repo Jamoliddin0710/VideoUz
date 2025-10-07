@@ -17,4 +17,21 @@ public class BaseApiController : ControllerBase
             IsSuccessful = true
         });
     }
+    
+    protected new ActionResult<ServiceResponse<object>> Ok()
+    {
+        return base.Ok(new ServiceResponse<object>()
+        {
+            IsSuccessful = true
+        });
+    }
+    
+    protected new ActionResult<ServiceResponse<string>> Ok(string obj)
+    {
+        return base.Ok(new ServiceResponse<string>()
+        {
+            Data = obj,
+            IsSuccessful = true
+        });
+    }
 }

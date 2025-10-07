@@ -1,7 +1,8 @@
-using Application.ServiceContract;
+using Application.Services;
 using Infrastructure.DTOs;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Refit;
+using Microsoft.AspNetCore.Http.Features;
+using UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,9 +20,14 @@ builder.Services.AddAuthentication(options =>
         options.ExpireTimeSpan = TimeSpan.FromMinutes(60); 
         options.SlidingExpiration = true; 
     });
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 200_000_000; // 200 MB
+});
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddSession();
 builder.Services.AddRefitService(builder.Configuration);
 var appOptions = new AppOptions();
 var section = builder.Configuration.GetSection(nameof(AppOptions));
@@ -41,6 +47,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseSession();
 app.MapControllers();
 app.MapControllerRoute(
     name: "default",

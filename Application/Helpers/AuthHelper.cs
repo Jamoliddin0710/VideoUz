@@ -1,7 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Application.Models;
+using Domain.Entities;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.Helpers;
 
@@ -17,6 +19,12 @@ public static class AuthHelper
         return userName;
     }
 
+    public static bool IsUserRole(this ClaimsPrincipal principal , string role)
+    {
+        var userrole =  principal.FindFirstValue(ClaimTypes.Role);
+        return userrole?.Contains(role , StringComparison.OrdinalIgnoreCase) ?? false;
+    }
+
     public static long? GetUserId(this ClaimsPrincipal principal)
     {
         if (principal is null)
@@ -27,6 +35,7 @@ public static class AuthHelper
         var userIdClaim = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         return long.TryParse(userIdClaim , out var userId) ? userId : 0;
     }
+    
     public static JwtSecurityToken DecodeToken(string token)
     {
         var handler = new JwtSecurityTokenHandler();
@@ -104,9 +113,14 @@ public static class AuthHelper
                 token
             },
             {
+                ClaimTypes.Role,
+                string.Join(";", claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value))
+            },
+            {
                 ClaimTypes.Expiration,
                 claims.FirstOrDefault(c => c.Type == ClaimTypes.Expiration)?.Value ?? ""
             },
         };
     }
 }
+

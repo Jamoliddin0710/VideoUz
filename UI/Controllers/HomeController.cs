@@ -4,21 +4,20 @@ using UI.Models;
 
 namespace UI.Controllers;
 
-public class HomeController : Controller
+public class HomeController(ILogger<HomeController> _logger) : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
-    {
-        _logger = logger;
-    }
-
     public IActionResult Index()
     {
+        if (!User.Identity.IsAuthenticated)
+        {
+            return RedirectToAction("Login", "Account");
+        }
+
         return View();
     }
 
-    public IActionResult Privacy()
+    [HttpGet]
+    public IActionResult AIChat()
     {
         return View();
     }

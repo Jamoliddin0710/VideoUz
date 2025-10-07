@@ -8,7 +8,7 @@ public class Subscribe : BaseEntity
     public long AppUserId { get; set; }
     //Navigation
     [ForeignKey(nameof(AppUserId))]
-    public AppUser AppUser { get; set; }
+    public virtual AppUser AppUser { get; set; }
     [ForeignKey(nameof(ChannelId))]
-    public Channel Channel { get; set; }
+    public virtual Channel Channel { get; set; }
 }

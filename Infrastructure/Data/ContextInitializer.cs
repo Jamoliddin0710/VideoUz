@@ -31,32 +31,35 @@ namespace Infrastructure.Data
                 var admin = new AppUser()
                 {
                     UserName = "admin",
+                    Name = "Admin",
                     Email = "admin@admin.com",
                     PhoneNumber = "0123456789",
                 };
                 
                await userManager.CreateAsync(admin, "admin123");
-               await userManager.AddToRoleAsync(admin, Role.Admin.ToString());
+               await userManager.AddToRoleAsync(admin, nameof(Role.Admin));
                
-               var moderator = new AppUser()
+               var teacher = new AppUser()
                 {
-                    UserName = "moderator",
-                    Email = "moderator@moderator.com",
-                    PhoneNumber = "0123456789",
+                    UserName = "teacher",
+                    Name = "teacher",
+                    Email = "teacher@teacher.com",
+                    PhoneNumber = "903182678",
                 };
                 
-               await userManager.CreateAsync(moderator, "moderator123");
-               await userManager.AddToRoleAsync(moderator, Role.Moderator.ToString());
+               await userManager.CreateAsync(teacher, "teacher123");
+               await userManager.AddToRoleAsync(teacher, nameof(Role.Teacher));
              
-               var user = new AppUser()
+               var student = new AppUser()
                 {
-                    UserName = "user",
-                    Email = "user@user.com",
-                    PhoneNumber = "0123456789",
+                    UserName = "student",
+                    Name = "student",
+                    Email = "student@student.com",
+                    PhoneNumber = "937072078",
                 };
                 
-               await userManager.CreateAsync(user, "user123");
-               await userManager.AddToRoleAsync(user, Role.User.ToString());
+               await userManager.CreateAsync(student, "student123");
+               await userManager.AddToRoleAsync(student, nameof(Role.Student));
             }
         }
     }

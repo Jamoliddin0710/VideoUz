@@ -5,19 +5,32 @@ namespace Infrastructure.Repositories;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly AppDbContext _context;
+
     public UnitOfWork(AppDbContext context)
     {
         _context = context;
     }
-    
+
     public void Dispose()
     {
-       _context.Dispose();
+        _context.Dispose();
     }
 
     public IChannelRepo ChannelRepo => new ChannelRepo(_context);
     public ICategoryRepo CategoryRepo => new CategoryRepo(_context);
     public IVideoRepo VideoRepo => new VideoRepo(_context);
+    public ICourseRepo CourseRepo => new CourseRepo(_context);
+    public IFileRepo FileRepo => new FileRepo(_context);
+    public IModuleRepo ModuleRepo => new ModuleRepo(_context);
+    public IContentRepo ContentRepo => new ContentRepo(_context);
+    public IProgressRepo ProgressRepo => new ProgressRepo(_context);
+    public IEnrollmentRepo EnrollmentRepo => new EnrollmentRepo(_context);
+    public IQuizRepo QuizRepo => new QuizRepo(_context);
+    public IQuizAttemptRepo QuizAttemptRepo => new QuizAttempRepo(_context);
+    public IQuizAnswerRepo QuizAnswerRepo => new QuizAnswerRepo(_context);
+    public IQuestionRepo QuestionRepo => new QuestionRepo(_context);
+    public IQuestionOptionRepo QuestionOptionRepo => new QuestionOptionRepo(_context);
+
 
     public async Task<bool> CompleteAsync()
     {
@@ -26,6 +39,7 @@ public class UnitOfWork : IUnitOfWork
         {
             result = await _context.SaveChangesAsync() > 0;
         }
+
         return result;
     }
 }

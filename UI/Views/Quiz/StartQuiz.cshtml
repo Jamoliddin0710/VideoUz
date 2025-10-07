@@ -1,0 +1,630 @@
+@model QuizDTO
+
+<div class="quiz-page-container">
+    <div class="quiz-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="quiz-title">@Model.Title</h1>
+                    @if (!string.IsNullOrEmpty(Model.Description))
+                    {
+                        <p class="quiz-description">@Model.Description</p>
+                    }
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="quiz-timer" id="quizTimer">
+                        <i class="fas fa-clock"></i> <span id="timeRemaining">@Model.TimeLimit:00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <div class="quiz-info-bar">
+                        <div class="quiz-info-item">
+                            <i class="fas fa-list-ol"></i> Savollar: <strong>@Model.Questions.Count</strong>
+                        </div>
+                        <div class="quiz-info-item">
+                            <i class="fas fa-clock"></i> Vaqt: <strong>@Model.TimeLimit daqiqa</strong>
+                        </div>
+                        <div class="quiz-info-item">
+                            <i class="fas fa-award"></i> O'tish bali: <strong>@Model.PassingScore%</strong>
+                        </div>
+                        <div class="quiz-info-item">
+                            <i class="fas fa-check-circle"></i> <span id="answeredCount">0</span>/<span id="totalQuestions">@Model.Questions.Count</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="question-navigation-panel">
+                    <h5 class="navigation-title">Savollar</h5>
+                    <div class="question-buttons">
+                        @foreach (var question in Model.Questions.OrderBy(q => q.Order))
+                        {
+                            <button class="question-nav-btn @(question.Order == 1 ? "active" : "")" 
+                                    id="navBtn_@question.Order" 
+                                    data-question-id="@question.Id" 
+                                    data-question-order="@question.Order">
+                                @question.Order
+                            </button>
+                        }
+                    </div>
+                    <div class="quiz-legend mt-3">
+                        <div class="legend-item">
+                            <span class="legend-marker current"></span> Hozirgi savol
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-marker answered"></span> Javob berilgan
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-marker unanswered"></span> Javoblanmagan
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <button id="submitQuizBtn" class="btn btn-success btn-lg w-100">
+                            <i class="fas fa-check-circle me-2"></i> Testni yakunlash
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-9">
+                <div id="questionsContainer">
+                    @foreach (var question in Model.Questions.OrderBy(q => q.Order))
+                    {
+                        <div class="question-card @(question.Order == 1 ? "" : "d-none")" 
+                             id="question_@question.Order" 
+                             data-question-id="@question.Id"
+                             data-question-order="@question.Order">
+                            
+                            <div class="question-header">
+                                <div class="question-number">
+                                    Savol <span>@question.Order</span> / @Model.Questions.Count
+                                </div>
+                                <div class="question-points">
+                                    @question.Points ball
+                                </div>
+                            </div>
+                            
+                            <div class="question-body">
+                                <h3 class="question-text">@question.QuestionText</h3>
+                                
+                                <div class="options-list mt-4">
+                                    @foreach (var option in question.Options)
+                                    {
+                                        <div class="option-item">
+                                            <div class="form-check">
+                                                <input class="form-check-input option-radio" 
+                                                       type="radio" 
+                                                       name="question_@question.Id" 
+                                                       id="option_@option.Id" 
+                                                       value="@option.Id"
+                                                       data-question-id="@question.Id"
+                                                       data-question-order="@question.Order">
+                                                <label class="form-check-label" for="option_@option.Id">
+                                                    @option.OptionText
+                                                </label>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            
+                            <div class="question-footer">
+                                <div class="d-flex justify-content-between">
+                                    <button class="btn btn-outline-secondary prev-question-btn @(question.Order == 1 ? "invisible" : "")" 
+                                            data-target-order="@(question.Order - 1)">
+                                        <i class="fas fa-chevron-left me-2"></i> Oldingi
+                                    </button>
+                                    
+                                    <button class="btn btn-outline-primary next-question-btn @(question.Order == Model.Questions.Count ? "invisible" : "")" 
+                                            data-target-order="@(question.Order + 1)">
+                                        Keyingi <i class="fas fa-chevron-right ms-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Submit Confirmation Modal -->
+<div class="modal fade" id="submitConfirmModal" tabindex="-1" aria-labelledby="submitConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="submitConfirmModalLabel">Testni yakunlash</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Testni yakunlashni istaysizmi?</p>
+                <div class="quiz-summary">
+                    <div class="quiz-summary-item">
+                        <span class="summary-label">Jami savollar:</span>
+                        <span class="summary-value">@Model.Questions.Count</span>
+                    </div>
+                    <div class="quiz-summary-item">
+                        <span class="summary-label">Javob berilgan:</span>
+                        <span class="summary-value" id="modalAnsweredCount">0</span>
+                    </div>
+                    <div class="quiz-summary-item">
+                        <span class="summary-label">Javob berilmagan:</span>
+                        <span class="summary-value" id="modalUnansweredCount">@Model.Questions.Count</span>
+                    </div>
+                </div>
+                <div class="alert alert-warning mt-3">
+                    <i class="fas fa-exclamation-triangle me-2"></i> Yakunlashdan so'ng javoblarni o'zgartirish imkoniyati yo'q
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-2"></i> Bekor qilish
+                </button>
+                <button type="button" class="btn btn-success" id="confirmSubmitBtn">
+                    <i class="fas fa-check-circle me-2"></i> Testni yakunlash
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Global variables
+            let timeLeft = @Model.TimeLimit * 60; // seconds
+            let timerInterval;
+            let answeredQuestions = {};
+            const totalQuestions = @Model.Questions.Count;
+            
+            // Start timer
+            startTimer();
+            
+            // Navigation buttons
+            $(".question-nav-btn").click(function() {
+                const questionOrder = $(this).data("question-order");
+                showQuestion(questionOrder);
+            });
+            
+            // Next/Previous buttons
+            $(".next-question-btn, .prev-question-btn").click(function() {
+                const targetOrder = $(this).data("target-order");
+                showQuestion(targetOrder);
+            });
+            
+            // Option selection
+            $(".option-radio").change(function() {
+                const questionId = $(this).data("question-id");
+                const questionOrder = $(this).data("question-order");
+                const optionId = $(this).val();
+                
+                // Save answer
+                answeredQuestions[questionId] = {
+                    questionId: questionId,
+                    selectedOptionId: optionId,
+                    questionOrder: questionOrder
+                };
+                
+                // Update UI
+                $(`#navBtn_${questionOrder}`).addClass("answered");
+                updateProgress();
+            });
+            
+            // Submit Quiz Button
+            $("#submitQuizBtn").click(function() {
+                // Show confirmation modal
+                $("#modalAnsweredCount").text(Object.keys(answeredQuestions).length);
+                $("#modalUnansweredCount").text(totalQuestions - Object.keys(answeredQuestions).length);
+                
+                // Show modal
+                new bootstrap.Modal(document.getElementById('submitConfirmModal')).show();
+            });
+            
+            // Confirm Submit Button
+            $("#confirmSubmitBtn").click(function() {
+                submitQuiz();
+            });
+            
+            // Functions
+            function showQuestion(order) {
+                // Hide all questions
+                $(".question-card").addClass("d-none");
+                
+                // Show selected question
+                $(`#question_${order}`).removeClass("d-none");
+                
+                // Update navigation buttons
+                $(".question-nav-btn").removeClass("active");
+                $(`#navBtn_${order}`).addClass("active");
+                
+                // Scroll to top of question if needed
+                $('html, body').animate({
+                    scrollTop: $("#questionsContainer").offset().top - 20
+                }, 300);
+            }
+            
+            function updateProgress() {
+                const answeredCount = Object.keys(answeredQuestions).length;
+                $("#answeredCount").text(answeredCount);
+                $("#totalQuestions").text(totalQuestions);
+                
+                // Update progress percentage if needed
+                const progressPercentage = (answeredCount / totalQuestions) * 100;
+                // You could add a progress bar here if desired
+            }
+            
+            function startTimer() {
+                const timerElement = $("#timeRemaining");
+                
+                timerInterval = setInterval(function() {
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        // Auto submit when time is up
+                        submitQuiz();
+                        return;
+                    }
+                    
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    
+                    timerElement.text(`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`);
+                    
+                    // Change color when time is running low
+                    if (timeLeft < 60) {
+                        $("#quizTimer").addClass("time-critical");
+                    } else if (timeLeft < 300) {
+                        $("#quizTimer").addClass("time-warning");
+                    }
+                    
+                    timeLeft--;
+                }, 1000);
+            }
+            
+            function submitQuiz() {
+                // Stop timer
+                clearInterval(timerInterval);
+                
+                // Prepare answers array
+                const answersArray = Object.values(answeredQuestions);
+                
+                // Submit to server
+                $.ajax({
+                    url: "/Quiz/Submit",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        quizId: @Model.Id,
+                        attemptId: @Model.AttemptId,
+                        answers: answersArray
+                    }),
+                    success: function(result) {
+                        window.location.href = `/Quiz/ResultQuiz/${result.attemptId}`;
+                    },
+                    error: function(xhr, status, error) {
+                        alert("Testni topshirishda xatolik yuz berdi. Iltimos, qaytadan urinib ko'ring.");
+                        console.error(error);
+                    }
+                });
+            }
+        });
+    </script>
+}
+
+<style>
+   
+    .quiz-page-container {
+        margin-bottom: 50px;
+    }
+
+   
+    .quiz-header {
+        background-color: #f8f9fa;
+        padding: 25px 0;
+        border-bottom: 1px solid #dee2e6;
+        margin-bottom: 20px;
+    }
+
+    .quiz-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #212529;
+        margin-bottom: 10px;
+    }
+
+    .quiz-description {
+        color: #6c757d;
+        font-size: 1.1rem;
+    }
+
+    .quiz-timer {
+        background-color: #0d6efd;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 50px;
+        display: inline-block;
+        font-size: 1.2rem;
+        font-weight: 600;
+        box-shadow: 0 3px 10px rgba(13, 110, 253, 0.3);
+    }
+
+    .quiz-timer.time-warning {
+        background-color: #ffc107;
+        color: #212529;
+    }
+
+    .quiz-timer.time-critical {
+        background-color: #dc3545;
+        color: white;
+        animation: pulse 1s infinite;
+    }
+
+    @@keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    .quiz-info-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 15px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .quiz-info-item {
+        padding: 5px 15px;
+        border-right: 1px solid #dee2e6;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .quiz-info-item:last-child {
+        border-right: none;
+    }
+
+    .quiz-info-item i {
+        margin-right: 8px;
+        color: #6c757d;
+    }
+
+    /* Question Navigation Panel */
+    .question-navigation-panel {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        padding: 20px;
+        position: sticky;
+        top: 20px;
+    }
+
+    .navigation-title {
+        margin-bottom: 15px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #343a40;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .question-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+
+    .question-nav-btn {
+        width: 45px;
+        height: 45px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        color: #343a40;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .question-nav-btn:hover {
+        background-color: #e9ecef;
+        border-color: #ced4da;
+    }
+
+    .question-nav-btn.active {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+        color: white;
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2);
+    }
+
+    .question-nav-btn.answered {
+        background-color: #d1e7dd;
+        border-color: #a3cfbb;
+        color: #0f5132;
+    }
+
+    .question-nav-btn.answered.active {
+        background-color: #0f5132;
+        border-color: #0f5132;
+        color: white;
+    }
+
+    .quiz-legend {
+        font-size: 0.85rem;
+        color: #6c757d;
+    }
+
+    .legend-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+
+    .legend-marker {
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        margin-right: 8px;
+    }
+
+    .legend-marker.current {
+        background-color: #0d6efd;
+    }
+
+    .legend-marker.answered {
+        background-color: #d1e7dd;
+    }
+
+    .legend-marker.unanswered {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+    }
+
+    /* Question Card */
+    .question-card {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+
+    .question-header {
+        background-color: #f8f9fa;
+        padding: 15px 20px;
+        border-bottom: 1px solid #dee2e6;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .question-number {
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    .question-number span {
+        font-weight: 700;
+        color: #0d6efd;
+    }
+
+    .question-points {
+        font-size: 0.9rem;
+        color: #6c757d;
+        font-weight: 500;
+    }
+
+    .question-body {
+        padding: 25px;
+    }
+
+    .question-text {
+        font-size: 1.3rem;
+        font-weight: 500;
+        color: #212529;
+        margin-bottom: 20px;
+    }
+
+    .option-item {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 12px;
+        transition: all 0.2s ease;
+    }
+
+    .option-item:hover {
+        background-color: #e9ecef;
+        border-color: #ced4da;
+        transform: translateY(-2px);
+        box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+
+    .form-check-input {
+        margin-top: 0.25rem;
+    }
+
+    .form-check-label {
+        padding-left: 10px;
+        cursor: pointer;
+        font-size: 1.1rem;
+    }
+
+    .question-footer {
+        padding: 15px 25px;
+        border-top: 1px solid #dee2e6;
+    }
+
+    /* Submit Modal */
+    .quiz-summary {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 15px;
+    }
+
+    .quiz-summary-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .quiz-summary-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .summary-label {
+        font-weight: 500;
+    }
+
+    .summary-value {
+        font-weight: 600;
+    }
+
+    /* Responsive */
+    @@media (max-width: 768px) {
+        .quiz-info-bar {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .quiz-info-item {
+            border-right: none;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 10px;
+        }
+
+        .quiz-info-item:last-child {
+            border-bottom: none;
+        }
+
+        .question-navigation-panel {
+            margin-bottom: 20px;
+            position: static;
+        }
+
+        .question-buttons {
+            justify-content: center;
+        }
+    }
+</style>

@@ -6,6 +6,8 @@ namespace Domain.RepositoryContracts;
 public interface IBaseRepo<T> where T : class
 {
     void Add(T entity);
+    Task<T> AddAsync(T entity);
+    void AddRange(IEnumerable<T> entities);
     void Update(T source, T destination);
     void Remove(T entity);
     void RemoveRange(IEnumerable<T> entities);
